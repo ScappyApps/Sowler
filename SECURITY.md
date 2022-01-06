@@ -14,4 +14,4 @@
 
 When you use this project it cannot be sold, nor may you be issued legal penalties! .
 
-We always strive to provide the best, so if you find Vulnerability please contact us quickly via Skype@bmde-labs.com
+We always strive to provide the best, so if you find Vulnerability please contact us quickly via scappy@bmde-labs.com
