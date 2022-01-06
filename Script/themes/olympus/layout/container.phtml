@@ -1,0 +1,380 @@
+<?php
+if ($so['loggedin'] == true && !isset($_GET['connected_via'])) {
+    global $Connect;
+    mysqli_query($Connect, "UPDATE " . T_USERS . " SET `connected_via` = 'pc' WHERE `user_id` = " . So_Secure($so['user']['user_id']) . " AND `connected_via` = 'mobile'");
+} else if ($so['loggedin'] == true && isset($_GET['connected_via']) && $_GET['connected_via'] == 'mobile') {
+    global $Connect;
+    mysqli_query($Connect, "UPDATE " . T_USERS . " SET `connected_via` = 'mobile', `lastseen` = '" . time() . "' WHERE `user_id` = " . So_Secure($so['user']['user_id']) . " AND `connected_via` = 'pc'");
+}
+?>
+<!DOCTYPE html>
+<html lang="<?php echo So_Language(); ?>">
+    <head>
+        <title><?php echo $so['title']; ?></title>
+        <meta charset="UTF-8">
+        <meta name="title" content="<?php echo $so['title']; ?>">
+        <meta name="description" content="<?php echo $so['description']; ?>">
+        <meta name="keywords" content="<?php echo $so['keywords']; ?>">
+        <meta name="author" content="Titiasnu Official">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <?php if (!empty($so['image'])) { ?>
+            <meta property="og:image" content="<?php echo $so['image']; ?>">
+        <?php } else { ?>
+            <meta property="og:image" content="<?php echo $so['config']['site_url']; ?>/upload/images/icon.png">
+        <?php } ?>
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="600">
+        <meta property="og:image:height" content="600"> 
+        <meta property="og:description" content="<?php echo $so['description']; ?>">
+
+        <?php if ($so['page'] == 'timeline') { ?>
+            <meta property="og:url" content="<?php echo So_SeoLink('index.php?link1=timeline&username=' . $so['profile']['username']); ?>" />
+            <meta property="og:type" content="article" />
+            <meta property="og:title" content="<?php echo $so['profile']['name']; ?>" />
+            <meta property="og:image" content="<?php echo $so['profile']['cover']; ?>" />
+        <?php } ?>
+
+        <script type="text/javascript" src="<?php echo $so['config']['theme_url']; ?>/javascript/jquery-3.3.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+        <script type="text/javascript" src="<?php echo $so['config']['theme_url']; ?>/javascript/readmore.js"></script>
+
+        <link rel="shortcut icon" href="<?php echo $so['config']['theme_url']; ?>/img/ico.ico"/>
+        <link rel="stylesheet" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+
+        <?php if ($so['page'] == 'admincp') { ?>
+            <link href="<?php echo $so['config']['theme_url']; ?>/stylesheet/bootstrap-toggle.min.css" rel="stylesheet">
+            <link href="<?php echo $so['config']['theme_url']; ?>/stylesheet/bootstrap-colorpicker.min.css" rel="stylesheet">
+
+        <?php } else if ($so['loggedin'] == true) { ?>
+            <!-- Main Font -->
+            <script src="<?php echo $so['config']['theme_url']; ?>/javascript/webfontloader.min.js"></script>
+
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" type="text/css" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/Bootstrap/dist/css/bootstrap-reboot.css">
+            <link rel="stylesheet" type="text/css" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/Bootstrap/dist/css/bootstrap.css">
+            <link rel="stylesheet" type="text/css" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/Bootstrap/dist/css/bootstrap-grid.css">
+
+            <!-- Main Styles CSS -->
+            <link rel="stylesheet" type="text/css" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/main.min.css">
+            <link rel="stylesheet" type="text/css" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/fonts.min.css">
+        <?php } ?>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+        <?php if ($so['page'] <> 'admincp') { ?>
+            <link href="<?php echo $so['config']['theme_url']; ?>/stylesheet/video-js.css" rel="stylesheet">
+            <link href="<?php echo $so['config']['theme_url']; ?>/stylesheet/videojs-vjsdownload.css" rel="stylesheet">
+            <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+        <?php } ?>  
+
+        <link rel="stylesheet" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/twidley.css?<?php echo time(); ?>">    
+        <script type="text/javascript">
+				var theme_url = "<?php echo $so['config']['theme_url']; ?>/weather/";
+				var site_url = "<?php echo $so['config']['site_url']; ?>";
+                function So_Requests() {
+                    return "<?php echo $so['config']['site_url'] . '/requests.php'; ?>";
+                }
+                function So_Requests_Ajax() {
+                    return "<?php echo $so['config']['site_url'] . '/index_ajax.php'; ?>";
+                }
+
+                function So_StartBar() {
+                    $('#loading-ajax-icon').attr('src', '<?php echo $so['config']['site_url']; ?>/upload/images/load.gif');
+                }
+                function So_FinishBar() {
+                    $('#loading-ajax-icon').attr('src', '<?php echo $so['config']['site_url']; ?>/upload/images/icon.png?<?php echo time(); ?>');
+                        }
+                        function decodeHtml(html) {
+                            var txt = document.createElement("textarea");
+                            txt.innerHTML = html;
+                            return txt.value;
+                        }
+                        var WebSiteUrl = "<?php echo $so['config']['site_url']; ?>";
+
+                        $(document).on('click', 'a[data-ajax]', function (e) {
+                            var url = $(this).attr('data-ajax');
+                            e.preventDefault();
+
+                            So_StartBar();
+
+                            $.post(So_Requests_Ajax() + url, {
+                                url: url
+                            }, function (data) {
+                                json_data = JSON.parse($(data).filter('#json-data').val());
+
+                                $('#container-to-ajax-loading').html(data);
+                                if (json_data.page == 'welcome') {
+                                    window.history.pushState({state: 'new'}, '', WebSiteUrl);
+                                } else {
+                                    window.history.pushState({state: 'new'}, '', json_data.url);
+                                }
+
+                                if (json_data.page == 'home') {
+                                    $('#global-new-tweet-button').show();
+                                } else {
+                                    $('#global-new-tweet-button').hide();
+                                }
+
+                                window.onpopstate = function (event) {
+                                    $(window).unbind('popstate');
+                                    window.location.href = document.location;
+                                };
+
+                                document.title = decodeHtml(json_data.title);
+
+                                $("html, body").animate({scrollTop: 0}, 150);
+                                So_FinishBar();
+                            });
+                        });
+                        function So_AlertMessage(message) {
+                            $('.alert-messages').find('.message-text').html(message);
+                            $('.alert-messages').addClass('js-message-drawer-visible');
+                            $('.alert-messages').removeClass('hidden');
+                            setTimeout(function () {
+                                $('.alert-messages').removeClass('js-message-drawer-visible');
+                                $('.alert-messages').addClass('hidden');
+                                $('.alert-messages').find('.message-text').html('');
+                            }, 2000);
+                        }
+                        $(document).ready(function () {
+                            $('body').attr('page', '<?php echo $so['page']; ?>');
+                        });
+                        function So_OpenBoxChat(user_id) {
+                            if ($(window).width() < 1024) {
+                                if ($('body').attr('page') != 'messenger') {
+                                    window.location.href = '<?php echo $so['config']['site_url']; ?>/messenger/' + user_id;
+                                }
+                            } else {
+                                So_GetChatUser(user_id);
+                            }
+                        }
+                        function So_GetChatUser(user_id) {
+
+                            if ($(window).width() < 1024) {
+                                if ($('body').attr('page') != 'messenger') {
+                                    window.location.href = '<?php echo $so['config']['site_url']; ?>/messenger/' + user_id;
+                                }
+                            } else {
+
+                                if ($('#chat-' + user_id).length == 1) {
+                                    return false;
+                                }
+                                if ($('.chat-box-normal').length == 4) {
+                                    return false;
+                                }
+                                $.post(So_Requests() + '?type=get-normal-chat', {
+                                    user_id: user_id
+                                }, function (data) {
+                                    if (data.status == 200) {
+                                        $('.opened-chats').append(data.chat);
+                                    } else {
+                                        return false;
+                                    }
+                                });
+                            }
+                        }
+						function So_GetCommentStickers(post_id) {
+							$('.show-publisher-box-comment-' + post_id + ' .EmojiPicker-dropdownMenu').hide(200);
+							$('.opened-chats .chat-box-normal .chat-footer .chat-extra-box, .opened-chats .chat-box-normal .chat-footer .chat-list-box').hide();
+							$.post(So_Requests() + '?type=get-comment-stickers', {
+								post_id: post_id
+							}, function (data) {
+								if (data.status == 200) {
+									$('.sadaas-comment-' + post_id).find('div#dropdown-menu-sticker').toggle();
+									$('.sadaas-comment-' + post_id).find('.box-stickers').html(data.html);
+								} else {
+									return false;
+								}
+							});
+						}
+						function So_GetPackageTypeComment(package, post_id) {
+							if ($('.sadaas-comment-' + post_id + ' .box-stickers').find('.stickers-body').length < 1) {
+								$('.sadaas-comment--' + post_id + ' .box-stickers').html('<img id="sticker-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+							} else {
+								$('.sadaas-comment-' + post_id + ' .box-stickers').find('.stickers-body').html('<img id="sticker-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+							}
+							$.post(So_Requests() + '?type=get-packge-type-comment', {
+								sticker_id: package,
+								post_id: post_id
+							}, function (data) {
+								if (data.status == 200) {
+									if ($('.sadaas-comment-' + post_id + ' .box-stickers').find('.stickers-body').length < 1) {
+										$('.sadaas-comment-' + post_id + ' .box-stickers').html(data.html);
+									} else {
+										$('.sadaas-comment-' + post_id + ' .box-stickers').find('.stickers-body').html(data.html);
+									}
+								} else {
+									return false;
+								}
+							});
+						}
+						function So_OpenCommentsGif(post_id) {
+							$('.ajfajdawda-' + post_id + '.dropdown-menu').toggle();
+							$('.show-publisher-box-comment-' + post_id + ' .EmojiPicker-dropdownMenu').hide(200);
+						}
+						function So_SearchGifComment(search, post_id) {
+						$.get('https://api.giphy.com/v1/gifs/search', {
+							api_key: '<?php echo $so['config']['giphy_api']; ?>',
+							limit: 20,
+							q: search
+						}, function (data) {
+							number = 1;
+							for (i = 0; i < 20; i++) {
+								var gif_image = "'" + data.data[i].images.downsized.url + "'";
+								$('.ajfajdawda-' + post_id + ' #askfjasfsakhlkhfalfhyef').prepend('<div class="FoundMediaSearch-categoryContainer FoundMediaSearch-categoryContainer--bg' + number + ' FoundMediaSearch-focusable FoundMediaSearch-categoryContainer--bg3"><img id="put-gif-publisher-box-comment" class="FoundMediaSearch-category" data-name="agree" data-display-name="Agree" post-id="' + post_id + '" data-image="' + data.data[i].images.downsized.url + '" style="background-image: url(' + data.data[i].images.downsized.url + ');width: 100%;height: 250px; background-position:  center;background-repeat;background-repeat: no-repeat;background-size: 100% 100%;" /></div>');
+								number++;
+								if (number == 6) {
+									number = 1;
+								}
+							}
+							var images = 0;
+							So_LoadImg($('button[style]'), function () {
+								images++;
+							})
+						});
+					}
+					function So_OpenCommentEmoticons(post_id) {
+						if ($('.show-publisher-box-comment-' + post_id + ' .EmojiPicker-dropdownMenu').length > 0) {
+							$('.show-publisher-box-comment-' + post_id + ' .EmojiPicker-dropdownMenu').hide(200);
+							return false;
+						}
+ 						$.get(So_Requests() + '?type=get-emoticons-comment', {
+							
+						}, function (data) {
+							if (data.status == 200) {
+								$('.show-publisher-box-comment-' + post_id + ' .emoticons-container').html(data.emoticons);
+								$('.show-publisher-box-comment-' + post_id + ' .EmojiPicker-dropdownMenu').toggle(200);
+							} else {
+								return false;
+							}
+						});
+					}
+        </script>
+        <script type="text/javascript" src="<?php echo $so['config']['theme_url']; ?>/javascript/api-click.js?<?php echo time(); ?>"></script>
+        <?php
+        if ($so['config']['websocket'] == 1 && $so['loggedin'] == true) {
+            echo So_GetPage('javascript/content');
+        }
+        ?>
+        <?php echo So_GetPage('style'); ?>
+
+        <link href="https://vjs.zencdn.net/7.1.0/video-js.css" rel="stylesheet">
+        <?php if ($so['page'] == 'timeline-app') { ?>
+            <link rel="stylesheet" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/app.css" />
+        <?php } ?>
+        <?php if ($so['page'] == 'live') { ?>
+            <link rel="stylesheet" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/live-stream.css?<?php echo time(); ?>" />
+        <?php } ?>
+        <?php echo So_GetPage('style-design-settings'); ?>
+		
+		<script type="text/javascript" src='<?php echo $so['config']['theme_url']; ?>/weather/js/index.js'></script>
+		<link rel="stylesheet" type="text/css" href="<?php echo $so['config']['theme_url']; ?>/weather/css/weather.css">
+		
+		<!-- include the calendar js and css files -->
+		<script src="<?php echo $so['config']['theme_url']; ?>/javascript/zabuto_calendar.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/zabuto_calendar.min.css">
+		
+    </head>
+    <body <?php if ($so['page'] == 'login') { ?>class="three-col logged-out ms-windows no-nav-banners"<?php } ?><?php if ($so['loggedin'] == true) { ?>class="three-col logged-in user-style-BuuhFenix ms-windows enhanced-mini-profile supports-drag-and-drop profile-field-editing"<?php } ?>>
+        <div id="bar_loading"></div>
+        <div class="lightbox"></div>
+        <?php
+        if ($so['page'] <> 'welcome' && $so['page'] <> 'forgot-password' && $so['page'] <> 'password-recover' && $so['page'] <> 'signup' && $so['page'] <> 'load-posts' && $so['page'] <> 'notifications-app' && $so['page'] <> 'post-app' && $so['page'] <> 'comment-app' && $so['page'] <> 'search-app' && $so['page'] <> 'timeline-app') {
+            echo '<div class="header-container">' . So_GetPage('header/content') . '</div>';
+        }
+        ?>
+		<div class="alert-messages" id="message-drawer" style="top: 46px;">
+			<div class="message sticky">
+				<div class="message-inside">
+					<span class="message-text"></span>
+				</div>
+			</div>
+		</div>
+        <div id="container-to-ajax-loading">
+            <?php echo $so['content']; ?>
+        </div>
+		<?php
+		if ($so['page'] <> 'load-posts' && $so['page'] <> 'notifications-app' && $so['page'] <> 'post-app' && $so['page'] <> 'comment-app' && $so['page'] <> 'search-app' && $so['page'] <> 'timeline-app') { ?>
+		<a class="back-to-top" href="#" style="color: #FFFFFF;">
+			<svg class="svg-inline--fa fa-arrow-up fa-w-14 back-icon" alt="arrow" aria-hidden="true" data-prefix="fas" data-icon="arrow-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"></path></svg>
+		</a>
+		<?php } ?>
+        <div id="profile-hover-container" data-associated-tweet-id="" data-screen-name="" data-user-id="">
+        </div>
+        <?php if ($so['loggedin'] == true && $so['page'] <> 'load-posts' && $so['page'] <> 'notifications-app' && $so['page'] <> 'post-app' && $so['page'] <> 'comment-app' && $so['page'] <> 'search-app' && $so['page'] <> 'timeline-app') { ?>
+            <div class="opened-chats"></div>
+        <?php } ?>
+        <!--<footer>
+        <?php if ($so['loggedin'] == true && $so['page'] <> 'load-posts' && $so['page'] <> 'notifications-app' && $so['page'] <> 'post-app' && $so['page'] <> 'comment-app' && $so['page'] <> 'search-app' && $so['page'] <> 'timeline-app') { ?>
+                            <div class="chat">
+            <?php //echo So_GetPage('chat/content'); ?>
+                            </div>
+        <?php } ?>
+        </footer>-->
+        <div class="content-share"></div>
+        <div id="dm_dialog" class="DMDialog modal-container hidden" style="z-index: 4002;overflow-x: hidden;"></div>
+        <!-- JS FILES -->
+        <?php if ($so['page'] == 'admincp') { ?>
+            <script src="https://code.highcharts.com/highcharts.js"></script>
+            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            <script src="<?php echo $so['config']['theme_url']; ?>/javascript/bootstrap-toggle.min.js"></script>
+            <script src="<?php echo $so['config']['theme_url']; ?>/javascript/bootstrap-colorpicker.min.js"></script>
+        <?php } ?>
+
+        <?php if ($so['loggedin'] == true && $so['page'] <> 'load-posts' && $so['page'] <> 'notifications-app' && $so['page'] <> 'post-app' && $so['page'] <> 'comment-app' && $so['page'] <> 'search-app' && $so['page'] <> 'timeline-app' && $so['config']['websocket'] == 0) { ?>
+            <script type="text/javascript">
+                        So_CheckNotifications();
+            </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $so['config']['google_map_api']; ?>&libraries=places"></script>
+        <?php } ?>
+        <script type="text/javascript" src="<?php echo $so['config']['theme_url']; ?>/javascript/bootstrap.min.js"></script>
+        <script type="text/javascript" src="<?php echo $so['config']['theme_url']; ?>/javascript/jquery.form.min.js"></script>
+
+        <!-- JS Scripts -->
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/jquery.appear.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/jquery.mousewheel.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/perfect-scrollbar.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/jquery.matchHeight.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/svgxuse.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/imagesloaded.pkgd.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/Headroom.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/velocity.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/ScrollMagic.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/jquery.waypoints.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/jquery.countTo.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/popper.min.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/material.min.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/bootstrap-select.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/smooth-scroll.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/selectize.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/swiper.jquery.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/moment.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/daterangepicker.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/simplecalendar.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/fullcalendar.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/isotope.pkgd.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/ajax-pagination.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/Chart.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/chartjs-plugin-deferred.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/circle-progress.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/loader.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/run-chart.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/jquery.magnific-popup.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/jquery.gifplayer.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/mediaelement-and-player.js"></script>
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/mediaelement-playlist-plugin.min.js"></script>
+
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/base-init.js"></script>
+        <script defer src="<?php echo $so['config']['theme_url']; ?>/fonts/fontawesome-all.js"></script>
+
+        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/Bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+        <!-- AUDIOS -->
+        <?php if ($so['loggedin'] == true) { ?>
+            <audio id="message-sound" class="sound-controls" preload="auto">
+                <source src="<?php echo $so['config']['theme_url']; ?>/mp3/new-message.mp3" type="audio/mpeg">
+            </audio>
+        <?php } ?>
+    </body>
+</html>

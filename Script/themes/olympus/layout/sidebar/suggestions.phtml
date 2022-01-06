@@ -1,0 +1,28 @@
+<div class="UserSmallListItem js-account-summary account-summary js-actionable-user" data-user-id="<?php echo $so['suggestion']['user_id']; ?>" data-feedback-token="181" data-impression-id="">
+    <div class="UserSmallListItem-context">
+    </div>
+    <div class="content">
+        <a class="account-group js-recommend-link js-user-profile-link user-thumb" href="<?php echo $so['suggestion']['url']; ?>" data-ajax="?link1=timeline&username=<?php echo $so['suggestion']['username']; ?>" data-user-id="<?php echo $so['suggestion']['user_id']; ?>" rel="noopener">
+            <img class="avatar js-action-profile-avatar " src="<?php echo $so['suggestion']['avatar']; ?>" alt="">
+            <span class="account-group-inner" data-user-id="<?php echo $so['suggestion']['user_id']; ?>">
+                <strong class="fullname"><?php echo $so['suggestion']['name']; ?></strong>
+                <?php if ($so['suggestion']['verified'] == 1) { ?>
+                    <span class="UserBadges">
+                        <span class="Icon">
+                            <i class="fas fa-check-circle" style="color: #009688;"></i>  
+                        </span>
+                    </span>
+                <?php } ?>
+                <span class="UserNameBreak">&nbsp;</span>
+                <span class="username u-dir u-textTruncate" dir="ltr">
+                    @<b><?php echo $so['suggestion']['username']; ?></b>
+                </span>
+            </span>
+        </a>
+        <div class="user-actions not-following not-muting" data-screen-name="<?php echo $so['suggestion']['username']; ?>" data-user-id="<?php echo $so['suggestion']['user_id']; ?>">
+            <span class="user-actions-follow-button js-follow-btn follow-button" id="button-suggestion-follow-<?php echo $so['suggestion']['user_id']; ?>">
+                <?php echo So_GetPage('buttons/sidebar-button-follow'); ?>
+            </span>
+        </div>
+    </div>
+</div>

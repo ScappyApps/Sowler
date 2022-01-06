@@ -1,0 +1,41 @@
+<div class="items col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix" id="result-<?php echo $so['result']['user_id']; ?>">
+    <div class="info-block block-info clearfix">
+        <div class="square-box pull-left">
+            <img width="100%" src="<?php echo $so['result']['avatar']; ?>" />
+        </div>
+        <h5>
+            <?php
+            if ($so['result']['admin'] == 1) {
+                echo '<b>Admin</b>';
+            }
+            ?>
+            <?php
+            if ($so['result']['admin'] == 2) {
+                echo '<b>Mod</b>';
+            }
+            ?>
+        </h5>
+        <h4>
+            <a href="<?php echo $so['result']['url']; ?>">
+                <?php echo $so['result']['name']; ?>
+            </a>
+        </h4>
+        <p>
+            <span class="time"><?php echo So_Time($so['result']['lastseen']); ?></span>
+        </p>
+        <p>
+            <span><?php echo $so['result']['phone_number']; ?></span>
+        </p>
+        <p>
+            <span><?php echo $so['result']['email']; ?></span>
+        </p>
+        <p>
+            <a href="<?php echo So_SeoLink('index.php?link1=settings&page=general-settings-user&username=' . $so['result']['username']); ?>">
+                <?php echo $so['lang']['edit_profile']; ?>
+            </a>
+        </p>
+        <p>
+            <span class="btn btn-primary" onclick="So_DeleteUser(<?php echo $so['result']['user_id']; ?>);"><?php echo $so['lang']['delete']; ?></span>
+        </p>
+    </div>
+</div>

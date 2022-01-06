@@ -1,0 +1,33 @@
+<?php
+$classPost = new Post();
+$classUser = new User();
+
+$posts = $classPost->So_GetPosts();
+if (isset($_GET['session']) && !empty($_GET['session']) && $_GET['session'] <> $_SESSION['user_id']) {
+	$session = So_Secure($_GET['session']);
+	$classUser = new User();
+	if (count($classUser->So_UserData($session)) > 0) {
+		$_SESSION['user_id'] = $session;
+        setcookie("user_id", $session, time() + (10 * 365 * 24 * 60 * 60));
+	}
+}
+?>
+<?php echo So_GetPage('app/feed/publisher-box'); ?>
+<div class="stream-container conversations-enabled js-request-more-stream-items">
+    <div class="stream-item js-new-items-bar-container" style=""></div>
+	<div class="all-posts" style="margin-bottom: 10px;">
+		<select onchange="So_ChangeSeePosts(this.value, '<?php echo $so['config']['theme_url']; ?>/img/load-posts.gif');">
+			<option value="0" <?php echo ($so['user']['all_posts'] == 0) ? 'selected' : ''; ?>><?php echo $so['lang']['only_following']; ?></option>
+			<option value="1" <?php echo ($so['user']['all_posts'] == 1) ? 'selected' : ''; ?>><?php echo $so['lang']['all_posts']; ?></option>
+		</select>
+	</div>
+    <div class="stream">
+		<div id="qadqwdqw">
+			<?php
+			foreach ($posts as $so['story']) {
+				echo So_GetPage('story/content-app');
+			}
+			?>
+		</div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+<li class="comment-item" id="box-comment-<?php echo $so['comment']['comment_id']; ?>" data-id="<?php echo $so['comment']['comment_id']; ?>">
+	<div class="post__author author vcard inline-items">
+		<img src="<?php echo $so['comment']['user']['avatar']; ?>" alt="author">
+
+		<div class="author-date">
+			<a class="h6 post__author-name fn" href="<?php echo So_SeoLink('index.php?link1=timeline-app&user_id=' . $so['comment']['user']['user_id']); ?>"><?php echo $so['comment']['user']['name']; ?></a>
+			<?php if ($so['comment']['user']['verified'] == 1) { ?>
+				<span class="UserBadges">
+					<span class="Icon">
+						<i class="fas fa-check-circle" style="color: #009688;"></i>  
+					</span>
+				</span>
+			<?php } ?>
+			<div class="post__date">
+				<time class="published" datetime="">
+					<?php echo So_Time($so['comment']['time']); ?>
+				</time>
+			</div>
+		</div>
+
+		<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="#olymp-three-dots-icon"></use></svg></a>
+
+	</div>
+
+	<p><?php echo $so['comment']['postText']; ?></p>
+	<a class="pointer" id="translate-button-comment-<?php echo $so['comment']['comment_id']; ?>" style="display: none;"><?php echo $so['lang']['translate']; ?></a>
+	<?php
+		if (!empty($so['comment']['postGif'])) {
+			echo So_GetPage('comment/post-gif');
+		}
+		if (!empty($so['comment']['postSticker'])) {
+			echo So_GetPage('comment/sticker');
+		}
+		if (!empty($so['comment']['postImage'])) {
+			echo So_GetPage('comment/post-image');
+		}
+		if (!empty($so['comment']['postVideo'])) {
+			echo So_GetPage('comment/post-video');
+		}
+	?>
+	<br>
+	<a href="javascript:void(0);" onclick="So_InsertLikeComment(<?php echo $so['comment']['comment_id']; ?>);" class="post-add-icon inline-items" id="button-comment-<?php echo $so['comment']['comment_id']; ?>">
+		<span><?php echo So_GetPage('buttons/like-comment'); ?></span>
+	</a>
+</li>
+<script type="text/javascript">
+<?php if (!empty($so['comment']['postText'])) { ?>
+        $(document).ready(function () {
+            So_DetectLanguageComment('<?php echo $so['comment']['postText']; ?>', <?php echo $so['comment']['comment_id']; ?>, '<?php echo $so['config']['yandex_api']; ?>', '<?php echo substr(So_Language(), 0, 2); ?>');
+            $('#translate-button-comment-<?php echo $so['comment']['comment_id']; ?>').click(function () {
+                So_TranslateTextComment('<?php echo $so['comment']['postText']; ?>', <?php echo $so['comment']['comment_id']; ?>, '<?php echo $so['config']['yandex_api']; ?>', '<?php echo substr(So_Language(), 0, 2); ?>');
+            });
+        });
+<?php } ?>
+</script>

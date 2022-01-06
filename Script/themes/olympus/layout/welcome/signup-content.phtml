@@ -1,0 +1,59 @@
+<div class="col-md-12" id="login-form-wp">
+    <div class="login-page">
+        <div class="login-logo">
+            <h1><?php echo $so['lang']['create_account']; ?></h1>
+        </div>
+        <div class="form">
+            <div class="alert-errors" style="margin-bottom: 5px;"></div>
+            <form class="login-form" method="post" id="signup">
+                <input name="username" type="text" placeholder="<?php echo $so['lang']['username']; ?>" />
+                <input name="first_name" type="text" placeholder="<?php echo $so['lang']['first_name']; ?>" />
+                <input name="last_name" type="text" placeholder="<?php echo $so['lang']['last_name']; ?>" />
+                <input name="email" type="email" placeholder="<?php echo $so['lang']['email']; ?>" />
+                <input name="password" type="password" placeholder="<?php echo $so['lang']['password']; ?>" />
+                <p dir="auto"><?php echo $so['lang']['to_register_you_accept']; ?></p>
+                <button><?php echo $so['lang']['subscribe']; ?></button>
+                <hr>
+                <p class="message">
+                    <?php echo $so['lang']['has_registered']; ?> <a href="<?php echo So_SeoLink('index.php?link1=login'); ?>">
+                        <?php echo $so['lang']['login']; ?>
+                    </a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+<?php echo So_GetPage('footer/content'); ?>
+<style>
+    div#container-to-ajax-loading {
+        height: auto;
+    }
+    body {
+        background: url(<?php echo $so['config']['theme_url']; ?>/img/mountain.jpg) no-repeat center center fixed;
+        height: -webkit-fill-available;
+        background-position: center;
+        background-size: 100% 100%;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $('form#signup').ajaxForm({
+            url: So_Requests() + '?type=signup',
+            beforeSend: function () {
+
+            },
+            success: function (data) {
+                if (data.status == 200) {
+                    window.location.href = '<?php echo $so['config']['site_url']; ?>';
+                } else if (data.status == 400) {
+                    $('.alert-errors').html(data.errors);
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 1000, 'linear');
+                } else {
+                    return false;
+                }
+            }
+        });
+    });
+</script>

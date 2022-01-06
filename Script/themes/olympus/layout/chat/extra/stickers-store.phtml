@@ -1,0 +1,58 @@
+<?php
+$classSticker = new Sticker();
+?>
+<div class="_10 uiLayer _4-hy _3thl _3qw" style="opacity: 1; min-width: 1350px;">
+    <div class="_3ixn"></div>
+    <div class="_59s7" role="dialog" aria-label="Dialog content" style="width: 688px; margin-top: 40px;">
+        <div class="_4t2a">
+            <div>
+                <div>
+                    <div>
+                        <div class="_5rq- autofocus _4-i2 _pig _50f4 _5pfh" font-size="medium" tabindex="-1" style="height: 450px;">
+                            <div>
+                                <div class="_5r5i">
+                                    <div class="_5r5f">
+                                        <i class="_5r5j img sp_hsafS-1bBqt sx_e24bb8" alt=""></i>
+                                        <div class="_6a">
+                                            <div class="_6a _6b" style="height: 192px;"></div>
+                                            <div class="_6a _6b">
+                                                <div class="_5r5l ellipsis">
+                                                    <i class="_5r5n img sp_hsafS-1bBqt sx_200efa" alt=""></i>
+                                                    <?php echo $so['lang']['stickers_store']; ?>
+                                                </div>
+                                                <span class="_5r5m  _2iel" role="heading" aria-level="3">
+                                                    <?php echo $so['lang']['find_new_stickers']; ?>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button onclick="So_CloseStickersStore();" class="layerCancel _5r5k _50zy _50-0 _50z- _5upp _42ft" type="button" title="Close">Close</button>
+                                </div>
+                                <div class="_5rzk">
+                                    <div width="688" class="uiScrollableArea nofade uiScrollableAreaWithShadow contentAfter">
+                                        <div class="uiScrollableAreaWrap scrollable" style="overscroll-behavior: contain contain;">
+                                            <div class="uiScrollableAreaBody" style="margin-right: -16px; width: 688px;">
+                                                <div class="uiScrollableAreaContent" id="list-stickers-package">
+                                                    <div class="clearfix _5r5r">
+                                                    <?php
+                                                    foreach ($classSticker->So_GetAllStickersStore() as $so['package']) {
+                                                        echo So_GetPage('chat/extra/package');
+                                                    }                                  
+                                                    ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uiScrollableAreaTrack">
+                                            <div class="uiScrollableAreaGripper" style="height: 57.3345px; top: 0px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

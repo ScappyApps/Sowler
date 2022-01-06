@@ -1,0 +1,54 @@
+<div class="Grid-cell u-size1of2 u-lg-size1of3 u-mb10" data-test-selector="ProfileTimelineUser" role="presentation">
+    <div class="js-stream-item" role="listitem" data-item-id="<?php echo $so['result']['user_id']; ?>" id="stream-item-user-<?php echo $so['result']['user_id']; ?>" data-item-type="user">
+        <div class="ProfileCard js-actionable-user
+             " data-screen-name="<?php echo $so['result']['username']; ?>" data-user-id="<?php echo $so['result']['user_id']; ?>" data-feedback-token="" data-impression-id="">
+            <a class="ProfileCard-bg js-nav" href="<?php echo So_SeoLink('index.php?link1=timeline-app&user_id=' . $so['result']['user_id'] . '?session=' . $_SESSION['user_id']); ?>" tabindex="-1" aria-hidden="true" style="
+               background-color: #009688;
+               background-image: url(<?php echo $so['result']['cover']; ?>);">
+            </a>
+            <div class="ProfileCard-content">
+                <a class="ProfileCard-avatarLink js-nav js-tooltip" href="<?php echo So_SeoLink('index.php?link1=timeline-app&user_id=' . $so['result']['user_id'] . '?session=' . $_SESSION['user_id']); ?>" data-ajax="?link1=timeline-app&user_id=<?php echo $so['result']['user_id']; ?>?session=<?php echo $_SESSION['user_id']; ?>" title="<?php echo $so['result']['name']; ?>" tabindex="-1" aria-hidden="true">
+                    <img class="ProfileCard-avatarImage js-action-profile-avatar" src="<?php echo $so['result']['avatar']; ?>" alt="">
+                </a>
+                <div class="ProfileCard-actions">
+                    <div class="ProfileCard-userActions with-rightCaret js-userActions">
+                        <div class="UserActions   UserActions--small u-textLeft">
+                            <div class="user-actions btn-group not-following not-muting " id="result-button-follow-<?php echo $so['result']['user_id']; ?>" data-user-id="<?php echo $so['result']['user_id']; ?>" data-screen-name="<?php echo $so['result']['username']; ?>" data-name="<?php echo $so['result']['name']; ?>" data-protected="false">
+                                <?php echo So_GetPage('buttons/result-button-follow'); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ProfileCard-userFields">
+                    <div class="ProfileNameTruncated account-group">
+                        <div class="u-textTruncate u-inlineBlock">
+                            <a class="fullname ProfileNameTruncated-link u-textInheritColor js-nav" href="<?php echo So_SeoLink('index.php?link1=timeline-app&user_id=' . $so['result']['user_id'] . '?session=' . $_SESSION['user_id']); ?>" data-ajax="?link1=timeline-app&user_id=<?php echo $so['result']['user_id']; ?>?session=<?php echo $_SESSION['user_id']; ?>" data-aria-label-part="">
+                                <?php echo $so['result']['name']; ?>
+                            </a>
+							<?php if ($so['result']['verified'] == 1) { ?>
+								<span class="UserBadges">
+									<span class="Icon">
+										<i class="fas fa-check-circle" style="color: #009688;"></i>  
+									</span>
+								</span>
+							<?php } ?>
+                        </div>
+                        <span class="UserBadges"></span>
+                    </div>
+                    <span class="ProfileCard-screenname">
+                        <a href="<?php echo So_SeoLink('index.php?link1=timeline-app&user_id=' . $so['result']['user_id'] . '?session=' . $_SESSION['user_id']); ?>" data-ajax="?link1=timeline-app&user_id=<?php echo $so['result']['user_id']; ?>?session=<?php echo $_SESSION['user_id']; ?>" class="ProfileCard-screennameLink u-linkComplex js-nav" data-aria-label-part="">
+                            <span class="username u-dir" dir="ltr">
+                                @<b class="u-linkComplex-target"><?php echo $so['result']['username']; ?></b>
+                            </span>
+                        </a>
+                        <span>‏</span>
+                    </span>
+                    <p class="ProfileCard-bio u-dir" dir="ltr" data-aria-label-part="">
+                        <?php echo $so['result']['about']; ?>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

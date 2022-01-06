@@ -1,0 +1,20 @@
+<?php $users = So_GetUsers(); ?>
+<div class="container">
+    <div class="row">
+        <h2>Filtered List</h2>
+        <div class="col-lg-12">
+            <input type="search" class="form-control" id="input-search" onkeydown="So_SearchUser(this.value);" name="q" placeholder="type the name of user" >
+        </div>
+        <br>
+        <div class="searchable-container" id="default-list">
+            <?php
+            foreach ($users as $so['result']) {
+                echo So_GetPage('admincp/users/list');
+            }
+            ?>
+        </div>
+        <div class="searchable-container" id="search-list">
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+<li class="js-stream-item stream-item stream-item js-activity js-activity-favorite" data-item-id="<?php echo $so['notification']['id']; ?>" id="stream-item-activity-<?php echo $so['notification']['id']; ?>" data-item-type="activity" data-component-context="favorite_activity">
+    <div class="stream-item-content clearfix stream-item-activity stream-item-favorite stream-item-activity-notification" data-activity-type="favorite" data-activity-min-position="1533294086630" data-activity-max-position="1533294086630" data-component-context="favorite_activity">
+        <div class="ActivityItem">
+            <div class="ActivityItem-container">
+                
+                <div class="ActivityItem-mainBody">
+                    <div class="ActivityItem-quoteTweetContainer ">
+                        <div class="QuoteTweet
+                             QuoteTweet--slim
+                             u-block js-tweet-details-fixer">
+                            <div class="QuoteTweet-container">
+                                <div class="QuoteTweet-innerContainer u-cf js-permalink js-media-container" data-item-id="<?php echo $so['notification']['id']; ?>" data-item-type="tweet" data-screen-name="<?php echo $so['notification']['to']['name']; ?>" data-user-id="<?php echo $so['notification']['to']['user_id']; ?>" href="javascript:void(0);" data-conversation-id="<?php echo $so['notification']['id']; ?>" tabindex="0">
+                                    <div class="tweet-content">
+                                        <div class="QuoteTweet-authorAndText u-alignTop">
+                                            <div class="QuoteTweet-originalAuthor u-cf u-textTruncate stream-item-header account-group js-user-profile-link">
+                                                <b class="QuoteTweet-fullname u-linkComplex-target"><?php echo $so['notification']['to']['name']; ?></b><span class="UserBadges"></span><span class="UserNameBreak">&nbsp;</span><span class="username u-dir u-textTruncate" dir="ltr">@<b><?php echo $so['notification']['to']['username']; ?></b></span>
+                                            </div>
+                                            <div class="QuoteTweet-text tweet-text u-dir" lang="es" data-aria-label-part="2" dir="ltr">
+                                                <?php echo $so['notification']['comment']['postText']; ?>
+                                            </div>
+                                            <div class="self-thread-context">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php if (!empty($so['notitication']['comment']['postImage'])) { ?>
+                                        <div class="QuoteMedia">
+                                            <div class="QuoteMedia-container js-quote-media-container">
+                                                <div class="QuoteMedia-singlePhoto">
+                                                    <div class="QuoteMedia-photoContainer js-quote-photo" data-image-url="<?php echo $so['notification']['comment']['postImage']; ?>" data-element-context="platform_photo_card" style="background-color:rgba(64,35,18,1.0);" data-dominant-color="[64,35,18]">
+                                                        <img data-aria-label-part="" src="<?php echo $so['notification']['comment']['postImage']; ?>" alt="" style="height: 100%; left: -1px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <?php if (!empty($so['notitication']['comment']['postGif'])) { ?>
+                                        <div class="QuoteMedia">
+                                            <div class="QuoteMedia-container js-quote-media-container">
+                                                <div class="QuoteMedia-singlePhoto">
+                                                    <div class="QuoteMedia-photoContainer js-quote-photo" data-image-url="<?php echo $so['notification']['comment']['postGif']; ?>" data-element-context="platform_photo_card" style="background-color:rgba(64,35,18,1.0);" data-dominant-color="[64,35,18]">
+                                                        <video id="video-gif-<?php echo $so['notification']['comment']['comment_id']; ?>" src="https://media.giphy.com/media/<?php echo $so['notification']['comment']['postGif']; ?>/giphy.mp4" poster="https://media.giphy.com/media/<?php echo $so['notification']['comment']['postGif']; ?>/giphy_s.gif" loop="" playsinline=""  muted="muted" style="height: 100%; left: -1px;"></video>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <?php if (!empty($so['notitication']['comment']['postVideo'])) { ?>
+                                        <div class="QuoteMedia">
+                                            <div class="QuoteMedia-container js-quote-media-container">
+                                                <div class="QuoteMedia-singlePhoto">
+                                                    <div class="QuoteMedia-photoContainer js-quote-photo" data-image-url="<?php echo $so['notification']['comment']['postGif']; ?>" data-element-context="platform_photo_card" style="background-color:rgba(64,35,18,1.0);" data-dominant-color="[64,35,18]">
+                                                        <div class="AdaptiveMediaOuterContainer">
+                                                            <div class="AdaptiveMedia is-video has-autoplayable-media" data-autoplaying-media="true">
+                                                                <div class="AdaptiveMedia-container">
+                                                                    <div class="PlayableMedia-player" style="padding-bottom: 56.49999999999999%;">
+                                                                        <div class="PlayableMedia-reactWrapper">
+                                                                            <div style="cursor: pointer; height: 100%; width: 100%; position: relative; color: rgba(255, 255, 255, 0.85); font-size: 13px; font-weight: 400;line-height: normal; transform: translateZ(0px);">
+                                                                                <div role="button" tabindex="0" style="position: absolute; height: 100%; width: 100%;">
+                                                                                    <div style="position: relative; width: 100%; height: 100%; background-color: transparent;">
+                                                                                        <video id="my_video_<?php echo $so['notification']['comment']['comment_id']; ?>" class="video-js vjs-default-skin vjs-big-play-centered" poster="" style="width: 100%; height: 100%; position: absolute; background-color: black; transform: rotate(0deg) scale(1);" controls muted="muted" preload="auto" data-setup="{}">
+                                                                                            <source src="<?php echo $so['notification']['comment']['postVideo']; ?>" type='video/mp4'>
+                                                                                            <p class="vjs-no-js">
+                                                                                                To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                                                                            </p>
+                                                                                        </video>
+                                                                                        <script src="<?php echo $so['config']['theme_url']; ?>/javascript/video.js"></script>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <ol class="ActivityItem-hiddenSupplementContainer js-navigable-stream " data-aria-label-part=""></ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

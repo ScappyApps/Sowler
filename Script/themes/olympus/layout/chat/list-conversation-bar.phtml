@@ -1,0 +1,20 @@
+<?php
+$time = time() - 60;
+$classMessage = new Message();
+$messages_not_saw = $classMessage->So_CheckMessagesNotSaw($so['conversation']['user_id']);
+?>
+<li class="inline-items js-chat-open" id="chat-list" onclick="So_OpenBoxChat(<?php echo $so['conversation']['user_id']; ?>);">
+    <div class="author-thumb">
+        <img width="30px" src="<?php echo $so['conversation']['avatar']; ?>" class="avatar">
+        <?php if ($messages_not_saw > 0) { ?>
+            <span class="chat-total-messages" style="position:  absolute;top: 0;right: 0;"><?php echo $messages_not_saw; ?></span>
+        <?php } ?>
+        <?php
+        if ($so['conversation']['lastseen'] > $time) {
+            ?>
+            <span class="icon-status online"></span>
+        <?php } else { ?>
+            <span class="icon-status disconected"></span>
+        <?php } ?>
+    </div>
+</li>

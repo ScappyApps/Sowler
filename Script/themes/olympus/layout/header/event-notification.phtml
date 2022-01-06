@@ -1,0 +1,41 @@
+<?php
+$button = So_ButtonReaction($so['notification']['post_id']);
+if ($button == 'reaction-default') {
+    $button = 'reaction_like';
+}
+?>
+<li class="<?php echo ($so['notification']['seen'] == 0) ? 'un-read' : ''; ?>">
+    <div class="author-thumb">
+        <img width="30px" src="<?php echo $so['notification']['from']['avatar']; ?>" alt="author">
+    </div>
+    <div class="notification-event">
+        <div>
+            <?php if ($so['notification']['type'] == 'followed_you') { ?>
+                <a onclick="So_UpdateSeenNotification(<?php echo $so['notification']['id']; ?>);" href="<?php echo $so['notification']['from']['url']; ?>" data-ajax="?link1=timeline&username=<?php echo $so['notification']['from']['username']; ?>">
+                    <?php echo $so['notification']['from']['name'] . ' - ' . $so['lang'][$so['notification']['type']]; ?>
+                </a>
+            <?php } else if ($so['notification']['type'] == 'mentioned_you_on_a_comment') { ?>
+            <a onclick="So_UpdateSeenNotification(<?php echo $so['notification']['id']; ?>);" href="<?php echo So_SeoLink('index.php?link1=comment&comment_id=' . $so['notification']['comment']['comment_id']); ?>" data-ajax="?link1=comment&comment_id=<?php echo $so['notification']['comment']['comment_id']; ?>">
+                <?php echo $so['notification']['from']['name'] . ' - ' . $so['lang'][$so['notification']['type']]; ?>
+            </a>
+            <?php } else { ?>
+                <a onclick="So_UpdateSeenNotification(<?php echo $so['notification']['id']; ?>);" href="<?php echo So_SeoLink('index.php?link1=post&post_id=' . $so['notification']['post_id']); ?>" data-ajax="?link1=post&post_id=<?php echo $so['notification']['post_id']; ?>">
+                    <?php echo $so['notification']['from']['name'] . ' - ' . $so['lang'][$so['notification']['type']]; ?>
+                </a>
+            <?php } ?>
+        </div>
+        <span class="notification-date"><time class="entry-date updated"><?php echo So_Time($so['notification']['time']); ?></time></span>
+    </div>
+    <span class="notification-icon">
+        <?php
+        if ($so['notification']['type'] == 'reacted_on_your_post') {
+        ?>
+        <img src="<?php echo $so['config']['theme_url']; ?>/img/reactions/<?php echo $button; ?>.png" width="16px" height="16px" />
+        <?php } ?>
+    </span>
+
+    <div class="more">
+        <svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
+        <svg class="olymp-little-delete"><use xlink:href="svg-icons/sprites/icons.svg#olymp-little-delete"></use></svg>
+    </div>
+</li>

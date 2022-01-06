@@ -1,0 +1,42 @@
+<?php $classUser = new User(); ?>
+<?php if ($classUser->So_CheckFollowing($so['user_hover']['user_id']) === false) { ?>
+<button type="button" onclick="So_RegisterFollowHover(<?php echo $so['user_hover']['user_id']; ?>);" style="display: block!important;" class="
+        EdgeButton
+        EdgeButton--secondary
+        EdgeButton--small 
+        button-text
+        follow-text">
+    <span aria-hidden="true"><?php echo $so['lang']['follow']; ?></span>
+    <span class="u-hiddenVisually"><?php echo $so['lang']['follow']; ?> <span class="username u-dir u-textTruncate" dir="ltr">@<b><?php echo $so['user_hover']['username']; ?></b></span></span>
+</button>
+<?php } else { ?>
+<button type="button" class="
+        EdgeButton
+        EdgeButton--primary
+        EdgeButton--small 
+        following-text">
+    <span aria-hidden="true">
+        <?php echo $so['lang']['following']; ?>
+    </span>
+    <span class="u-hiddenVisually">
+        <?php echo $so['lang']['following']; ?> 
+        <span class="username u-dir u-textTruncate" dir="ltr">
+            @<b><?php echo $so['user_hover']['username']; ?></b>
+        </span>
+    </span>
+</button>
+<button type="button" onclick="So_RegisterFollowHover(<?php echo $so['user_hover']['user_id']; ?>);" class="
+        EdgeButton
+        EdgeButton--danger
+        EdgeButton--small 
+        button-text
+        unfollow-text">
+    <span aria-hidden="true"><?php echo $so['lang']['unfollow']; ?></span>
+    <span class="u-hiddenVisually">
+        <?php echo $so['lang']['unfollow']; ?> 
+        <span class="username u-dir u-textTruncate" dir="ltr">
+            @<b><?php echo $so['user_hover']['username']; ?></b>
+        </span>
+    </span>
+</button>
+<?php } ?>

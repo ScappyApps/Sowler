@@ -1,0 +1,28 @@
+<a class="pointer url-embed-container" href="<?php echo $so['story']['html_url']; ?>" target="_blank">
+	<div class="url-embed-content">
+		<div class="html-image">
+			<img src="<?php echo $so['story']['html_image']; ?>" />
+		</div>
+		<div class="url-embed-body">
+			<div class="html-title">
+				<?php echo $so['story']['html_title']; ?>
+			</div>
+			<div class="html-body">
+				<?php echo $so['story']['html_body']; ?>
+			</div>
+		</div>
+	</div>
+</a>
+<a class="pointer" id="close-embed-url" onclick="So_ClosePublisherBox();">
+	<i class="fas fa-window-close"></i>
+</a>
+<style>
+.embed-url {
+    position: relative;
+    margin-top: 50px;
+}
+a#close-embed-url {
+    position: absolute;
+    right: 15px;
+}
+</style>

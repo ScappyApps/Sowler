@@ -1,0 +1,25 @@
+<?php echo So_GetPage('app/feed/content'); ?>
+<script type="text/javascript">
+    So_GetLightboxCommentNotification(<?php echo $so['story']['post_id']; ?>, <?php echo $so['comment']['comment_id']; ?>);
+</script>
+<style>
+    div#story-box {
+        padding-left: 20px!important;
+    }
+    ol#stream-items-id {
+        margin: 0;
+    }
+    .stream {
+        margin: 0;
+    }
+    .stream-container {
+        margin: 0;
+    }
+    div.story-box-comment:before {
+        border: solid 2px #009688;
+        position: absolute;
+        margin-top: -10px;
+        margin-left: 0px;
+        min-height: auto;
+    }
+</style>

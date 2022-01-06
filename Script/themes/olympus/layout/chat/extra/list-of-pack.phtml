@@ -1,0 +1,14 @@
+<?php
+$classSticker = new Sticker();
+?>
+<div class="<?php echo str_replace(" ", "", $so['package']['name']); ?>">
+    <?php foreach ($classSticker->So_GetAllStickers($so['package']['id']) as $so['sticker']) { ?>
+        <div class="pull-left">
+            <div id="package-sticker">
+                <div class="pointer safdasa" id="submit-form-sticker" data-sticker="<?php echo str_replace($so['config']['site_url'] . '/', "", $so['sticker']['image']); ?>" data-user="<?php echo $so['chat']['user_id']; ?>">
+                    <img src="<?php echo $so['sticker']['image']; ?>" />
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+</div>

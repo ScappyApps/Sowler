@@ -1,0 +1,14 @@
+<div id="settings_nav" role="navigation" class="module">
+    <ul class="js-nav-links">
+        <?php foreach ($so['list_pages'] as $key => $value) { ?>
+        <li class="<?php if ($so['page'] == $key) { echo 'active'; } ?>">
+            <a class="list-link js-nav" href="<?php echo So_SeoLink('index.php?link1=settings&page=' . $key); ?>" data-ajax="?link1=settings&page=<?php echo $key; ?>">
+                <?php echo $so['lang'][$value]; ?>
+                <span class="Icon">
+                    <i class="fas fa-angle-right"></i>
+                </span>
+            </a>
+        </li>
+        <?php } ?>
+    </ul>
+</div>

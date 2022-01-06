@@ -1,0 +1,154 @@
+<?php
+$classSticker = new Sticker();
+?>
+<div class="container">
+    <div class="row">
+        <div>
+            <form class="form-horizontal" method="post" id="create-package" enctype="multipart/form-data">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend><?php echo $so['lang']['create_a_new_sticker_package']; ?><br></legend>
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput"><?php echo $so['lang']['name_of_package']; ?></label>  
+                        <div class="col-md-4">
+                            <input id="textinput" name="name" type="text" class="form-control input-md">
+                            <span class="help-block"></span>  
+                        </div>
+                    </div>
+                    <!-- File Button --> 
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="filebutton"><?php echo $so['lang']['cover_of_package']; ?></label>
+                        <div class="col-md-4">
+                            <input id="filebutton" name="image" accept="image/png" class="input-file" type="file">
+                            <span class="help-block">64 X 64</span>  
+                        </div>
+                    </div>
+                    <div class="TweetBoxUploadProgress">
+                        <div class="publisher-hidden-option">
+                            <div id="progress">
+                                <span id="percent">0%</span>
+                                <div class="progress">
+                                    <div id="bar" class="progress-bar active"></div> 
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="singlebutton"></label>
+                        <div class="col-md-4">
+                            <button id="singlebutton" class="btn btn-primary"><?php echo $so['lang']['upload']; ?></button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <hr>
+        <div>
+            <form class="form-horizontal" method="post" id="create-new-sticker-store" enctype="multipart/form-data">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend><?php echo $so['lang']['upload_sticker_to_package']; ?><br></legend>
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput"><?php echo $so['lang']['package']; ?></label>  
+                        <div class="col-md-4">
+                            <select id="selectbasic" name="sticker_id" class="form-control">
+                                <?php foreach ($classSticker->So_GetAllStickersStore() as $so['package']) { ?>
+                                <option value="<?php echo $so['package']['id']; ?>"><?php echo $so['package']['name']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- File Button --> 
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="filebutton"><?php echo $so['lang']['sticker']; ?></label>
+                        <div class="col-md-4">
+                            <input id="filebutton" name="image" accept="image/png" class="input-file" type="file">
+                            <span class="help-block">64 X 64</span>  
+                        </div>
+                    </div>
+                    <div class="TweetBoxUploadProgress">
+                        <div class="publisher-hidden-option">
+                            <div id="progress">
+                                <span id="percent">0%</span>
+                                <div class="progress">
+                                    <div id="bar" class="progress-bar active"></div> 
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="singlebutton"></label>
+                        <div class="col-md-4">
+                            <button id="singlebutton" class="btn btn-primary"><?php echo $so['lang']['upload']; ?></button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    .TweetBoxUploadProgress {
+        display: none;
+    }
+</style>
+<script>
+    $(function () {
+        $('form#create-package').ajaxForm({
+            url: So_Requests() + '?type=create-package',
+            beforeSend: function () {
+                var percentVal = '0%';
+                $('form#create-package').find('#percent').width(percentVal);
+                $('form#create-package').find('#percent').html(percentVal);
+                $('form#create-package .TweetBoxUploadProgress').show();
+            },
+            uploadProgress: function (event, position, total, percentComplete) {
+                var percentVal = percentComplete + '%';
+                $('form#create-package').find('#percent').width(percentVal);
+                $('form#create-package #progress').slideDown(200);
+                $('form#create-package').find('#percent').html(percentVal);
+            },
+            success: function (data) {
+                $('form#create-package #progress').slideUp(200);
+                $('form#create-package .TweetBoxUploadProgress').hide();
+                if (data.status == 200) {
+                    $('form#create-package').clearForm();
+                } else {
+                    return false;
+                }
+            }
+        });
+        $('form#create-new-sticker-store').ajaxForm({
+            url: So_Requests() + '?type=create-new-sticker-store',
+            beforeSend: function () {
+                var percentVal = '0%';
+                $('form#create-new-sticker-store').find('#percent').width(percentVal);
+                $('form#create-new-sticker-store').find('#percent').html(percentVal);
+                $('form#create-new-sticker-store .TweetBoxUploadProgress').show();
+            },
+            uploadProgress: function (event, position, total, percentComplete) {
+                var percentVal = percentComplete + '%';
+                $('form#create-new-sticker-store').find('#percent').width(percentVal);
+                $('form#create-new-sticker-store #progress').slideDown(200);
+                $('form#create-new-sticker-store').find('#percent').html(percentVal);
+            },
+            success: function (data) {
+                $('form#create-new-sticker-store #progress').slideUp(200);
+                $('form#create-new-sticker-store .TweetBoxUploadProgress').hide();
+                if (data.status == 200) {
+                    $('form#create-new-sticker-store .input-file').val('');
+                } else {
+                    return false;
+                }
+            }
+        });
+    });
+</script>

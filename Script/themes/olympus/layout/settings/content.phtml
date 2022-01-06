@@ -1,0 +1,52 @@
+<?php
+$so['page'] = 'general-settings';
+
+$so['list_pages'] = array(
+    'general-settings' => 'general_settings',
+    'update-profile-avatar' => 'update_profile_avatar',
+    'update-profile-cover' => 'update_profile_cover',
+    'change-password' => 'change_password',
+    'delete-account' => 'delete_account'
+);
+
+$listPages = array(
+    'general-settings',
+    'update-profile-avatar',
+    'update-profile-cover',
+    'change-password',
+    'delete-account',
+    'general-settings-user'
+);
+
+if (isset($_GET['page']) && in_array($_GET['page'], $listPages)) {
+    $so['page'] = $_GET['page'];
+}
+?>
+<div class="main-header">
+	<div class="content-bg-wrap bg-account"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col col-lg-8 m-auto col-md-8 col-sm-12 col-12">
+				<div class="main-header-content">
+					<h1><?php echo $so['lang']['settins_and_privacy']; ?></h1>
+					<p><?php echo $so['config']['site_name']; ?></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ... end Main Header Account -->
+
+
+
+<!-- Your Account Personal Information -->
+
+<div class="container" style="margin-top: initial;">
+	<div class="row">
+		 <?php echo So_GetPage('settings/' . $so['page']); ?>
+
+		<?php echo So_GetPage('settings/left-content'); ?>
+		
+	</div>
+</div>

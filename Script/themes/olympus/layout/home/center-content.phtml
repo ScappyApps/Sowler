@@ -1,0 +1,14 @@
+<div role="main" aria-labelledby="content-main-heading" class="content-main top-timeline-tweetbox" id="timeline" tabindex="-1">
+    <div id="above-timeline-prompt"></div>
+    <?php echo So_GetPage('story/publisher-box'); ?>
+	<?php
+		if (!empty($so['config']['message_alert'])) {
+	?>
+	<div class="message-alert">
+		<?php echo html_entity_decode($so['config']['message_alert']); ?>
+	</div>
+	<?php
+		}
+	?>
+    <?php echo So_GetPage('story/load-posts'); ?>
+</div>

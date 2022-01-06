@@ -1,0 +1,64 @@
+<?php
+$classSticker = new Sticker();
+?>
+<div class="container">
+    <div class="row">
+        <h2>
+        <?php
+        if (isset($_GET['sticker_id'])) {
+            echo $classSticker->So_StickerStoreData($_GET['sticker_id'])['name'];
+        } else {
+            echo $so['lang']['stickers_store'];
+        }
+        ?>
+        </h2>
+        <hr>
+        <div>
+            <?php if (!isset($_GET['sticker_id'])) { ?>
+                <?php foreach ($classSticker->So_GetAllStickersStore() as $so['package']) { ?>
+                <div class="pull-left">
+                    <div id="package-sticker">
+                        <a class="pointer" href="<?php echo $so['config']['site_url']; ?>/admincp/list-stickers-store?sticker_id=<?php echo $so['package']['id']; ?>">
+                            <?php echo $so['package']['name']; ?>
+                        </a>
+                        <div class="safdasa">
+                            <img src="<?php echo $so['package']['image']; ?>" />
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+            <?php } else { ?>
+                <?php foreach ($classSticker->So_GetAllStickers($_GET['sticker_id']) as $so['sticker']) { ?>
+                <div class="pull-left">
+                    <div id="package-sticker">
+                        <div class="safdasa">
+                            <img src="<?php echo $so['sticker']['image']; ?>" />
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+            <?php } ?>
+        </div>
+    </div>
+</div>
+<style>
+    div#package-sticker {
+        width: 200px;
+        display: grid;
+    }
+    div#package-sticker a {
+        padding: 10px;
+        background-color: #333333;
+        color: #FFFFFF;
+    }
+    div#package-sticker .safdasa {
+        width: 100%;
+        border: solid 1px #f1f1f1;
+        text-align: center;
+    }
+</style>
+<script>
+    $(function () {
+        
+    });
+</script>

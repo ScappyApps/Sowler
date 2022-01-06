@@ -1,0 +1,9 @@
+<li class="trend-item js-trend-item  context-trend-item" data-trand-name="#<?php echo $so['trand']['tag'];?>" data-trands-id="<?php echo $so['trand']['id'];?>">
+    <a class="pretty-link js-nav js-tooltip u-linkComplex" href="<?php echo $so['trand']['url'];?>" data-ajax="?link1=hashtag&hash=<?php echo $so['trand']['tag'];?>">
+        <span class="u-linkComplex-target trend-name" dir="ltr">#<?php echo $so['trand']['tag'];?></span>
+        <div class="js-nav trand-item-context"></div>
+        <div class="js-nav trend-item-stats">
+          <?php echo $so['trand']['total']; ?> Twidleys
+        </div>
+    </a>
+</li>

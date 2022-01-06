@@ -1,0 +1,19 @@
+<?php
+
+$page = 'dashboard';
+$pages = array(
+    'dashboard',
+    'users',
+    'posts',
+    'settings',
+    'ads',
+    'custom-settings',
+    'design-settings',
+    'stickers-store',
+    'list-stickers-store'
+);
+if (isset($_GET['page']) && in_array($_GET['page'], $pages)) {
+    $page = $_GET['page'];
+}
+echo So_GetPage('admincp/' . $page . '/content');
+?>

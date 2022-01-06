@@ -1,0 +1,56 @@
+<?php
+$page = 'today';
+$classPost = new Post();
+$last_moment = $classPost->So_LastMoment();
+if (isset($_GET['category_id'])) {
+    $array = array('1', '2', '3', '4', '5');
+    if (in_array($_GET['category_id'], $array)) {
+        if ($_GET['category_id'] == 1) {
+            $page = 'news';
+			$last_moment = $classPost->So_LastMoment(1);
+        } else if ($_GET['category_id'] == 2) {
+            $page = 'sports';
+			$last_moment = $classPost->So_LastMoment(2);
+        } else if ($_GET['category_id'] == 3) {
+            $page = 'entertainment';
+			$last_moment = $classPost->So_LastMoment(3);
+        } else if ($_GET['category_id'] == 4) {
+            $page = 'fun';
+			$last_moment = $classPost->So_LastMoment(4);
+        } else if ($_GET['category_id'] == 5) {
+            $page = 'edit';
+        }
+    }
+    
+}
+if (!isset($last_moment['post_id']) && $_GET['category_id'] <> 5) {
+	$page = 'none-story';
+}
+?>
+<div class="container">
+	<div class="row">
+		<div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="clients-grid">
+
+				<?php echo So_GetPage('moments/header'); ?>
+
+				<div class="row sorting-container" id="clients-grid-1" data-layout="masonry">
+					<?php
+						echo So_GetPage('moments/' . $page);
+					?>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container" style="margin-top: initial;" id="menu-two">
+	<div class="row">
+		<div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="clients-grid">
+				<?php echo So_GetPage('moments/header'); ?>
+			</div>
+		</div>
+	</div>
+</div>

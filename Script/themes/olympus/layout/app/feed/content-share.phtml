@@ -1,0 +1,188 @@
+<?php
+$classPost = new Post();
+$classComment = new Comment();
+?>
+<li class="twidley-post js-stream-item stream-item stream-item" data-item-id="<?php echo $so['origin']['post_id']; ?>" id="stream-item-tweet-<?php echo $so['story']['post_id']; ?>">
+    <div id="story-box" class="tweet js-stream-tweet js-actionable-tweet js-profile-popup-actionable dismissible-content original-tweet js-original-tweet my-tweet dismissible-content" data-tweet-id="<?php echo $so['origin']['post_id']; ?>" data-item-id="<?php echo $so['origin']['post_id']; ?>">
+        <div class="context">
+            <i class="fas fa-retweet"></i> <?php
+            if ($so['story']['user_id'] == $so['user']['user_id']) {
+                echo $so['lang']['you'];
+            } else {
+                echo $so['story']['user']['name'];
+            }
+            ?> <?php echo $so['lang']['retwidleyd']; ?>
+            <p dir="auto">
+                <?php echo $so['story']['postText']; ?>
+            </p>
+        </div>
+        <div class="content" id="ijmaidjaidjai">
+            <div class="stream-item-header">
+                <a class="account-group js-account-group js-action-profile" href="<?php echo So_SeoLink('index.php?link1=timeline-app&user_id=' . $so['origin']['user']['user_id'] . '?session=' . $_SESSION['user_id']); ?>" data-user-id="<?php echo $so['origin']['user_id']; ?>">
+                    <img class="avatar js-action-profile-avatar" src="<?php echo $so['origin']['user']['avatar']; ?>" alt="">
+                    <span class="FullNameGroup">
+                        <strong class="fullname show-popup-with-id u-textTruncate " data-aria-label-part=""><?php echo $so['origin']['user']['name']; ?></strong>
+                        <span>‏</span>
+                        <?php if ($so['origin']['user']['verified'] == 1) { ?>
+                            <span class="UserBadges">
+                                <span class="Icon">
+                                    <i class="fas fa-check-circle" style="color: #009688;"></i>  
+                                </span>
+                            </span>
+                        <?php } ?>
+                        <span class="UserNameBreak">&nbsp;</span>
+                    </span>
+                    <span class="username u-dir u-textTruncate" dir="ltr" data-aria-label-part="">
+                        @<b><?php echo $so['origin']['user']['username']; ?></b>
+                    </span>
+                </a>
+                <small class="time">
+                    <a href="javascript:void(0);" class="tweet-timestamp js-permalink js-nav js-tooltip" title="<?php echo $so['origin']['hour']; ?> - <?php echo $so['origin']['day'] . '/' . $so['months'][$so['origin']['month']] . '/' . $so['origin']['year']; ?>" data-conversation-id="<?php echo $so['origin']['post_id']; ?>">
+                        <span class="_timestamp js-short-timestamp js-relative-timestamp"><?php echo $so['origin']['post_time']; ?></span>
+                    </a>
+                </small>
+                <?php if ($so['origin']['user_id'] == $so['user']['user_id'] || $so['user']['admin'] > 0 || $so['story']['user_id'] == $so['user']['user_id']) { ?>
+                    <div class="ProfileTweet-action ProfileTweet-action--more js-more-ProfileTweet-actions">
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="ProfileTweet-actionButton u-textUserColorHover dropdown-toggle js-dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <div class="IconContainer js-tooltip" title="More">
+                                    <span class="Icon Icon--small">
+                                        <i class="fas fa-angle-down"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu is-autoCentered">
+                                <ul>
+                                    <li class="js-actionDelete">
+                                        <button type="button" class="dropdown-link" onclick="So_DeletePostRest(<?php echo $so['story']['post_id']; ?>);"><?php echo $so['lang']['delete_twidley']; ?></button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+            <div class="js-tweet-text-container">
+                <?php if (!empty($so['origin']['postText'])) { ?>
+                    <p <?php echo So_GetPage('story/extra/background-share'); ?> class="TweetTextSize js-tweet-text tweet-text" id="translate-p-<?php echo $so['origin']['post_id']; ?>" lang="<?php echo So_Language(); ?>" data-aria-label-part="0"><?php echo $so['origin']['postText']; ?></p>
+                    <a class="pointer" id="translate-button-<?php echo $so['origin']['post_id']; ?>" style="display: none;"><?php echo $so['lang']['translate']; ?></a>
+                <?php } ?>
+            </div>
+            <?php
+            if (!empty($so['origin']['html_url']) && empty($so['origin']['postYoutube'])) {
+
+                $so['story']['html_title'] = $so['origin']['html_title'];
+                $so['story']['html_image'] = $so['origin']['html_image'];
+                $so['story']['html_body'] = $so['origin']['html_body'];
+                $so['story']['html_url'] = $so['origin']['html_url'];
+
+                echo So_GetPage('story/extra/url-embed');
+            }
+            if (!empty($so['origin']['postGif'])) {
+                echo So_GetPage('story/shares/post-gif');
+            }
+            if (!empty($so['origin']['postSticker'])) {
+                $so['story']['postSticker'] = $so['origin']['postSticker'];
+                echo So_GetPage('story/sticker');
+            }
+            if (!empty($so['origin']['postImage'])) {
+                echo So_GetPage('story/shares/post-image');
+            }
+            if (!empty($so['origin']['postVideo'])) {
+                echo So_GetPage('story/shares/post-video');
+            }
+            if (!empty($so['origin']['postType']) && $so['origin']['postType'] == 'started_live_stream') {
+                $so['story']['user_id'] = $so['origin']['user_id'];
+                echo So_GetPage('live/player-feed');
+            }
+            ?>
+            <?php if (!empty($so['origin']['postYoutube'])) { ?>
+                <iframe id="iframe-youtube" data-src="https://www.youtube.com/embed/<?php echo $so['origin']['postYoutube']; ?>" frameborder="0" scrolling="no" allowtransparency="true" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" src="https://www.youtube.com/embed/<?php echo $so['origin']['postYoutube']; ?>?autoplay=0&amp;auto_play=false"></iframe>
+            <?php } ?>
+            <?php
+            if ($so['config']['type_button'] == 'reactions') {
+                echo So_GetPage('buttons/reactions/count-reactions');
+            }
+            ?>
+            <div class="stream-item-footer">
+                <div class="ProfileTweet-actionCountList u-hiddenVisually">
+                    <span class="ProfileTweet-action--reply u-hiddenVisually">
+                        <span class="ProfileTweet-actionCount" aria-hidden="true" data-tweet-stat-count="0">
+                            <span class="ProfileTweet-actionCountForAria" id="profile-tweet-action-reply-count-aria-<?php echo $so['origin']['post_id']; ?>">0 replies</span>
+                        </span>
+                    </span>
+                    <span class="ProfileTweet-action--retweet u-hiddenVisually">
+                        <span class="ProfileTweet-actionCount" aria-hidden="true" data-tweet-stat-count="0">
+                            <span class="ProfileTweet-actionCountForAria" id="profile-tweet-action-retweet-count-aria-<?php echo $so['origin']['post_id']; ?>">0 retweets</span>
+                        </span>
+                    </span>
+                    <span class="ProfileTweet-action--favorite u-hiddenVisually">
+                        <span class="ProfileTweet-actionCount" aria-hidden="true" data-tweet-stat-count="0">
+                            <span class="ProfileTweet-actionCountForAria" id="profile-tweet-action-favorite-count-aria-<?php echo $so['origin']['post_id']; ?>">0 likes</span>
+                        </span>
+                    </span>
+                </div>
+                <div class="ProfileTweet-actionList js-actions" role="group" aria-label="Tweet actions">
+                    <div class="ProfileTweet-action ProfileTweet-action--reply">
+                        <a href="javascript:void(0);" onclick="So_GetLightboxComment(<?php echo $so['origin']['post_id']; ?>);" class="pointer ProfileTweet-actionButton js-actionButton js-actionReply" data-modal="ProfileTweet-reply">
+                            <div class="IconContainer js-tooltip" title="<?php echo $so['lang']['reply']; ?>">
+                                <span class="Icon Icon--small">
+                                    <i class="far fa-comment"></i>
+                                </span>
+                            </div>
+                            <span class="ProfileTweet-actionCount ProfileTweet-actionCount--isZero ">
+                                <span class="ProfileTweet-actionCountForPresentation" aria-hidden="true"></span>
+                                <?php
+                                $countPostComment = $classPost->So_CountPostComment($so['origin']['post_id']);
+                                if ($countPostComment > 0) {
+                                    echo $countPostComment;
+                                }
+                                ?>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="ProfileTweet-action ProfileTweet-action--retweet js-toggleState js-toggleRt">
+                        <a href="javascript:void(0);" onclick="So_SharePostApp(<?php echo $so['origin']['post_id']; ?>);" class="pointer ProfileTweet-actionButton js-actionButton js-actionRetweet" data-modal="ProfileTweet-retweet">
+                            <div class="IconContainer js-tooltip" title="Retwidley">
+                                <span class="Icon Icon--small">
+                                    <i class="fas fa-retweet"></i>
+                                </span>
+                            </div>
+                            <span class="ProfileTweet-actionCount ProfileTweet-actionCount--isZero">
+                                <span class="ProfileTweet-actionCountForPresentation" aria-hidden="true">
+                                    <?php
+                                    $countPostShare = $classPost->So_CountPostShare($so['origin']['post_id']);
+                                    if ($countPostShare > 0) {
+                                        echo $countPostShare;
+                                    }
+                                    ?>
+                                </span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="ProfileTweet-action ProfileTweet-action--favorite js-toggleState">
+                        <?php
+                        if ($so['config']['type_button'] == 'reactions') {
+                            echo So_GetPage('buttons/reactions/content');
+                        } else {
+                            ?>
+                            <a href="javascript:void(0);" onclick="So_InsertLike(<?php echo $so['origin']['post_id']; ?>);" class="pointer ProfileTweet-actionButton js-actionButton js-actionFavorite" id="button-like-<?php echo $so['origin']['post_id']; ?>">
+                                <?php echo So_GetPage('buttons/like-share'); ?>
+                            </a>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
+<script type="text/javascript">
+<?php if (!empty($so['origin']['postText'])) { ?>
+        $(document).ready(function () {
+            So_DetectLanguage('<?php echo $so['origin']['postText']; ?>', <?php echo $so['origin']['post_id']; ?>, '<?php echo $so['config']['yandex_api']; ?>', '<?php echo substr(So_Language(), 0, 2); ?>');
+            $('#translate-button-<?php echo $so['origin']['post_id']; ?>').click(function () {
+                So_TranslateText('<?php echo $so['origin']['postText']; ?>', <?php echo $so['origin']['post_id']; ?>, '<?php echo $so['config']['yandex_api']; ?>', '<?php echo substr(So_Language(), 0, 2); ?>');
+            });
+        });
+<?php } ?>
+</script>

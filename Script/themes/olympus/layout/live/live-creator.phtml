@@ -1,0 +1,35 @@
+<?php
+if (empty($so['user']['secret_key'])) {
+	$classUser = new User();
+	$classUser->So_UpdateUser($so['user']['user_id'], array('secret_key' => base64_encode(mt_rand())));
+	
+	header("Location: " . So_SeoLink('index.php?link1=live&type=create'));
+	exit();
+}
+?>
+<div class="sadaassad">
+	<div id="story-box" style="padding: 0px;"class="contact-form tweet js-stream-tweet js-actionable-tweet js-profile-popup-actionable dismissible-content original-tweet js-original-tweet my-tweet dismissible-content">
+		<div class="context"></div>
+		<form method="post" id="form-live">
+			<h3><?php echo $so['lang']['welcome']; ?>, <?php echo $so['user']['first_name']; ?>!</h3>
+			<p dir="auto">
+				<?php echo $so['lang']['live_description']; ?>
+			</p>
+			<b>Key</b>: <?php echo $so['user']['secret_key']; ?><br><br>
+			<b>Rtmp</b>: rtmp://<?php echo str_replace("https://", "", $so['config']['site_url']); ?>/live<br>
+			<hr><br>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<textarea name="postText" class="form-control" placeholder="<?php echo $so['lang']['type_something']; ?>" style="width: 100%;"></textarea>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<button type="submit" class="btn btn-success"><?php echo $so['lang']['transmit']; ?></button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

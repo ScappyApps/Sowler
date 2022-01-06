@@ -1,0 +1,26 @@
+<?php $classPost = new Post(); ?>
+<div class="stream-container conversations-enabled js-request-more-stream-items" data-max-position="1023715060630396928" data-min-position="1023688242284187652">
+    <div class="stream-item js-new-items-bar-container" style=""></div>
+    <div class="stream">
+		<div id="qadqwdqw">
+			 <?php
+            $posts = $classPost->So_GetPosts(0, $so['profile']['user_id']);
+
+            if (count($posts) > 0) {
+                foreach ($posts as $so['story']) {
+                    echo So_GetPage('story/content');
+                }
+            } else { ?>
+			<div class="SearchEmptyTimeline">
+				<div class="SearchEmptyTimeline-empty">
+					<div class="SearchEmptyTimeline-emptyTitle">
+						<?php echo $so['lang']['not_found']; ?>
+					</div>
+				</div>
+			</div>
+			<?php
+			}
+            ?>
+		</div>
+    </div>
+</div>

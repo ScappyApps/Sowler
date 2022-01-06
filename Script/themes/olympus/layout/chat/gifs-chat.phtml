@@ -1,0 +1,38 @@
+<div class="ajfajdawda dropdown-menu" id="regergaeg">
+    <div class="sasdsadsada-input">
+        <input type="text" id="asfasssfdsadwq" autocomplete="off" onkeyup="So_SearchGifChat(this.value);" placeholder="<?php echo $so['lang']['search_gif']; ?>"/>
+        <span class="Icon">
+            <i class="fas fa-search"></i>
+        </span>
+    </div>
+    <div class="qawsquioddqy">
+        <div class="FoundMediaSearch-items" id="askfjasfsakhlkhfalfhyef"></div>
+    </div>
+</div>
+<script>
+    function So_SearchGifChat(search) {
+        var user_id = <?php echo $so['chat']['user_id']; ?>;
+        $.get('https://api.giphy.com/v1/gifs/search', {
+            api_key: '<?php echo $so['config']['giphy_api']; ?>',
+            limit: 20,
+            q: search
+        }, function (data) {
+            number = 1;
+            for (i = 0; i < 20; i++) {
+                var gif_image = "'" + data.data[i].images.downsized.url + "'";
+                $('.opened-chats').find('#chat-' + user_id).find('#askfjasfsakhlkhfalfhyef').prepend('<div class="FoundMediaSearch-categoryContainer FoundMediaSearch-categoryContainer--bg' + number + ' FoundMediaSearch-focusable FoundMediaSearch-categoryContainer--bg3"><button type="button" id="put-gif-publisher-box" class="FoundMediaSearch-category" data-name="agree" data-display-name="Agree" onclick="So_PutGifChat(' + gif_image + ', ' + user_id + ');" data-image="' + data.data[i].images.downsized.url + '" style="background-image: url(' + data.data[i].images.downsized.url + ');width: 208px;background-position:  center;background-repeat"><div class="FlexEmbed u-borderRadiusInherit" style="padding-bottom: 50%"><div class="FlexEmbed-item u-borderRadiusInherit"><div class="FoundMediaSearch-categoryName"></div></div></div></button></div>');
+                number++;
+                if (number == 6) {
+                    number = 1;
+                }
+            }
+            var images = 0;
+            So_LoadImg($('button[style]'), function () {
+                images++;
+            })
+        });
+    }
+    $(document).ready(function () {
+        So_SearchGifChat('happyness');
+    });
+</script>

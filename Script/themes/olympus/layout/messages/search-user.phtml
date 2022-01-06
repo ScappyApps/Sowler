@@ -1,0 +1,9 @@
+<div class=" DMDialogTypeahead">
+    <span class="DMTypeaheadHeader"><?php echo $so['lang']['send_a_message']; ?>:</span>
+    <ul class="TokenizedMultiselect-inputContainer">
+        <li>
+            <input onkeyup="So_SearchUserMessages(this.value);" class="TokenizedMultiselect-input twttr-directmessage-input js-initial-focus dm-to-input" aria-autocomplete="list" aria-expanded="true" rows="1" type="text" placeholder="<?php echo $so['lang']['type_a_name']; ?>" />
+        </li>
+    </ul>
+    <ul id="DMComposeTypeaheadSuggestions" class="DMTypeaheadSuggestions u-scrollY" role="listbox"></ul>
+</div>

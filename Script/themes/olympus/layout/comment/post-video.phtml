@@ -1,0 +1,13 @@
+<video width="400px" height="300px" id="my_video_<?php echo $so['comment']['comment_id']; ?>" class="video-js vjs-default-skin vjs-big-play-centered" poster="" controls muted="muted" preload="none" data-setup="{}" autoplay="false">
+	<source src="<?php echo $so['comment']['postVideo']; ?>" type='video/mp4'>
+	<p class="vjs-no-js">
+		To view this video please enable JavaScript, and consider upgrading to a web browser that
+	</p>
+</video>
+<script src="<?php echo $so['config']['theme_url']; ?>/javascript/video.js"></script>
+<style>
+div#my_video_<?php echo $so['comment']['comment_id']; ?> {
+    width: 300px;
+    height: 200px;
+}
+</style>

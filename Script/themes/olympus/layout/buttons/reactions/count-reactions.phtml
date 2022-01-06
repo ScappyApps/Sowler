@@ -1,0 +1,11 @@
+<div class="count-reactions">
+	<?php
+	$lang_reactions = $so['lang']['reactions'];
+	
+	if (So_TotalReactions($so['story']['post_id']) == 1) {
+		$lang_reactions = $so['lang']['reaction'];
+	}
+	
+	echo '<span id="asdaas">' . So_TotalReactions($so['story']['post_id']) . ' ' . $lang_reactions . '</span>';
+	?>
+</div>

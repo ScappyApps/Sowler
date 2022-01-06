@@ -1,0 +1,37 @@
+<ul class="cat-list-bg-style align-center sorting-menu">
+	<li class="cat-list__item <?php echo (!isset($_GET['category_id'])) ? 'active' : ''; ?>">
+		<a class="MomentGuideNavigation-target MomentGuideNavigation-target--category js-nav u-textUserColorHover" href="<?php echo So_SeoLink('index.php?link1=moments'); ?>" data-ajax="?link1=moments" title="Today" data-guide-category-id="0" data-component-context="moment_category" data-next-active-element=".js-nav[data-guide-category-id=0]">
+			<?php echo $so['lang']['today']; ?>
+		</a>
+	</li>
+	<li class="cat-list__item <?php echo (isset($_GET['category_id']) && $_GET['category_id'] == 1) ? 'active' : ''; ?>">
+		<a class="MomentGuideNavigation-target MomentGuideNavigation-target--category js-nav u-textUserColorHover" href="<?php echo So_SeoLink('index.php?link1=moments'); ?>/1" data-ajax="?link1=moments&category_id=1" title="News" data-guide-category-id="1" data-component-context="moment_category" data-next-active-element=".js-nav[data-guide-category-id=1]">
+			<?php echo $so['lang']['news']; ?>
+		</a>
+	</li>
+	<li class="cat-list__item <?php echo (isset($_GET['category_id']) && $_GET['category_id'] == 2) ? 'active' : ''; ?>">
+		<a class="MomentGuideNavigation-target MomentGuideNavigation-target--category js-nav u-textUserColorHover" href="<?php echo So_SeoLink('index.php?link1=moments'); ?>/2" data-ajax="?link1=moments&category_id=2" title="Sports" data-guide-category-id="2" data-component-context="moment_category" data-next-active-element=".js-nav[data-guide-category-id=2]">
+			<?php echo $so['lang']['sports']; ?>
+		</a>
+	</li>
+	<li class="cat-list__item <?php echo (isset($_GET['category_id']) && $_GET['category_id'] == 3) ? 'active' : ''; ?>">
+		<a class="MomentGuideNavigation-target MomentGuideNavigation-target--category js-nav u-textUserColorHover" href="<?php echo So_SeoLink('index.php?link1=moments'); ?>/3" data-ajax="?link1=moments&category_id=3" title="Entertainment" data-guide-category-id="3" data-component-context="moment_category" data-next-active-element=".js-nav[data-guide-category-id=3]">
+			<?php echo $so['lang']['entertainment']; ?>
+		</a>
+	</li>
+	<li class="cat-list__item <?php echo (isset($_GET['category_id']) && $_GET['category_id'] == 4) ? 'active' : ''; ?>">
+		<a class="MomentGuideNavigation-target MomentGuideNavigation-target--category js-nav u-textUserColorHover" href="<?php echo So_SeoLink('index.php?link1=moments'); ?>/4" data-ajax="?link1=moments&category_id=4" title="Fun" data-guide-category-id="4" data-component-context="moment_category" data-next-active-element=".js-nav[data-guide-category-id=4]">
+			<?php echo $so['lang']['fun']; ?>
+		</a>
+	</li>
+	<li class="cat-list__item">
+		<a class="pointer" onclick="So_CreateMoment();">
+			<span class="visuallyhidden"><?php echo $so['lang']['create_a_new_moment']; ?></span>
+		</a>
+	</li>
+</ul>
+<script>
+function So_CreateMoment() {
+	window.location.href = '<?php echo So_SeoLink('index.php?link1=moments'); ?>/5';
+}
+</script>

@@ -1,0 +1,23 @@
+<div class="AdaptiveMediaOuterContainer">
+    <div class="AdaptiveMedia is-video has-autoplayable-media" data-autoplaying-media="true">
+        <div class="AdaptiveMedia-container">
+            <div class="PlayableMedia-player" style="padding-bottom: 56.49999999999999%;">
+                <div class="PlayableMedia-reactWrapper">
+                    <div style="cursor: pointer; height: 100%; width: 100%; position: relative; color: rgba(255, 255, 255, 0.85); font-size: 13px; font-weight: 400;line-height: normal; transform: translateZ(0px);">
+                        <div role="button" tabindex="0" style="position: absolute; height: 100%; width: 100%;">
+                            <div style="position: relative; width: 100%; height: 100%; background-color: transparent;">
+                                <video id="my_video_<?php echo $so['origin']['post_id']; ?>" class="video-js vjs-default-skin vjs-big-play-centered" poster="" style="width: 100%; height: 100%; position: absolute; background-color: black; transform: rotate(0deg) scale(1);" controls muted="muted" preload="auto" data-setup="{}">
+                                    <source src="<?php echo $so['origin']['postVideo']; ?>" type='video/mp4'>
+                                    <p class="vjs-no-js">
+                                        To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                    </p>
+                                </video>
+                                <script src="<?php echo $so['config']['theme_url']; ?>/javascript/video.js"></script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

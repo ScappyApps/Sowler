@@ -1,0 +1,23 @@
+<div class="count-reactions">
+
+</div>
+<div class="reactions">
+	<div class="pull-left">
+		<div class="reaction">
+			<?php
+			if (So_CheckReaction($so['story']['post_id']) === true) {
+				echo So_GetPage('buttons/reactions/' . So_ButtonReaction($so['story']['post_id']));
+			} else { ?>
+			<a class="pointer UFILikeLink _4x9- _4x9_ _48-k" id="reaction-button" href="javascript:void(0);" title="<?php echo $so['lang']['like']; ?>" data-story="<?php echo $so['story']['post_id']; ?>" onclick="So_RegisterReactions(<?php echo $so['story']['post_id']; ?>, 'reaction_like');">
+				<span class="_9zc _19km _1ktw _2hoq _3uet _4e-m">
+					<i class="asfassasa"></i>
+				</span>
+				<?php echo $so['lang']['like']; ?>
+				<div class="list-reactions" id="list-reactions-<?php echo $so['story']['post_id']; ?>">
+					
+				</div>
+			</a>
+			<?php } ?>
+		</div>
+	</div>
+</div>

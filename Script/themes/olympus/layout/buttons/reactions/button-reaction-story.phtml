@@ -1,0 +1,13 @@
+<div class="reactions">
+	<div class="">
+		<div class="reaction">
+			<?php
+			if (So_CheckReaction($so['story']['post_id']) === true) {
+				echo So_GetPage('buttons/reactions/' . So_ButtonReaction($so['story']['post_id']));
+			} else {
+				echo So_GetPage('buttons/reactions/reaction-default');
+			}
+			?>
+		</div>
+	</div>
+</div>

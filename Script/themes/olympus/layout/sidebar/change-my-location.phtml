@@ -1,0 +1,72 @@
+<div class="ProfileOnboarding-bio introduce-yourself" id="introduce-yourself">
+    <div class="ProfileOnboarding-header">
+        <div class="dismiss js-action-dismiss"><span class="Icon"><i class="fas fa-times"></i></span></div>
+        <div class="ProfileOnboarding-title"><?php echo $so['lang']['introduce_your_location']; ?></div>
+        <div class="ProfileOnboarding-subtitle"><?php echo $so['lang']['find_people_next_to_you']; ?></div>
+    </div>
+    <div class="ProfileHeaderCardEditing-bioRich ProfileHeaderCardEditing-item">
+        <div class="RichEditor RichEditor--emojiPicker u-borderUserColorLight">
+            <div class="RichEditor-container u-borderRadiusInherit">
+                <form class="form-horizontal" id="change-my-location" method="post">
+                    <fieldset>
+                        <div class="fdlfjslfsj">
+                            <div class="wsdfsdr">
+                                <textarea id="user_location" style="border-color: transparent;border-radius: 10px;width: 100%;height: 50px;padding: 10px;overflow-y: hidden;" name="location" ></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('form#change-my-location').ajaxForm({
+            url: So_Requests() + '?type=change-my-location',
+            beforeSend: function () {
+
+            },
+            success: function (data) {
+                if (data.status == 200) {
+                    $('form#change-my-location').remove();
+                } else {
+                    return false;
+                }
+            }
+        });
+    });
+    var pac_input = document.getElementById('user_location');
+    (function pacSelectFirst(input) {
+        // store the original event binding function
+        var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
+        function addEventListenerWrapper(type, listener) {
+            // Simulate a 'down arrow' keypress on hitting 'return' when no pac suggestion is selected,
+            // and then trigger the original listener.
+            if (type == "keydown") {
+                var orig_listener = listener;
+                listener = function (event) {
+                    var suggestion_selected = $(".pac-item-selected").length > 0;
+                    if (event.which == 13 && !suggestion_selected) {
+                        var simulated_downarrow = $.Event("keydown", {
+                            keyCode: 40,
+                            which: 40
+                        });
+                        orig_listener.apply(input, [simulated_downarrow]);
+                    }
+                    orig_listener.apply(input, [event]);
+                };
+            }
+            // add the modified listener
+            _addEventListener.apply(input, [type, listener]);
+        }
+        if (input.addEventListener)
+            input.addEventListener = addEventListenerWrapper;
+        else if (input.attachEvent)
+            input.attachEvent = addEventListenerWrapper;
+    })(pac_input);
+
+    $(function () {
+        var autocomplete = new google.maps.places.Autocomplete(pac_input);
+    });
+</script>

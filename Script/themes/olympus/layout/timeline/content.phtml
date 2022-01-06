@@ -1,0 +1,215 @@
+<?php
+$classPost = new Post();
+$classUser = new User();
+$pages = array('following', 'followers');
+if (isset($_GET['type']) && !in_array($_GET['type'], $pages)) {
+    unset($_GET['type']);
+}
+?>
+<div class="container">
+	<div class="row">
+		<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="ui-block">
+				<div class="top-header">
+					<div class="top-header-thumb widget w-last-photo js-zoom-gallery">
+						<a class="author-thumb" href="<?php echo str_replace("." . pathinfo($so['profile']['cover'], PATHINFO_EXTENSION), "_full." . pathinfo($so['profile']['cover'], PATHINFO_EXTENSION), $so['profile']['cover']); ?>">
+							<img src="<?php echo $so['profile']['cover']; ?>" alt="nature" style="border-radius:  initial;">
+						</a>
+					</div>
+					<div class="profile-section">
+						<div class="row">
+							<div class="col col-lg-5 col-md-5 col-sm-12 col-12">
+								<ul class="profile-menu">
+									<li>
+										<a href="<?php echo So_SeoLink('index.php?link1=timeline&username=' . $so['profile']['username']); ?>" data-ajax="?link1=timeline&username=<?php echo $so['profile']['username']; ?>" <?php if (!isset($_GET['type'])) { ?>class="active"<?php } ?>>Timeline</a>
+									</li>
+									<li>
+										<a href="<?php echo So_SeoLink('index.php?link1=timeline&username=' . $so['profile']['username'] . '&type=following'); ?>" data-ajax="?link1=timeline&username=<?php echo $so['profile']['username']; ?>&type=following" <?php if (isset($_GET['type']) && $_GET['type'] == 'following') { ?>class="active"<?php } ?>><?php echo $so['lang']['following']; ?></a>
+									</li>
+									<li>
+										<a href="<?php echo So_SeoLink('index.php?link1=timeline&username=' . $so['profile']['username'] . '&type=followers'); ?>" data-ajax="?link1=timeline&username=<?php echo $so['profile']['username']; ?>&type=followers" <?php if (isset($_GET['type']) && $_GET['type'] == 'followers') { ?>class="active"<?php } ?>><?php echo $so['lang']['followers']; ?></a>
+									</li>
+								</ul>
+							</div>
+							<div class="col col-lg-5 ml-auto col-md-5 col-sm-12 col-12">
+								<ul class="profile-menu">
+									<li>
+										<a class="<?php if (!isset($_GET['type'])) { ?>active<?php } ?>" href="#" data-ajax="?link1=timeline&username=<?php echo $so['profile']['username']; ?>" data-nav="tweets" tabindex="0" data-original-title="<?php echo $classPost->So_CountPostsUser($so['profile']['user_id']); ?> Twidleys">
+											<span data-count="<?php echo $classPost->So_CountPostsUser($so['profile']['user_id']); ?>" data-is-compact="false">
+												<?php echo $classPost->So_CountPostsUser($so['profile']['user_id']); ?>
+											</span>
+											<span aria-hidden="true"><?php echo $so['lang']['twidleys']; ?></span>
+										</a>
+									</li>
+									<li>
+										<a class="<?php if (isset($_GET['type']) && $_GET['type'] == 'following') { ?>active<?php } ?>" data-nav="following" href="#" data-ajax="?link1=timeline&username=<?php echo $so['profile']['username']; ?>&type=following" data-original-title="<?php echo $classUser->So_CountFollowingUser($so['profile']['user_id']); ?> <?php echo $so['lang']['following']; ?>">
+											<span data-count="2" data-is-compact="false"><?php echo $classUser->So_CountFollowingUser($so['profile']['user_id']); ?></span>
+											<span aria-hidden="true"><?php echo $so['lang']['following']; ?></span>
+										</a>
+									</li>
+									<li>
+										<a class="<?php if (isset($_GET['type']) && $_GET['type'] == 'followers') { ?>active<?php } ?>" data-nav="following" href="#" data-original-title="<?php echo $classUser->So_CountFollowersUser($so['profile']['user_id']); ?> <?php echo $so['lang']['followers']; ?>">
+											<span data-count="2" data-is-compact="false"><?php echo $classUser->So_CountFollowersUser($so['profile']['user_id']); ?></span>
+											<span aria-hidden="true"><?php echo $so['lang']['followers']; ?></span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="control-block-button">
+							<?php
+                            if ($so['profile']['user_id'] <> $so['user']['user_id']) {
+                                echo So_GetPage('buttons/button-timeline-follow');
+                            }
+                            ?>
+						</div>
+					</div>
+					<div class="top-header-author">
+						<div class="widget w-last-photo js-zoom-gallery">
+							<a href="<?php echo str_replace("." . pathinfo($so['profile']['avatar'], PATHINFO_EXTENSION), "_full." . pathinfo($so['profile']['avatar'], PATHINFO_EXTENSION), $so['profile']['avatar']); ?>" class="author-thumb">
+								<img width="100%;" src="<?php echo $so['profile']['avatar']; ?>" alt="author">
+							</a>
+						</div>
+						<div class="author-content">
+							<a href="<?php echo So_SeoLink('index.php?link1=timeline&username=' . $so['profile']['username']); ?>" data-ajax="?link1=timeline&username=<?php echo $so['profile']['username']; ?>" class="h4 author-name"><?php echo $so['profile']['name']; ?></a>
+							<div class="country"><?php echo $so['profile']['location']; ?></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php if (!isset($_GET['type'])) { ?>
+<!-- ... end Top Header-Profile -->
+<div class="container" style="margin-top: initial;">
+	<div class="row">
+
+		<!-- Main Content -->
+
+		<div class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+			
+			<div class="ui-block">
+
+				<!-- News Feed Form  -->
+
+				<?php echo So_GetPage('story/publisher-box'); ?>
+				
+				<!-- ... end News Feed Form  -->
+			</div>
+			
+			<div id="newsfeed-items-grid">
+
+				<?php echo So_GetPage('timeline/load-posts'); ?>
+			
+			</div>
+
+		</div>
+
+		<!-- ... end Main Content -->
+
+
+		<!-- Left Sidebar -->
+
+		<div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-12 col-12">
+
+			<div class="ui-block">
+				<div class="ui-block-title">
+					<h6 class="title"><?php echo $so['lang']['profile_into']; ?></h6>
+				</div>
+				<div class="ui-block-content">
+
+					<!-- W-Personal-Info -->
+					
+					<ul class="widget w-personal-info item-block">
+						<?php if ($so['profile']['privacy'] == 1 || $so['profile']['user_id'] == $so['user']['user_id']) { ?>
+						<li>
+							<span class="title"><?php echo $so['lang']['about']; ?>:</span>
+							<span class="text"><?php echo $so['profile']['about']; ?></span>
+						</li>
+						<li class="ProfileHeaderCard-location ">
+							<span class="title"><?php echo $so['lang']['location']; ?>:</span>
+							<span class="text" dir="ltr">
+								<?php echo $so['profile']['location']; ?>
+							</span>
+						</li>
+						<?php if (!empty($so['profile']['day'])) { ?>
+						<li class="ProfileHeaderCard-birthdate">
+							<span class="title"><?php echo $so['lang']['birthday']; ?>:</span>
+							<span class="text" dir="ltr" title="<?php echo $so['profile']['day']; ?> <?php echo $so['months'][$so['profile']['month']]; ?> <?php echo $so['profile']['year']; ?>"><?php echo $so['lang']['birthday']; ?> <?php echo $so['profile']['day']; ?> <?php echo $so['months'][$so['profile']['month']]; ?> <?php echo $so['profile']['year']; ?></span>
+						</li>
+						<?php } ?>
+						<?php } ?>
+					</ul>
+					
+					<!-- .. end W-Personal-Info -->
+					<!-- W-Socials -->
+					
+					<!--<div class="widget w-socials">
+						<h6 class="title">Other Social Networks:</h6>
+						<a href="#" class="social-item bg-facebook">
+							<i class="fab fa-facebook-f" aria-hidden="true"></i>
+							Facebook
+						</a>
+						<a href="#" class="social-item bg-twitter">
+							<i class="fab fa-twitter" aria-hidden="true"></i>
+							Twitter
+						</a>
+						<a href="#" class="social-item bg-dribbble">
+							<i class="fab fa-dribbble" aria-hidden="true"></i>
+							Dribbble
+						</a>
+					</div>-->
+					
+					
+					<!-- ... end W-Socials -->
+				</div>
+			</div>
+			
+		</div>
+
+		<!-- ... end Left Sidebar -->
+
+
+		<!-- Right Sidebar -->
+
+		<div class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
+
+			<div class="ui-block">
+				<div class="ui-block-title">
+					<h6 class="title"><?php echo $so['lang']['last_photos']; ?></h6>
+				</div>
+				<div class="ui-block-content">
+
+					<!-- W-Latest-Photo -->
+					
+					<ul class="widget w-last-photo js-zoom-gallery">
+						<?php
+						$photos = So_LastPhotos($so['profile']['user_id']);
+						if (count($photos) > 0) {
+							foreach ($photos as $so['photo']) {
+						?>
+						<li>
+							<a href="<?php echo $so['photo']['postImage']; ?>">
+								<img style="height: 62px;" src="<?php echo $so['photo']['postImage']; ?>" alt="photo">
+							</a>
+						</li>
+						<?php } } ?>
+					</ul>
+					
+					
+					<!-- .. end W-Latest-Photo -->
+				</div>
+			</div>
+		</div>
+
+		<!-- ... end Right Sidebar -->
+
+	</div>
+</div>
+<?php } else if (in_array($_GET['type'], $pages)) {
+	echo So_GetPage('timeline/' . $_GET['type']);
+}
+?>

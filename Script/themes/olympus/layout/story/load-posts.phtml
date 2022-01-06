@@ -1,0 +1,22 @@
+<?php
+$classPost = new Post();
+$posts = $classPost->So_GetPosts();
+?>
+<div class="stream-container conversations-enabled js-request-more-stream-items">
+    <div class="stream-item js-new-items-bar-container" style=""></div>
+	<div class="all-posts" style="margin-bottom: 10px;">
+		<select onchange="So_ChangeSeePosts(this.value, '<?php echo $so['config']['theme_url']; ?>/img/load-posts.gif');">
+			<option value="0" <?php echo ($so['user']['all_posts'] == 0) ? 'selected' : ''; ?>><?php echo $so['lang']['only_following']; ?></option>
+			<option value="1" <?php echo ($so['user']['all_posts'] == 1) ? 'selected' : ''; ?>><?php echo $so['lang']['all_posts']; ?></option>
+		</select>
+	</div>
+    <div class="stream">
+		<div id="qadqwdqw">
+			<?php
+			foreach ($posts as $so['story']) {
+				echo So_GetPage('story/content');
+			}
+			?>
+		</div>
+    </div>
+</div>

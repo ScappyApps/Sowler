@@ -1,0 +1,170 @@
+<?php
+$classMessage = new Message();
+?>
+<div class="chat-box-normal" id="chat-<?php echo $so['chat']['user_id']; ?>" data-token-id="<?php echo $so['chat']['user_id']; ?>">
+    <div class="chat-header" data-chat="<?php echo $so['chat']['user_id']; ?>">
+        <?php
+        if ($so['chat']['lastseen'] > (time() - 60)) {
+            ?>
+            <span class="icon-online"></span>
+        <?php } else { ?>
+            <span class="icon-offline"></span>
+        <?php } ?>
+        <a class="pointer" href="<?php echo So_SeoLink('index.php?link1=timeline&username=' . $so['chat']['username']); ?>" data-ajax="?link1=timeline&username=<?php echo $so['chat']['username']; ?>">
+            <?php echo $so['chat']['name']; ?>
+        </a>
+        <a class="pointer" href="javascript:void(0);" style="position: absolute;right: 10px;" onclick="So_CloseChatUser(<?php echo $so['chat']['user_id']; ?>);">
+            <i class="fas fa-times"></i>
+        </a>
+    </div>
+    <div class="box-general">
+        <div class="chat-body">
+            <img id="chat-messages-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />
+        </div>
+        <div class="chat-footer">
+            <form class="chat-form-<?php echo $so['chat']['user_id']; ?>" method="post" enctype="multipart/form-data">
+                <div class="box-more-things nav-item dropdown">
+                    <a class="pointer" href="javascript:void(0);" onclick="So_OpenListThings(<?php echo $so['chat']['user_id']; ?>);">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </a>
+                    <div class="chat-list-box" id="chat-list-box-<?php echo $so['chat']['user_id']; ?>" data-toggle="false">
+                        <ul>
+                            <li>
+                                <a onclick="So_GetChatEmoticons(<?php echo $so['chat']['user_id']; ?>);">
+                                    <i class="fas fa-smile"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="So_GetChatUpload(<?php echo $so['chat']['user_id']; ?>);">
+                                    <i class="fas fa-upload"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="So_GetChatGifs(<?php echo $so['chat']['user_id']; ?>);">
+                                    <i class="fas fa-gift"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="So_GetChatStickers(<?php echo $so['chat']['user_id']; ?>);">
+                                    <i class="fas fa-magic"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box-textarea">
+                    <textarea name="postText" onkeydown="So_SubmitChat(<?php echo $so['chat']['user_id']; ?>, event);" onfocus="So_UpdateSeenMessages(<?php echo $so['chat']['user_id']; ?>);" placeholder="<?php echo $so['lang']['type_something']; ?>" autofocus></textarea>
+                </div>
+                <div class="box-button">
+                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                </div>
+                <input type="hidden" id="message-emoticon" name="emoticon" value=""/>
+                <input type="hidden" id="post-gif-chat" name="postGif" />
+                <input type="hidden" id="post-sticker-chat" name="postSticker" />
+                <input type="hidden" name="to_id" value="<?php echo $so['chat']['user_id']; ?>" />
+                <div class="chat-extra-box"></div>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(document).on('click', '.opened-chats #chat-<?php echo $so['chat']['user_id']; ?> .chat-extra-box .EmojiPicker-item', function () {
+            var key = $(this).attr('data-key');
+            var value = $('.opened-chats #chat-<?php echo $so['chat']['user_id']; ?> .box-textarea textarea').val();
+            var emoticon = $('.opened-chats #chat-<?php echo $so['chat']['user_id']; ?> #message-emoticon').val();
+            $('.opened-chats #chat-<?php echo $so['chat']['user_id']; ?> #message-emoticon').val(emoticon + key + ',');
+            $('.opened-chats #chat-<?php echo $so['chat']['user_id']; ?> .box-textarea textarea').val(value + key + ' ');
+        });
+<?php if ($so['config']['websocket'] == 1) { ?>
+            $('.opened-chats #chat-<?php echo $so['chat']['user_id']; ?> .box-textarea textarea').focus(function () {
+                var jsonData = {
+                    from_id: <?php echo $so['user']['user_id']; ?>,
+                    to_id: <?php echo $so['chat']['user_id']; ?>
+                };
+                socket.emit('seenMessage', jsonData);
+            });
+<?php } ?>
+        $(document).ready(function () {
+<?php if ($classMessage->So_CheckLastSeenMessage($so['chat']['user_id']) === true) { ?>
+                So_GetMessagesChat(<?php echo $so['chat']['user_id']; ?>, 1, '<?php echo $so['lang']['message_seen']; ?>');
+<?php } else { ?>
+                So_GetMessagesChat(<?php echo $so['chat']['user_id']; ?>, 0, '');
+<?php } ?>
+<?php if ($so['config']['websocket'] == 0) { ?>
+                So_GetMessagesNews_<?php echo $so['chat']['user_id']; ?>();
+<?php } ?>
+
+            var bar_ = $('.chat-form-<?php echo $so['chat']['user_id']; ?> > #bar');
+            var percent_ = $('.chat-form-<?php echo $so['chat']['user_id']; ?> > #percent');
+
+            $('form.chat-form-<?php echo $so['chat']['user_id']; ?>').ajaxForm({
+                url: So_Requests() + '?type=insert-new-message-chat',
+                beforeSend: function () {
+                    var percentVal = '0%';
+                    bar_.width(percentVal);
+                    percent_.html(percentVal);
+                    $('form.chat-form-<?php echo $so['chat']['user_id']; ?> .publisher-hidden-option').show();
+                    $('.opened-chats #chat-<?php echo $so['chat']['user_id']; ?> .chat-footer form .box-button button').html('<img width="15px" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    var percentVal = percentComplete + '%';
+                    bar_.width(percentVal);
+                    $('form.chat-form-<?php echo $so['chat']['user_id']; ?> #progress').slideDown(200);
+                    percent_.html(percentVal);
+                },
+                success: function (data) {
+                    $('.opened-chats #chat-<?php echo $so['chat']['user_id']; ?> .chat-footer form .box-button button').html('<i class="fas fa-paper-plane"></i>');
+                    var JSONdata = JSON.parse(data);
+                    $('form.chat-form-<?php echo $so['chat']['user_id']; ?> #progress').slideUp(200);
+                    $('form.chat-form-<?php echo $so['chat']['user_id']; ?> .publisher-hidden-option').hide();
+                    if (JSONdata[0].status == 200) {
+						<?php if ($so['config']['websocket'] == 1) { ?>
+						socket.emit('sendMessage', JSONdata[0]);
+						<?php } ?>
+                        $('form.chat-form-<?php echo $so['chat']['user_id']; ?>').clearForm();
+                        $('#chat-<?php echo $so['chat']['user_id']; ?> .chat-body').append(JSONdata[0].html);
+                        $('#post-sticker-chat, #post-gif-chat, #message-emoticon').val('');
+                        var div_scroll = $('.opened-chats').find('#chat-<?php echo $so['chat']['user_id']; ?>').find('.chat-body')[0];
+                        setTimeout(function () {
+                            div_scroll.scrollTop = div_scroll.scrollHeight;
+                        }, 500);
+                    } else {
+                        return false;
+                    }
+                }
+            });
+        });
+<?php if ($so['config']['websocket'] == 0) { ?>
+            function So_GetMessagesNews_<?php echo $so['chat']['user_id']; ?>() {
+                if ($('.opened-chats #chat-<?php echo $so['chat']['user_id']; ?>').length < 1) {
+                    return false;
+                }
+
+                var user_id = $('.opened-chats #chat-<?php echo $so['chat']['user_id']; ?>').attr('data-token-id');
+                var message_id = 0;
+                var div_scroll = $('.opened-chats').find('#chat-<?php echo $so['chat']['user_id']; ?>').find('.chat-body')[0];
+                if (typeof ($('.opened-chats').find('#chat-<?php echo $so['chat']['user_id']; ?>').find('.message-box').attr('data-message'))) {
+                    message_id = $('.opened-chats').find('#chat-<?php echo $so['chat']['user_id']; ?>').find('.message-box:last-child').attr('data-message');
+                }
+
+                $.post(So_Requests() + '?type=get-messages-news-chat', {
+                    message_id: message_id,
+                    user_id: user_id
+                }, function (data) {
+                    if (data.status == 200) {
+                        $('#chat-<?php echo $so['chat']['user_id']; ?> .chat-body').append(data.html);
+                        div_scroll.scrollTop = div_scroll.scrollHeight;
+                        document.getElementById('message-sound').play();
+                    }
+                    setTimeout(function () {
+                        So_GetMessagesNews_<?php echo $so['chat']['user_id']; ?>();
+                    }, 4000);
+                });
+            }
+<?php } ?>
+    </script>
+    <style>
+        .visto-chat-<?php echo $so['chat']['user_id']; ?> {
+            display: none;
+        }
+    </style>
+</div>

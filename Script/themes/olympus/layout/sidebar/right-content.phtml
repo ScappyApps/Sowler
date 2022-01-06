@@ -1,0 +1,65 @@
+<div class="dashboard dashboard-right">
+    <div class="module wtf-module js-wtf-module roaming-module has-content">
+        <div class="flex-module">
+            <div class="flex-module-header">
+                <h3><?php echo $so['lang']['who_to_follow']; ?></h3>
+                <!--<small>· </small>
+                <button type="button" class="btn-link js-refresh-suggestions">
+                    <small><?php echo $so['lang']['refresh']; ?></small>
+                </button>-->
+                <br>
+                <!--<small class="view-all">· --><a class="js-view-all-link js-nav" href="<?php echo So_SeoLink('index.php?link1=suggestions-follow'); ?>" data-ajax="?link1=suggestions-follow" data-element-term="view_all_link"><?php echo $so['lang']['view_all']; ?></a>
+            <!--</small>-->
+            </div>
+            <?php
+            $suggestions = So_GetSuggestions();
+            if (count($suggestions) > 0) {
+                foreach ($suggestions as $so['suggestion']) {
+                    echo So_GetPage('sidebar/suggestions');
+                }
+            }
+            ?>
+        </div>
+    </div>
+    <div class="module Trends trends">
+        <div class="trends-inner">
+            <div class="flex-module trends-container context-trends-container">
+                <div class="flex-module-header">
+                    <h3>
+                        <span class="trend-location js-trend-location"><?php echo $so['lang']['trends_for_you']; ?></span>
+                    </h3>
+                </div>
+                <div class="flex-module-inner">
+                    <ul class="trend-items js-trends">
+                        <?php
+                        $trands = So_GetTrends('top');
+                        if (count($trands) > 0) {
+                            foreach ($trands as $so['trand']) {
+                                echo So_GetPage('sidebar/trands');
+                            }
+                        }
+                        ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="Footer module roaming-module">
+        <div class="flex-module">
+            <div class="flex-module-inner js-items-container">
+                <ul class="u-cf">
+                    <li class="Footer-item Footer-copyright">© <?php echo date('Y'); ?> <?php echo $so['config']['site_name']; ?></li>
+                    <li class="Footer-item">
+                        <a href="<?php echo So_SeoLink('index.php?link1=about'); ?>" rel="noopener"><?php echo $so['lang']['terms_about']; ?></a>
+                    </li>
+                    <li class="Footer-item">
+                        <a href="<?php echo So_SeoLink('index.php?link1=tos'); ?>" rel="noopener"><?php echo $so['lang']['terms']; ?></a>
+                    </li>
+                    <li class="Footer-item">
+                        <a href="<?php echo So_SeoLink('index.php?link1=privacy'); ?>" rel="noopener"><?php echo $so['lang']['terms_privacy']; ?></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

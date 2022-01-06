@@ -1,0 +1,46 @@
+<div id="doc">
+    <div class="alert-messages hidden" id="message-drawer" style="top: 46px;">
+        <div class="message sticky">
+            <div class="message-inside">
+                <span class="message-text"></span>
+            </div>
+        </div>
+    </div>
+    <div id="page-outer">
+        <div id="page-container" class="AppContent wrapper wrapper-home">
+            <?php echo So_GetPage('sidebar/left-content'); ?>
+            <div role="main" aria-labelledby="content-main-heading" class="content-main top-timeline-tweetbox" id="timeline" tabindex="-1">
+                <div id="above-timeline-prompt"></div>
+                <div class="stream-container conversations-enabled js-request-more-stream-items" data-max-position="1023715060630396928" data-min-position="1023688242284187652">
+                    <div class="stream-item js-new-items-bar-container" style=""></div>
+                    <div class="stream">
+                        <ol class="stream-items js-navigable-stream posts-list" id="stream-items-id">
+                            <?php echo So_GetPage('story/content'); ?>
+                        </ol>
+                        <div class="stream-footer">
+                            <div class="timeline-end has-items">
+                                <div class="stream-end">
+                                    <div class="stream-end-inner">
+                                        <span class="Icon Icon--large">
+                                            <img src="<?php echo $so['config']['site_url']; ?>/upload/images/icon.png" width="24">
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="stream-loading">
+                                    <div class="stream-end-inner">
+                                        <span class="spinner" title="Loading..."></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ol class="hidden-replies-container"></ol>
+                    </div>
+                </div>
+            </div>
+            <?php echo So_GetPage('sidebar/right-content'); ?>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    So_GetLightboxCommentNotification(<?php echo $so['story']['post_id']; ?>, <?php echo $so['comment']['comment_id']; ?>);
+</script>

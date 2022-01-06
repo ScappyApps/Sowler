@@ -1,0 +1,67 @@
+<!-- News Feed Form  -->
+<?php echo So_GetPage('live/chat/publisher-box'); ?>
+<div id="newsfeed-items-grid">
+	<?php
+	$classComment = new Comment();
+	$comments = $classComment->So_GetComments($so['live']['post_id']);
+
+	if (count($comments) > 0) {
+		foreach ($comments as $so['comment']) {
+			echo So_GetPage('live/comment/content');
+		}
+	}
+	?>
+</div>
+<div class="chat-live-get-comments">
+	<ul class="comments-list" id="comments-list-<?php echo $so['live']['post_id']; ?>">
+	</ul>
+</div>
+<script>
+<?php if ($so['config']['websocket'] == 0) { ?>
+$(document).ready(function () {
+	So_GetLiveComments();
+});
+function So_GetLiveComments() {
+	var post_id = <?php echo $so['live']['post_id']; ?>;
+	 var after_id = 0;
+	
+	var div_scroll_chat = $('.chat-live ul.comments-list')[0];
+	
+	if ($('.comment-item').length > 0) {
+		after_id = $('.chat-live .comment-item:last').attr('data-id');
+	} else {
+		after_id = '0';
+	}
+	
+	$.post(So_Requests() + '?type=get-comments-live', {
+		post_id: post_id,
+		after_id: after_id
+	}, function (data) {
+		if (data.status == 200) {
+			$('.comments-list').append(data.html);
+			div_scroll_chat.scrollTop = div_scroll_chat.scrollHeight;
+		}
+	});
+	
+	if ($('.chat-live-get-comments').length > 0) {
+		setTimeout(function () {
+			So_GetLiveComments();
+		}, 4000);
+	}
+}
+<?php } else { ?>
+socket.on('receivedMessageLivestream', function (data) {
+	var div_scroll_chat = $('.chat-live ul.comments-list')[0];
+	if (data.room_id = <?php echo $so['live']['post_id']; ?>) {
+		$('.comments-list').append(data.html);
+		div_scroll_chat.scrollTop = div_scroll_chat.scrollHeight;
+	}
+});
+<?php } ?>
+</script>
+<style>
+ul.comments-list {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+</style>

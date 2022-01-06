@@ -1,0 +1,90 @@
+<div id="retweet-tweet-dialog" class="RetweetDialog modal-container tweet-showing" style="z-index: 4002; display: block;">
+    <div class="RetweetDialog-modal modal draggable" style="display: block!important;" id="retweet-tweet-dialog-dialog" role="alertdialog" aria-labelledby="retweet-tweet-dialog-header" aria-describedby="retweet-tweet-dialog-body" style="top: 20%; left: 388px;">
+        <div class="js-first-tabstop" tabindex="0"></div>
+        <div class="modal-content col-md-5" role="document" id="form-share-new-post">
+            <div class="modal-header">
+                <h3 class="modal-title" id="retweet-tweet-dialog-header"><?php echo $so['lang']['retwidley_this']; ?></h3>
+            </div>
+            <form id="form-share" method="post" class="t1-form tweet-form RetweetDialog-tweetForm isWithoutComment condensed">
+                <div class="RetweetDialog-commentBox">
+                    <div class="tweet-content">
+                        <div class="RichEditor RichEditor--emojiPicker">
+                            <div class="RichEditor-mozillaCursorWorkaround">&nbsp;</div>
+                            <div class="RichEditor-container u-borderRadiusInherit">
+                                <div class="RichEditor-scrollContainer u-borderRadiusInherit" style="height: 60px;">
+                                    <textarea style="height: 60px;" name="postText" placeholder="<?php echo $so['lang']['add_a_comment']; ?>"></textarea>
+                                    <input type="hidden" name="share_id" value="<?php echo $so['story']['post_id']; ?>">
+                                </div>
+                            </div>
+                            <div class="RichEditor-mozillaCursorWorkaround">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="RetweetDialog-footer u-cf">
+                    <div class="container" style="margin-top: 0px;">
+						<div class="row">
+							<!-- Main Content -->
+							<main class="col-md-12">
+								<div id="newsfeed-items-grid">
+									<?php echo So_GetPage('story/content'); ?>
+								</div>
+							</main>
+						</div>
+					</div>
+                    <div class="tweet-button">
+                        <button class="btn btn-md-2 btn-primary" type="submit">
+                            <span class="RetweetDialog-retweetActionLabel">
+                                Retwidley
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <a href="javascript:void(0);" onclick="So_CloseFormShare();" class="pointer modal-btn modal-close js-close" style="color: #ddd;" aria-controls="retweet-tweet-dialog-dialog" aria-describedby="retweet-tweet-dialog-body">
+            <span class="Icon Icon--medium">
+                <i class="fas fa-times"></i>
+                <span class="visuallyhidden">Close</span>
+            </span>
+        </a>
+        <div class="js-last-tabstop" tabindex="0"></div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('form#form-share').ajaxForm({
+            url: So_Requests() + '?type=share-post',
+            beforeSend: function () {
+               
+           },
+           success: function (data) {
+               if (data.status == 200) {
+                   So_CloseFormShare();
+                    So_AlertMessage(data.message);
+                    $('#qadqwdqw').prepend(data.html);
+                    So_HideLightbox();
+               } else {
+                   return false;
+               }
+           }
+        });
+    });
+</script>
+<style>
+    .tweet {
+        border-bottom: none;
+    }
+    .tweet:hover {
+        background-color: transparent;
+    }
+    .stream-item:not(.no-header-background-module) {
+        border: none;
+    }
+    #retweet-tweet-dialog .post .control-block-button, #retweet-tweet-dialog .comments-list, #retweet-tweet-dialog .more-comments, #sqwsoqio, #asdasdada, #qswqswqswqsqw, #retweet-tweet-dialog .more {
+        display: none;
+    }
+    #iframe-youtube {
+        width: 100%;
+    }
+</style>

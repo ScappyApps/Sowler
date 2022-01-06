@@ -1,0 +1,25 @@
+<?php $classComment = new Comment(); ?>
+<div class="IconContainer js-tooltip" data-original-title="<?php echo $so['lang']['like']; ?>">
+    <?php if ($classComment->So_CommentLiked($so['comment']['comment_id'], $so['user']['user_id']) === true) { ?>
+        <span role="presentation" class="Icon Icon--medium" style="color: #e0245e!important;font-size: 15px;">
+            <i class="fas fa-heart"></i>
+        </span>
+    <?php } else { ?>
+        <span role="presentation" class="Icon Icon--heart Icon--medium" style="font-size: 20px;"></span>
+        <div class="HeartAnimation"></div>
+    <?php } ?>
+</div>
+<span class="ProfileTweet-actionCount ProfileTweet-actionCount--isZero">
+    <?php if ($classComment->So_CommentLiked($so['comment']['comment_id'], $so['user']['user_id']) === true) { ?>
+        <span class="ProfileTweet-actionCountForPresentation" aria-hidden="true" style="color: #e0245e!important;">
+        <?php } else { ?>
+            <span class="ProfileTweet-actionCountForPresentation" aria-hidden="true" style="color: #e0245e!important;">
+            <?php } ?>
+            <?php
+            $countCommentLike = $classComment->So_CountCommentLike($so['comment']['comment_id']);
+            if ($countCommentLike > 0) {
+                echo $countCommentLike;
+            }
+            ?>
+        </span>
+</span>

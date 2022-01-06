@@ -1,0 +1,92 @@
+<div class="ProfileOnboarding" style="display: block;">
+    <div class="js-first-tabstop" tabindex="1"></div>
+    <div class="ProfileOnboarding-caret">
+        <div class="ProfileOnboarding-caretInner"></div>
+    </div>
+    <div class="ProfileOnboarding-module module">
+        <?php
+        if ($so['user']['avatar'] == $so['config']['site_url'] . '/upload/images/d-avatar.png') {
+            echo So_GetPage('sidebar/change-profile-avatar');
+        }
+        
+        if ($so['user']['cover'] == $so['config']['site_url'] . '/') {
+            echo So_GetPage('sidebar/change-profile-cover');
+        }
+       
+        if (empty($so['user']['about'])) {
+            echo So_GetPage('sidebar/change-about-me');
+        }
+       
+        if (empty($so['user']['location'])) {
+            echo So_GetPage('sidebar/change-my-location');
+        }
+        
+        if (empty($so['user']['day']) && empty($so['user']['month']) && empty($so['user']['year'])) {
+            echo So_GetPage('sidebar/change-my-birthday');
+        }
+        ?>
+        <div class="ProfileOnboarding-complete u-textCenter introduce-yourself" id="introduce-yourself">
+            <div class="dismiss js-action-dismiss"><span class="Icon"><i class="fas fa-times"></i></span></div>
+            <img class="Emoji ProfileOnboarding-completeImage" src="https://abs.twimg.com/emoji/v2/72x72/1f4af.png">
+                <div class="ProfileOnboarding-completeText"><?php echo $so['lang']['awesome_100_porcent']; ?></div>
+                <a class="btn small primary-btn ProfileOnboarding-button ProfileOnboarding-profileButton" href="<?php echo So_SeoLink('index.php?link1=timeline&username=' . $so['user']['username']); ?>" data-ajax="?link1=timeline&username=<?php echo $so['user']['username']; ?>">
+                <?php echo $so['lang']['see_my_profile']; ?>
+                </a>
+        </div>
+        <div class="ProfileOnboardingProgress introduce-yourself" id="introduce-yourself">
+            <div class="ProfileOnboardingProgress-bar">
+                <div class="ProfileOnboardingProgress-barCompleted" style="width: <?php echo $so['user']['porcent']; ?>%;"></div>
+            </div>
+            <span class="ProfileOnboardingProgress-text"><?php echo $so['user']['porcent']; ?>% <?php echo $so['lang']['completed']; ?></span>
+        </div>
+        <div class="ProfileOnboarding-cta u-textRight">
+            <button class="save-profile-btn btn small primary-btn ProfileOnboarding-button" onclick="So_Next();"><?php echo $so['lang']['save']; ?></button>
+        </div>
+    </div>
+    <div class="js-last-tabstop" tabindex="4"></div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.ProfileOnboarding-module').find('.introduce-yourself:first-child').show();
+    });
+    var divs = document.querySelectorAll('.ProfileOnboarding-module > .introduce-yourself');
+    div_next = 1;
+    div_back = 0;
+    total_divs  = $('.ProfileOnboarding-module').find('.introduce-yourself').length - 1;
+    porcent     = <?php echo $so['user']['porcent']; ?>;
+
+    function So_Next() {
+
+        if (div_next == (total_divs - 1)) {
+            $('.ProfileOnboarding-cta.u-textRight').hide();
+        }
+        if (total_divs != div_next) {
+            divs[div_back].style.display = "none";
+            divs[div_next].style.display = "block";
+
+            div_next = div_next + 1;
+            div_back = div_back + 1;
+            porcent  = porcent + 20;
+            
+            $('.ProfileOnboardingProgress-text').html(porcent + '% <?php echo $so['lang']['completed']; ?>');
+            $('.ProfileOnboardingProgress-barCompleted').attr('style', 'width: ' + porcent + '%;');
+            if ($('#user_description').length > 0) {
+                if ($('#user_description').val() != '') {
+                    $('form#change-about-me').submit();
+                }
+            }
+            if ($('#user_location').length > 0) {
+                if ($('#user_location').val() != '') {
+                    $('form#change-my-location').submit();
+                }
+            }
+            if ($('#user_day').length > 0 && $('#user_month').length > 0 && $('#user_year').length > 0) {
+                if ($('#user_day').val() != 0 && $('#user_month').val() != 0 && $('#user_year').val() != 0) {
+                    $('form#change-my-birthday').submit();
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+</script>

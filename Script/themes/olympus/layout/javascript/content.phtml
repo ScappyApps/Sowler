@@ -1,0 +1,71 @@
+<script>
+		var socket = io('<?php echo $so['config']['site_url']; ?>:<?php echo $so['config']['site_port']; ?>');
+		socket.on('resultNotifications', function (data) {
+			if (data.status == 200) {
+				if (data.count_notifications == 0) {
+					$('.count-notifications').html('0');
+				} else {
+					$('.count-notifications').html(data.count_notifications);
+				}
+				if (data.count_messages == 0) {
+					$('.count-messages').html('0');
+				} else {
+					$('.count-messages').html(data.count_messages);
+				}
+				/**if (JSONdata[0].users_online != 0) {
+				 $('.chat-container > #chat-list-messages').html(JSONdata[0].users_online);
+				 } else {
+				 $('.chat-container > #chat-list-messages').html('');
+				 }**/
+				setTimeout(function () {
+					var metaData = {
+						user_id: <?php echo $so['user']['user_id']; ?>
+					};
+					socket.emit('getNotifications', metaData);
+				}, 3000);
+			}
+		});
+        socket.on('receivedMessage', function (message) {
+            if (message.to_id == <?php echo $so['user']['user_id']; ?>) {
+                if ($('.messenger-chat-opened').length > 0 && message.from_id == $('.messenger-chat-opened').attr('data-messenger')) {
+                    $('#list-messages').append(message.html_to);
+                    var div_scroll = $('#list-messages')[0];
+                    div_scroll.scrollTop = div_scroll.scrollHeight;
+                    $('.visto').remove();
+                }
+                if ($('.opened-chats #chat-' + message.from_id).length > 0) {
+                    $('#chat-' + message.from_id + ' .chat-body').append(message.html_to_chat);
+                    $('.visto-chat-' + message.from_id).hide();
+                    var div_scroll = $('#chat-' + message.from_id + ' .chat-body')[0];
+                    setTimeout(function () {
+                        div_scroll.scrollTop = div_scroll.scrollHeight;
+                        $('.visto-chat-' + message.from_id).remove();
+                    }, 200);
+                }
+            } else {
+                return false;
+            }
+        });
+
+        socket.on('receivedMessageSeen', function (message) {
+            if (message.to_id == <?php echo $so['user']['user_id']; ?>) {
+                if ($('.messenger-chat-opened').length > 0 && message.from_id == $('.messenger-chat-opened').attr('data-messenger') && $('.visto').length < 1) {
+                    $('#list-messages').append('<div class="visto" style="background: #ffffff;padding: 0px 10px 5px; text-align: rigth;"><?php echo $so['lang']['message_seen']; ?></div>');
+                    var div_scroll = $('#list-messages')[0];
+                    div_scroll.scrollTop = div_scroll.scrollHeight;
+                     $('.visto').show();
+                }
+                if ($('.opened-chats #chat-' + message.from_id).length > 0 && $('.visto-chat-' + message.from_id).length < 1) {
+                    $('#chat-' + message.from_id + ' .chat-body').append('<div class="visto-chat-' + message.from_id + '" style="background: #ffffff;padding: 0px 10px 5px; text-align: rigth;"><?php echo $so['lang']['message_seen']; ?></div>');
+                    
+                    var div_scroll = $('#chat-' + message.from_id + ' .chat-body')[0];
+                    $('.visto-chat-' + message.from_id).show();
+                    setTimeout(function () {
+                        div_scroll.scrollTop = div_scroll.scrollHeight;
+                    }, 200);
+                }
+            } else {
+                return false;
+            }
+        });
+</script>

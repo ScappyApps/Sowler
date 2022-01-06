@@ -1,0 +1,29 @@
+<div id="asfkjaofuiuiasdua">
+	<video id="video-gif-<?php echo $so['comment']['comment_id']; ?>" src="https://media.giphy.com/media/<?php echo $so['comment']['postGif']; ?>/giphy.mp4" poster="https://media.giphy.com/media/<?php echo $so['comment']['postGif']; ?>/giphy_s.gif" loop="" playsinline=""  muted="muted" style="background-color: black;transform: rotate(0deg) scale(1);width: 300px;"></video>
+	<div class="click-toplay-pause-video" data-post-id="<?php echo $so['comment']['comment_id']; ?>" data-status="true"></div>
+</div>
+<script>
+    $(document).ready(function () {
+        // Get media - with autoplay disabled (audio or video)
+        var media = $('video').not("[autoplay='autoplay']");
+        var tolerancePixel = 150;
+
+        function checkMedia() {
+            // Get current browser top and bottom
+            var scrollTop = $(window).scrollTop() + tolerancePixel;
+            var scrollBottom = $(window).scrollTop() + $(window).height() - tolerancePixel;
+            media.each(function (index, el) {
+                var yTopMedia = $(this).offset().top;
+                var yBottomMedia = $(this).height() + yTopMedia;
+
+                if (scrollTop < yBottomMedia && scrollBottom > yTopMedia) {
+                    $(this).get(0).play();
+                } else {
+                    $(this).get(0).pause();
+
+                }
+            });
+        }
+        $(document).on('scroll', checkMedia);
+    });
+</script>

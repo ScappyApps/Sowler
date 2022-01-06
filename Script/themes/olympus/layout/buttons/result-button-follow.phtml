@@ -1,0 +1,14 @@
+<?php $classUser = new User(); ?>
+<?php if ($classUser->So_CheckFollowing($so['result']['user_id']) === false) { ?>
+<a href="javascript:void(0);" onclick="So_RegisterFollowResult(<?php echo $so['result']['user_id']; ?>);" class="accept-request">
+	<span class="icon-add without-text">
+		<?php echo $so['lang']['follow']; ?> 
+	</span>
+</a>
+<?php } else { ?>
+<a href="javascript:void(0);" onclick="So_RegisterFollowResult(<?php echo $so['result']['user_id']; ?>);" class="accept-request">
+	<span class="icon-add without-text">
+		<?php echo $so['lang']['following']; ?> 
+	</span>
+</a>
+<?php } ?>

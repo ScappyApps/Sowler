@@ -1,0 +1,93 @@
+<?php
+$classSticker = new Sticker();
+$sticker = $classSticker->So_GetAllStickers($so['package']['id']);
+?>
+<div class="_10 uiLayer _4-hy _3thl _3qw" style="opacity: 1; min-width: 1350px;">
+    <div class="_3ixn"></div>
+    <div class="_59s7" role="dialog" aria-label="Dialog content" style="width: 688px; margin-top: 40px;">
+        <div class="_4t2a">
+            <div>
+                <div>
+                    <div>
+                        <div class="_5rq- autofocus _4-i2 _pig _50f4 _5pfh" font-size="medium" tabindex="-1" style="height: 450px;">
+                            <div>
+                                <div class="_5r5i">
+                                    <div class="_5r5g _4-i0 _2gb3">
+                                        <div class="clearfix">
+                                            <div class="_ohe lfloat">
+                                                <h3 class="_52c9" data-hover="tooltip" data-tooltip-display="overflow">
+                                                    <a class="_5r5c" href="javascript:void(0);" onclick="So_GetStickersStoreComment(<?php echo $so['package']['post_id']; ?>);">
+                                                        <img class="_5r5t img" src="<?php echo $so['config']['site_url']; ?>/upload/images/gkUNakoJaOf.png" alt="" height="12" width="8">
+                                                        <span class="_5rq_  _5kx5">
+                                                            <?php echo $so['lang']['stickers_store']; ?>
+                                                        </span>
+                                                    </a>
+                                                </h3>
+                                            </div>
+                                            <div class="_ohf rfloat">
+                                                <div class="_51-u">
+                                                    <button data-testid="dialog_title_close_button" onclick="So_CloseStickersStore();" class="layerCancel _51-t _50zy _50-0 _50z- _5upp _42ft" type="button" title="Close">
+                                                        <?php echo $so['lang']['close']; ?>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" _5rzl">
+                                    <div width="688" class="uiScrollableArea nofade uiScrollableAreaWithShadow contentAfter">
+                                        <div class="uiScrollableAreaWrap scrollable" style="overscroll-behavior: contain contain;">
+                                            <div class="uiScrollableAreaBody" style="margin-right: 0;width: 688px;padding: 10px;">
+                                                <div class="uiScrollableAreaContent">
+                                                    <div style="padding-top: 10px; padding-bottom: 10px;">
+                                                        <div class="_5ra6 clearfix" direction="left">
+                                                            <div class="_ohe lfloat">
+                                                                <img class="_5ra5 _5r5s img _8o _8r img" src="<?php echo $so['package']['image']; ?>" alt="">
+                                                            </div>
+                                                            <div class="">
+                                                                <div class="_42ef _8u">
+                                                                    <div style="margin-top: 10px;">
+                                                                        <div class="_5raa  _50f7">
+                                                                            <?php echo $so['package']['name']; ?>
+                                                                        </div>
+                                                                        <div class="_5rac">
+                                                                            <?php echo $so['config']['site_name']; ?>
+                                                                        </div>
+                                                                        <?php
+                                                                        if ($classSticker->So_HaveStickerPackage($so['package']['id']) === false && $so['package']['id'] <> 2) {
+                                                                        ?>
+                                                                        <button id="button-package-<?php echo $so['package']['id']; ?>" class="_5r5d _4jy0 _4jy4 _4jy2 _51sy selected _42ft" onclick="So_AddToMyStickersComment(<?php echo $so['package']['id']; ?>, <?php echo $so['story']['post_id']; ?>);">
+                                                                            <?php echo $so['lang']['free']; ?>
+                                                                        </button>
+                                                                        <?php } ?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="_5ra7 _4-u2  _4-u8" style="padding: 10px;">
+                                                            <?php
+                                                            foreach ($classSticker->So_GetAllStickers($so['package']['id']) as $so['sticker']) {
+                                                            ?>
+                                                            <img src="<?php echo $so['sticker']['image']; ?>">
+                                                            <?php } ?>
+                                                            <div>
+                                                                <div class="_5ra9 _50f8">© <?php echo date('Y'); ?> <?php echo $so['config']['site_name']; ?></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uiScrollableAreaTrack" style="opacity: 1;">
+                                            <div class="uiScrollableAreaGripper" style="height: 202.014px; top: 0px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

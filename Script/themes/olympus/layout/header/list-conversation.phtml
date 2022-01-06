@@ -1,0 +1,44 @@
+<?php
+$classMessage = new Message();
+$classUser = new User();
+$message = $classMessage->So_GetLastMessage($so['conversation']['user_id']);
+$message[0]['first_name'] = $classUser->So_UserData($message[0]['from_id'])['first_name'];
+?>
+<li class="<?php if ($message[0]['from_id'] <> $so['user']['user_id'] && $message[0]['seen'] == 0) { echo 'message-unread'; } ?>">
+    <div class="author-thumb">
+        <img width="30px" src="<?php echo $so['conversation']['avatar']; ?>" alt="<?php echo $so['conversation']['name']; ?>">
+    </div>
+    <div class="notification-event">
+        <a href="javascript:void(0);" onclick="So_GetChatUser(<?php echo $so['conversation']['user_id']; ?>);" class="h6 notification-friend"><?php echo $so['conversation']['name']; ?></a>
+        <span class="chat-message-item">
+            <?php
+                if ($message[0]['from_id'] == $so['user']['user_id']) {
+                    echo $so['lang']['you'];
+                } else {
+                    echo $message[0]['first_name'];
+                }
+                ?>:
+                <?php
+                if (strlen($message[0]['postText']) > 20) {
+                    echo substr($message[0]['postText'], 0, 20) . '...';
+                } else {
+                    echo $message[0]['postText'];
+                }
+                ?>
+        </span>
+        <?php
+        if (!empty($message[0]['postImage']) || !empty($message[0]['postGif']) || !empty($message[0]['postVideo'])) {
+            echo '<p class="DMInboxItem-snippet"><i class="fas fa-paperclip"></i>: ' . $so['lang']['file'] . '</p>';
+        }
+        ?>
+        <span class="notification-date">
+            <time class="entry-date updated"><?php echo So_Time($message[0]['time']); ?></time>
+        </span>
+    </div>
+    <span class="notification-icon">
+        <svg class="svg-inline--fa fa-envelope fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg>
+    </span>
+    <div class="more">
+        <svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
+    </div>
+</li>

@@ -1,0 +1,43 @@
+<?php
+$classMessage = new Message();
+$classUser = new User();
+$message = $classMessage->So_GetLastMessage($so['conversation']['user_id']);
+$message[0]['first_name'] = $classUser->So_UserData($message[0]['from_id'])['first_name'];
+?>
+<li class="<?php if ($message[0]['from_id'] <> $so['user']['user_id'] && $message[0]['seen'] == 0) { echo 'hover-message'; } ?>" data-token-id="<?php echo $so['conversation']['user_id']; ?>">
+	<div class="author-thumb">
+		<img width="35px" src="<?php echo $so['conversation']['avatar']; ?>" alt="author">
+	</div>
+	<div class="notification-event">
+		<a href="<?php echo $so['config']['site_url']; ?>/messenger/<?php echo So_Secure($so['conversation']['user_id']); ?>" class="h6 notification-friend"><?php echo $so['conversation']['name']; ?></a>
+		<span class="chat-message-item">
+		<?php
+		if ($message[0]['from_id'] == $so['user']['user_id']) {
+			echo $so['lang']['you'];
+		} else {
+			echo $message[0]['first_name'];
+		}
+		?>:
+		<?php
+		if (strlen($message[0]['postText']) > 20) {
+			echo substr($message[0]['postText'], 0, 20) . '...';
+		} else {
+			echo $message[0]['postText'];
+		}
+		?>
+		</span>
+		<?php
+		if (!empty($message[0]['postImage']) || !empty($message[0]['postGif']) || !empty($message[0]['postVideo'])) {
+			echo '<span class="chat-message-item"><i class="fas fa-paperclip"></i>: ' . $so['lang']['file'] . '</span>';
+		}
+		?>
+		<span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
+	</div>
+	<span class="notification-icon">
+		<svg class="olymp-chat---messages-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use></svg>
+	</span>
+
+	<div class="more">
+		<svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
+	</div>
+</li>

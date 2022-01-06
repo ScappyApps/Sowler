@@ -1,0 +1,118 @@
+<?php
+$classMessage = new Message();
+$conversations = $classMessage->So_GetMessagesOpen(200);
+?>
+<div class="chat-container">
+    <div class="chat-search">
+        <i class="fas fa-search"></i>
+        <input id="chat-search-input" type="text" placeholder="<?php echo $so['lang']['search_messages']; ?>" onkeyup="So_SearchFriend(this.value);" />
+    </div>
+    <ul id="chat-list-messages">
+        <?php
+        if (count($conversations) > 1) {
+            foreach ($conversations as $so['conversation']) {
+                if ($so['conversation']['user_id'] <> $so['user']['user_id']) {
+                    echo So_GetPage('chat/list-conversation');
+                }
+            }
+        }
+        ?>
+    </ul>
+    <ul class="search-result-messages">
+        <div id="result">
+
+        </div>
+        <div class="not-found">
+            <?php echo $so['lang']['not_found']; ?>
+        </div>
+    </ul>
+</div>
+<script>
+    function So_GetChatEmoticons(user_id) {
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box, .opened-chats .chat-box-normal .chat-footer .chat-list-box').hide();
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box').html('<img id="chat-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+        $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').show();
+        $.post(So_Requests() + '?type=get-chat-emoticons', {
+            user_id: user_id
+        }, function (data) {
+            if (data.status == 200) {
+                $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').html(data.html);
+            } else {
+                return false;
+            }
+        });
+    }
+    function So_GetChatUpload(user_id) {
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box, .opened-chats .chat-box-normal .chat-footer .chat-list-box').hide();
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box').html('<img id="chat-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+        $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').show();
+        $.post(So_Requests() + '?type=get-chat-upload', {
+            user_id: user_id
+        }, function (data) {
+            if (data.status == 200) {
+                $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').html(data.html);
+            } else {
+                return false;
+            }
+        });
+    }
+    function So_GetChatGifs(user_id) {
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box, .opened-chats .chat-box-normal .chat-footer .chat-list-box').hide();
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box').html('<img id="chat-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+        $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').show();
+        $.post(So_Requests() + '?type=get-chat-gifs', {
+            user_id: user_id
+        }, function (data) {
+            if (data.status == 200) {
+                $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').html(data.html);
+            } else {
+                return false;
+            }
+        });
+    }
+    function So_GetChatStickers(user_id) {
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box, .opened-chats .chat-box-normal .chat-footer .chat-list-box').hide();
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box').html('<img id="chat-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+        $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').show();
+        $.post(So_Requests() + '?type=get-chat-stickers', {
+            user_id: user_id
+        }, function (data) {
+            if (data.status == 200) {
+                $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').html(data.html);
+            } else {
+                return false;
+            }
+        });
+    }
+    function So_PutGifChat(image, user_id) {
+        $('.opened-chats').find('#chat-' + user_id).find('input#post-gif-chat').val(image);
+        $('form.chat-form-' + user_id).submit();
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box, .opened-chats .chat-box-normal .chat-footer .chat-list-box').hide();
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box').html('<img id="chat-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+    }
+    function So_GetPackageType(package, to_id) {
+        $('.chat-form-' + to_id).find('.stickers-body').html('<img id="chat-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+        $.post(So_Requests() + '?type=get-packge-type', {
+            sticker_id: package,
+            to_id: to_id
+        }, function (data) {
+            if (data.status == 200) {
+                $('.chat-form-' + to_id).find('.stickers-body').html(data.html);
+            } else {
+                return false;
+            }
+        });
+    }
+</script>
+<style>
+    .search-result-messages, .search-result-messages .not-found {
+        display: none;
+    }
+    .search-result-messages .not-found {
+        padding: 5px;
+        color: #fff;
+        font-size: 15px;
+        text-align: center;
+        font-weight: bold;
+    }
+</style>

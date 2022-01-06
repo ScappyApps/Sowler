@@ -1,0 +1,26 @@
+<div class="message-box" data-message="<?php echo $so['message']['id']; ?>">
+    <div class="<?php echo ($so['message']['from_id'] <> $so['user']['user_id']) ? 'pull-left' : 'pull-right'; ?>">
+        <?php if ($so['message']['from_id'] <> $so['user']['user_id']) { ?>
+        <img src="<?php echo $so['message']['from']['avatar']; ?>" style="border-radius: 50%;"/>
+        <?php } ?>
+        <p dir="auto">
+            <?php echo $so['message']['postText']; ?>
+        </p>
+        <div class="media-file">
+            <?php
+            if (!empty($so['message']['postImage'])) {
+                echo So_GetPage('chat/extra/image');
+            }
+            if (!empty($so['message']['postGif'])) {
+                echo So_GetPage('chat/extra/gif');
+            }
+            if (!empty($so['message']['postVideo'])) {
+                echo So_GetPage('chat/extra/video');
+            }
+            if (!empty($so['message']['postSticker'])) {
+                echo So_GetPage('chat/extra/sticker');
+            }
+            ?>
+        </div>
+    </div>
+</div>

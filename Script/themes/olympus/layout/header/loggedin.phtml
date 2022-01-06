@@ -1,0 +1,878 @@
+<?php
+$notifications = So_Notifications();
+$classMessage = new Message();
+$conversations = $classMessage->So_GetMessagesOpen(200);
+$conversationss = $classMessage->So_GetFriends(200);
+
+$last_id = 0;
+if (count($conversations) > 0) {
+	$last_id = So_LastChatId();
+}
+?>
+<div class="fixed-sidebar">
+    <div class="fixed-sidebar-left sidebar--small" id="sidebar-left">
+        <a href="<?php echo So_SeoLink('index.php?link1=home'); ?>" data-ajax="?link1=home" class="logo img-logo-header">
+            <div class="img-wrap">
+                <img src="<?php echo $so['config']['site_url']; ?>/upload/images/icon.png?<?php echo time(); ?>" id="loading-ajax-icon" />
+            </div>
+        </a>
+        <div class="mCustomScrollbar" data-mcs-theme="dark">
+            <ul class="left-menu">
+                <li>
+                    <a href="#" class="js-sidebar-open">
+                        <svg class="svg-inline--fa fa-outdent fa-w-14" aria-hidden="true" data-prefix="fas" data-icon="outdent" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M0 84V44c0-8.837 7.163-16 16-16h416c8.837 0 16 7.163 16 16v40c0 8.837-7.163 16-16 16H16c-8.837 0-16-7.163-16-16zm208 144h224c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H208c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zM16 484h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm192-128h224c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H208c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zM4.687 267.313l96 95.984C110.734 373.348 128 366.224 128 351.984V160.008c0-14.329-17.325-21.304-27.313-11.313l-96 95.992c-6.249 6.248-6.249 16.378 0 22.626z"></path></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo So_SeoLink('index.php?link1=home'); ?>" data-ajax="?link1=home">
+                        <svg class="svg-inline--fa fa-newspaper fa-w-18" aria-hidden="true" data-prefix="fas" data-icon="newspaper" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M552 64H88c-13.255 0-24 10.745-24 24v8H24c-13.255 0-24 10.745-24 24v272c0 30.928 25.072 56 56 56h472c26.51 0 48-21.49 48-48V88c0-13.255-10.745-24-24-24zM56 400a8 8 0 0 1-8-8V144h16v248a8 8 0 0 1-8 8zm236-16H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm-208-96H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm0-96H140c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h360c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12z"></path></svg>
+                    </a>
+                </li>
+                <?php if ($so['config']['moments'] == 1) { ?>
+                <li>
+                    <a href="<?php echo So_SeoLink('index.php?link1=moments'); ?>" data-ajax="?link1=moments">
+                        <svg class="svg-inline--fa fa-bolt fa-w-10" aria-hidden="true" data-prefix="fas" data-icon="bolt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M295.973 160H180.572L215.19 30.184C219.25 14.956 207.756 0 192 0H56C43.971 0 33.8 8.905 32.211 20.828l-31.996 240C-1.704 275.217 9.504 288 24.004 288h118.701L96.646 482.466C93.05 497.649 104.659 512 119.992 512c8.35 0 16.376-4.374 20.778-11.978l175.973-303.997c9.244-15.967-2.288-36.025-20.77-36.025z"></path></svg>
+                    </a>
+                </li>
+                <?php } ?>
+                <?php if ($so['config']['floopz_music'] == 1) { ?>
+                    <li>
+                        <a onclick="So_OpenFloopz();" href="javascript:void(0);">
+                            <svg class="svg-inline--fa fa-headphones fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="headphones" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 32C114.52 32 0 146.496 0 288v48a32 32 0 0 0 17.689 28.622l14.383 7.191C34.083 431.903 83.421 480 144 480h24c13.255 0 24-10.745 24-24V280c0-13.255-10.745-24-24-24h-24c-31.342 0-59.671 12.879-80 33.627V288c0-105.869 86.131-192 192-192s192 86.131 192 192v1.627C427.671 268.879 399.342 256 368 256h-24c-13.255 0-24 10.745-24 24v176c0 13.255 10.745 24 24 24h24c60.579 0 109.917-48.098 111.928-108.187l14.382-7.191A32 32 0 0 0 512 336v-48c0-141.479-114.496-256-256-256z"></path></svg>
+                        </a>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
+
+    <div class="fixed-sidebar-left sidebar--large" id="sidebar-left-1">
+        <a href="<?php echo $so['user']['url']; ?>" data-ajax="?link1=timeline&username=<?php echo $so['user']['username']; ?>" class="logo">
+            <div class="img-wrap">
+                <img width="100px" src="<?php echo $so['config']['site_url']; ?>/upload/images/logo.png?<?php echo time(); ?>" alt=" Sowler">
+            </div>
+        </a>
+
+        <div class="mCustomScrollbar" data-mcs-theme="dark">
+            <ul class="left-menu">
+                <li>
+                    <a href="#" class="js-sidebar-open">
+                        <svg class="svg-inline--fa fa-outdent fa-w-14" aria-hidden="true" data-prefix="fas" data-icon="outdent" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M0 84V44c0-8.837 7.163-16 16-16h416c8.837 0 16 7.163 16 16v40c0 8.837-7.163 16-16 16H16c-8.837 0-16-7.163-16-16zm208 144h224c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H208c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zM16 484h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm192-128h224c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H208c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zM4.687 267.313l96 95.984C110.734 373.348 128 366.224 128 351.984V160.008c0-14.329-17.325-21.304-27.313-11.313l-96 95.992c-6.249 6.248-6.249 16.378 0 22.626z"></path></svg>
+                        <span class="left-menu-title" style="margin-left: 10px;">Collapse Menu</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo So_SeoLink('index.php?link1=home'); ?>" data-ajax="?link1=home">
+                        <svg class="svg-inline--fa fa-newspaper fa-w-18" aria-hidden="true" data-prefix="fas" data-icon="newspaper" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M552 64H88c-13.255 0-24 10.745-24 24v8H24c-13.255 0-24 10.745-24 24v272c0 30.928 25.072 56 56 56h472c26.51 0 48-21.49 48-48V88c0-13.255-10.745-24-24-24zM56 400a8 8 0 0 1-8-8V144h16v248a8 8 0 0 1-8 8zm236-16H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm-208-96H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm0-96H140c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h360c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12z"></path></svg>
+                        <span class="left-menu-title" style="margin-left: 10px;">Newsfeed</span>
+                    </a>
+                </li>
+                <?php if ($so['config']['moments'] == 1) { ?>
+                <li>
+                    <a href="<?php echo So_SeoLink('index.php?link1=moments'); ?>" data-ajax="?link1=moments">
+                        <i class="fas fa-bolt"></i> 
+                        <span class="left-menu-title" style="margin-left: 10px;"><?php echo $so['lang']['moments']; ?></span>
+                    </a>
+                </li>
+                <?php } ?>
+                <?php if ($so['config']['floopz_music'] == 1) { ?>
+                    <li>
+                        <a onclick="So_OpenFloopz();" role="button" href="javascript:void(0);">
+                            <svg class="svg-inline--fa fa-headphones fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="headphones" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 32C114.52 32 0 146.496 0 288v48a32 32 0 0 0 17.689 28.622l14.383 7.191C34.083 431.903 83.421 480 144 480h24c13.255 0 24-10.745 24-24V280c0-13.255-10.745-24-24-24h-24c-31.342 0-59.671 12.879-80 33.627V288c0-105.869 86.131-192 192-192s192 86.131 192 192v1.627C427.671 268.879 399.342 256 368 256h-24c-13.255 0-24 10.745-24 24v176c0 13.255 10.745 24 24 24h24c60.579 0 109.917-48.098 111.928-108.187l14.382-7.191A32 32 0 0 0 512 336v-48c0-141.479-114.496-256-256-256z"></path></svg>
+                            <span class="left-menu-title" style="margin-left: 10px;"><?php echo $so['lang']['floopz_music']; ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ... end Fixed Sidebar Left -->
+
+<!-- Fixed Sidebar Left -->
+<div class="fixed-sidebar fixed-sidebar-responsive">
+
+    <div class="fixed-sidebar-left sidebar--small" id="sidebar-left-responsive">
+        <a href="<?php echo So_SeoLink('index.php?link1=home'); ?>" data-ajax="?link1=home" class="logo js-sidebar-open img-logo-header">
+            <img src="<?php echo $so['config']['site_url']; ?>/upload/images/icon.png?<?php echo time(); ?>" id="loading-ajax-icon" />
+        </a>
+    </div>
+
+    <div class="fixed-sidebar-left sidebar--large" id="sidebar-left-1-responsive">
+        <a href="<?php echo So_SeoLink('index.php?link1=home'); ?>" data-ajax="?link1=home" class="logo img-logo-header">
+            <div class="img-wrap">
+                <img src="<?php echo $so['config']['site_url']; ?>/upload/images/icon.png?<?php echo time(); ?>" id="loading-ajax-icon" />
+            </div>
+        </a>
+
+        <div class="mCustomScrollbar" data-mcs-theme="dark">
+
+            <div class="control-block">
+                <div class="author-page author vcard inline-items">
+                    <div class="author-thumb">
+                        <img alt="author" src="<?php echo $so['user']['avatar']; ?>" width="35px" class="avatar">
+                        <span class="icon-status online"></span>
+                    </div>
+                    <a href="<?php echo $so['user']['url']; ?>" data-ajax="?link1=timeline&username=<?php echo $so['user']['username']; ?>" class="author-name fn">
+                        <div class="author-title">
+                            <?php echo $so['user']['name']; ?> <svg class="olymp-dropdown-arrow-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use></svg>
+                        </div>
+                        <span class="author-subtitle"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="ui-block-title ui-block-title-small">
+                <h6 class="title">MAIN SECTIONS</h6>
+            </div>
+
+            <ul class="left-menu">
+                <li>
+                    <a href="#" class="js-sidebar-open">
+                        <svg class="svg-inline--fa fa-outdent fa-w-14" aria-hidden="true" data-prefix="fas" data-icon="outdent" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M0 84V44c0-8.837 7.163-16 16-16h416c8.837 0 16 7.163 16 16v40c0 8.837-7.163 16-16 16H16c-8.837 0-16-7.163-16-16zm208 144h224c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H208c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zM16 484h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm192-128h224c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H208c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zM4.687 267.313l96 95.984C110.734 373.348 128 366.224 128 351.984V160.008c0-14.329-17.325-21.304-27.313-11.313l-96 95.992c-6.249 6.248-6.249 16.378 0 22.626z"></path></svg>
+                        <span class="left-menu-title" style="margin-left: 10px;">Collapse Menu</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo So_SeoLink('index.php?link1=home'); ?>" data-ajax="?link1=home">
+                        <svg class="svg-inline--fa fa-newspaper fa-w-18" aria-hidden="true" data-prefix="fas" data-icon="newspaper" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M552 64H88c-13.255 0-24 10.745-24 24v8H24c-13.255 0-24 10.745-24 24v272c0 30.928 25.072 56 56 56h472c26.51 0 48-21.49 48-48V88c0-13.255-10.745-24-24-24zM56 400a8 8 0 0 1-8-8V144h16v248a8 8 0 0 1-8 8zm236-16H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm-208-96H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm0-96H140c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h360c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12z"></path></svg>
+                        <span class="left-menu-title" style="margin-left: 10px;">Newsfeed</span>
+                    </a>
+                </li>
+                <?php if ($so['config']['moments'] == 1) { ?>
+                <li>
+                    <a href="<?php echo So_SeoLink('index.php?link1=moments'); ?>" data-ajax="?link1=moments">
+                        <i class="fas fa-bolt"></i> 
+                        <span class="left-menu-title" style="margin-left: 10px;"><?php echo $so['lang']['moments']; ?></span>
+                    </a>
+                </li>
+                <?php } ?>
+                <?php if ($so['config']['floopz_music'] == 1) { ?>
+                    <li>
+                        <a onclick="So_OpenFloopz();" role="button" href="javascript:void(0);">
+                            <svg class="svg-inline--fa fa-headphones fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="headphones" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 32C114.52 32 0 146.496 0 288v48a32 32 0 0 0 17.689 28.622l14.383 7.191C34.083 431.903 83.421 480 144 480h24c13.255 0 24-10.745 24-24V280c0-13.255-10.745-24-24-24h-24c-31.342 0-59.671 12.879-80 33.627V288c0-105.869 86.131-192 192-192s192 86.131 192 192v1.627C427.671 268.879 399.342 256 368 256h-24c-13.255 0-24 10.745-24 24v176c0 13.255 10.745 24 24 24h24c60.579 0 109.917-48.098 111.928-108.187l14.382-7.191A32 32 0 0 0 512 336v-48c0-141.479-114.496-256-256-256z"></path></svg>
+                            <span class="left-menu-title" style="margin-left: 10px;"><?php echo $so['lang']['floopz_music']; ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
+            </ul>
+
+            <div class="ui-block-title ui-block-title-small">
+                <h6 class="title"><?php echo $so['lang']['your_account']; ?></h6>
+            </div>
+
+            <ul class="account-settings">
+                <li>
+                    <a href="<?php echo So_SeoLink('index.php?link1=settings'); ?>" data-ajax="?link1=settings" data-nav="settings">
+                        <i class="fas fa-sliders-h"></i>
+                        <?php echo $so['lang']['settins_and_privacy']; ?>
+                    </a>
+                </li>
+                <?php if ($so['user']['admin'] > 0) { ?>
+                        <li>
+                            <a href="<?php echo $so['config']['site_url']; ?>/admincp" data-nav="settings">
+                                <svg class="svg-inline--fa fa-unlock-alt fa-w-14" aria-hidden="true" data-prefix="fas" data-icon="unlock-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M400 256H152V152.9c0-39.6 31.7-72.5 71.3-72.9 40-.4 72.7 32.1 72.7 72v16c0 13.3 10.7 24 24 24h32c13.3 0 24-10.7 24-24v-16C376 68 307.5-.3 223.5 0 139.5.3 72 69.5 72 153.5V256H48c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48zM264 408c0 22.1-17.9 40-40 40s-40-17.9-40-40v-48c0-22.1 17.9-40 40-40s40 17.9 40 40v48z"></path></svg>
+                                Admincp
+                            </a>
+                        </li>
+                <?php } ?>
+                <?php if ($so['config']['adsense'] > 0) { ?>
+                        <!--<li>
+                                <a href="<?php echo So_SeoLink('index.php?link1=adsense'); ?>" data-nav="settings">
+                        <?php echo $so['lang']['my_adsense']; ?>
+                                </a>
+                        </li>-->
+                <?php } ?>
+                <?php if ($so['config']['live_stream'] == 1) { ?>
+                        <?php if ($so['config']['live_stream_all_users'] == 1) { ?>
+                                <li>
+                                    <a href="<?php echo So_SeoLink('index.php?link1=live&type=create'); ?>" data-nav="settings">
+                                        <i class="fas fa-video"></i> 
+                                        <?php echo $so['lang']['live_stream']; ?>
+                                    </a>
+                                </li>
+                        <?php } else if ($so['user']['verified'] == 1) { ?>
+                                <li>
+                                    <a href="<?php echo So_SeoLink('index.php?link1=live&type=create'); ?>" data-nav="settings">
+                                        <i class="fas fa-video"></i>  
+                                        <?php echo $so['lang']['live_stream']; ?>
+                                    </a>
+                                </li>
+                        <?php } ?>
+                <?php } ?>
+                <li>
+                    <button class="btn" type="button" onclick="So_Logout();"><?php echo $so['lang']['log_out']; ?></button>
+                </li>
+            </ul>
+
+            <div class="ui-block-title ui-block-title-small">
+                <h6 class="title"><?php echo $so['lang']['about']; ?> <?php echo $so['config']['site_name']; ?></h6>
+            </div>
+
+            <ul class="about-olympus">
+                <li>
+                        <a href="<?php echo So_SeoLink('index.php?link1=about'); ?>" rel="noopener"><?php echo $so['lang']['terms_about']; ?></a>
+                </li>
+                <li>
+                        <a href="<?php echo So_SeoLink('index.php?link1=tos'); ?>" rel="noopener"><?php echo $so['lang']['terms']; ?></a>
+                </li>
+                <li>
+                        <a href="<?php echo So_SeoLink('index.php?link1=privacy'); ?>" rel="noopener"><?php echo $so['lang']['terms_privacy']; ?></a>
+                </li>
+                <li>© <?php echo date('Y'); ?> <?php echo $so['config']['site_name']; ?></li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+<!-- ... end Fixed Sidebar Left -->
+
+<!-- Fixed Sidebar Right -->
+
+<div class="fixed-sidebar right">
+    <div class="fixed-sidebar-right sidebar--small" id="sidebar-right">
+
+        <div class="mCustomScrollbar" data-mcs-theme="dark">
+            <ul class="chat-users">
+                <?php
+                if (count($conversations) > 0) {
+                    foreach ($conversations as $so['conversation']) {
+                        if ($so['conversation']['user_id'] <> $so['user']['user_id']) {
+                            echo So_GetPage('chat/list-conversation-bar');
+                        }
+                    }
+                }
+                ?>
+            </ul>
+            <hr>
+            <ul class="chat-users">
+                <?php
+                if (count($conversationss) > 0) {
+                    foreach ($conversationss as $so['conversation']) {
+                        echo So_GetPage('chat/list-conversation-bar');
+                    }
+                }
+                ?>
+            </ul>
+        </div>
+        
+
+        <div class="search-friend inline-items">
+            <a href="#" class="js-sidebar-open">
+                <svg class="svg-inline--fa fa-align-justify fa-w-14" aria-hidden="true" data-prefix="fas" data-icon="align-justify" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M0 84V44c0-8.837 7.163-16 16-16h416c8.837 0 16 7.163 16 16v40c0 8.837-7.163 16-16 16H16c-8.837 0-16-7.163-16-16zm16 144h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 256h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0-128h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>
+            </a>
+        </div>
+
+        <a href="#" class="olympus-chat inline-items js-chat-open">
+            <img width="35px" src="<?php echo $so['config']['site_url']; ?>/upload/images/icon.png" />
+        </a>
+
+    </div>
+
+    <div class="fixed-sidebar-right sidebar--large" id="sidebar-right-1">
+
+        <div class="mCustomScrollbar" id="search-list-chat" data-mcs-theme="dark">
+            <div class="ui-block-title ui-block-title-small">
+                <a href="#" class="title"><?php echo $so['lang']['result']; ?></a>
+            </div>
+            <ul class="chat-users">
+                <boxresult></boxresult>
+            </ul>
+        </div>
+        
+        <div class="mCustomScrollbar" id="normal-list-chat" data-mcs-theme="dark">
+
+            <div class="ui-block-title ui-block-title-small">
+                <a href="#" class="title">Previous conversations</a>
+            </div>
+
+            <ul class="chat-users">
+                <?php
+                if (count($conversations) > 0) {
+                    foreach ($conversations as $so['conversation']) {
+                        if ($so['conversation']['user_id'] <> $so['user']['user_id']) {
+                            echo So_GetPage('chat/list-conversation');
+                        }
+                    }
+                }
+                ?>
+            </ul>
+
+
+            <div class="ui-block-title ui-block-title-small">
+                <a href="#" class="title">FRIENDS</a>
+            </div>
+
+            <ul class="chat-users">
+                <?php
+                if (count($conversationss) > 0) {
+                    foreach ($conversationss as $so['conversation']) {
+                        echo So_GetPage('chat/list-conversation');
+                    }
+                }
+                ?>
+            </ul>
+
+
+            <!--<div class="ui-block-title ui-block-title-small">
+                <a href="#" class="title">UNCATEGORIZED</a>
+                <a href="#">Settings</a>
+            </div>
+
+            <ul class="chat-users">
+                <li class="inline-items js-chat-open">
+
+                    <div class="author-thumb">
+                        <img alt="author" src="img/avatar71-sm.jpg" class="avatar">
+                        <span class="icon-status online"></span>
+                    </div>
+
+                    <div class="author-status">
+                        <a href="#" class="h6 author-name">Bruce Peterson</a>
+                        <span class="status">ONLINE</span>
+                    </div>
+
+                    <div class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
+
+                        <ul class="more-icons">
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="START CONVERSATION" class="olymp-comments-post-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
+                            </li>
+
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="ADD TO CONVERSATION" class="olymp-add-to-conversation-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-add-to-conversation-icon"></use></svg>
+                            </li>
+
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="BLOCK FROM CHAT" class="olymp-block-from-chat-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-block-from-chat-icon"></use></svg>
+                            </li>
+                        </ul>
+
+                    </div>
+
+
+                </li>
+                <li class="inline-items js-chat-open">
+
+                    <div class="author-thumb">
+                        <img alt="author" src="img/avatar72-sm.jpg" class="avatar">
+                        <span class="icon-status away"></span>
+                    </div>
+
+                    <div class="author-status">
+                        <a href="#" class="h6 author-name">Chris Greyson</a>
+                        <span class="status">AWAY</span>
+                    </div>
+
+                    <div class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
+
+                        <ul class="more-icons">
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="START CONVERSATION" class="olymp-comments-post-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
+                            </li>
+
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="ADD TO CONVERSATION" class="olymp-add-to-conversation-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-add-to-conversation-icon"></use></svg>
+                            </li>
+
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="BLOCK FROM CHAT" class="olymp-block-from-chat-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-block-from-chat-icon"></use></svg>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </li>
+                <li class="inline-items js-chat-open">
+
+                    <div class="author-thumb">
+                        <img alt="author" src="img/avatar63-sm.jpg" class="avatar">
+                        <span class="icon-status status-invisible"></span>
+                    </div>
+
+                    <div class="author-status">
+                        <a href="#" class="h6 author-name">Nicholas Grisom</a>
+                        <span class="status">INVISIBLE</span>
+                    </div>
+
+                    <div class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
+
+                        <ul class="more-icons">
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="START CONVERSATION" class="olymp-comments-post-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
+                            </li>
+
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="ADD TO CONVERSATION" class="olymp-add-to-conversation-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-add-to-conversation-icon"></use></svg>
+                            </li>
+
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="BLOCK FROM CHAT" class="olymp-block-from-chat-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-block-from-chat-icon"></use></svg>
+                            </li>
+                        </ul>
+
+                    </div>
+                </li>
+                <li class="inline-items js-chat-open">
+
+                    <div class="author-thumb">
+                        <img alt="author" src="img/avatar72-sm.jpg" class="avatar">
+                        <span class="icon-status away"></span>
+                    </div>
+
+                    <div class="author-status">
+                        <a href="#" class="h6 author-name">Chris Greyson</a>
+                        <span class="status">AWAY</span>
+                    </div>
+
+                    <div class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
+
+                        <ul class="more-icons">
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="START CONVERSATION" class="olymp-comments-post-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
+                            </li>
+
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="ADD TO CONVERSATION" class="olymp-add-to-conversation-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-add-to-conversation-icon"></use></svg>
+                            </li>
+
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="BLOCK FROM CHAT" class="olymp-block-from-chat-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-block-from-chat-icon"></use></svg>
+                            </li>
+                        </ul>
+
+                    </div>
+                </li>
+                <li class="inline-items js-chat-open">
+
+                    <div class="author-thumb">
+                        <img alt="author" src="img/avatar71-sm.jpg" class="avatar">
+                        <span class="icon-status online"></span>
+                    </div>
+
+                    <div class="author-status">
+                        <a href="#" class="h6 author-name">Bruce Peterson</a>
+                        <span class="status">ONLINE</span>
+                    </div>
+
+                    <div class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
+
+                        <ul class="more-icons">
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="START CONVERSATION" class="olymp-comments-post-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
+                            </li>
+
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="ADD TO CONVERSATION" class="olymp-add-to-conversation-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-add-to-conversation-icon"></use></svg>
+                            </li>
+
+                            <li>
+                                <svg data-toggle="tooltip" data-placement="top" data-original-title="BLOCK FROM CHAT" class="olymp-block-from-chat-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-block-from-chat-icon"></use></svg>
+                            </li>
+                        </ul>
+
+                    </div>
+                </li>
+            </ul>-->
+
+        </div>
+
+        <div class="search-friend inline-items">
+            
+            <input class="form-control" id="chat-search-input" type="text" placeholder="<?php echo $so['lang']['search_messages']; ?>" onkeyup="So_SearchFriend(this.value);">
+            
+            <a href="29-YourAccount-AccountSettings.html" class="settings">
+                <svg class="olymp-settings-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-settings-icon"></use></svg>
+            </a>
+
+            <a href="#" class="js-sidebar-open">
+                <svg class="svg-inline--fa fa-times fa-w-12" aria-hidden="true" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M323.1 441l53.9-53.9c9.4-9.4 9.4-24.5 0-33.9L279.8 256l97.2-97.2c9.4-9.4 9.4-24.5 0-33.9L323.1 71c-9.4-9.4-24.5-9.4-33.9 0L192 168.2 94.8 71c-9.4-9.4-24.5-9.4-33.9 0L7 124.9c-9.4 9.4-9.4 24.5 0 33.9l97.2 97.2L7 353.2c-9.4 9.4-9.4 24.5 0 33.9L60.9 441c9.4 9.4 24.5 9.4 33.9 0l97.2-97.2 97.2 97.2c9.3 9.3 24.5 9.3 33.9 0z"></path></svg>
+            </a>
+        </div>
+
+        <a href="#" class="olympus-chat inline-items js-chat-open">
+
+            <h6 class="olympus-chat-title"><?php echo $so['config']['site_name']; ?> CHAT</h6>
+        </a>
+
+    </div>
+</div>
+
+<!-- ... end Fixed Sidebar Right -->
+
+<!-- Fixed Sidebar Right-Responsive -->
+
+<div class="fixed-sidebar right fixed-sidebar-responsive">
+    <div class="fixed-sidebar-right sidebar--small" id="sidebar-right-responsive">
+        <a href="#" class="olympus-chat inline-items js-chat-open">
+            <img width="35px" src="<?php echo $so['config']['site_url']; ?>/upload/images/icon.png" />
+        </a>
+    </div>
+</div>
+
+<!-- ... end Fixed Sidebar Right-Responsive -->
+
+<!-- Header-BP -->
+
+<header class="header" id="site-header">
+    <div class="page-title">
+        <h6><?php echo $so['lang']['welcome']; ?></h6>
+    </div>
+    <div class="header-content-wrapper">
+        <form class="search-bar w-search notification-list friend-requests" action="<?php echo So_SeoLink('index.php?link1=search'); ?>">
+            <div class="form-group with-button">
+                <input class="form-control js-user-search" onkeyup="So_SearchUsers(this.value);" placeholder="<?php echo $so['lang']['search_on']; ?> <?php echo $so['config']['site_name']; ?>" name="q" autocomplete="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-owns="typeahead-dropdown-1" type="text">
+                <button>
+                    <svg class="svg-inline--fa fa-search fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path></svg>
+                </button>
+            </div>
+        </form>
+        <a href="<?php echo So_SeoLink('index.php?link1=suggestions-follow'); ?>" data-ajax="?link1=suggestions-follow" class="link-find-friend"><?php echo $so['lang']['find_friends']; ?></a>
+        <div class="control-block">
+            <div class="control-icon more has-items">
+                <svg class="svg-inline--fa fa-envelope fa-w-16 hover-messages" aria-hidden="true" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg>
+                <div class="label-avatar bg-purple count-messages"><?php echo So_CountMessages(); ?></div>
+                <div class="more-dropdown more-with-triangle triangle-top-center">
+                    <div class="ui-block-title ui-block-title-small">
+                        <h6 class="title"><?php echo $so['lang']['messages']; ?></h6>
+                    </div>
+                    <div class="mCustomScrollbar" data-mcs-theme="dark">
+                        <ul class="notification-list chat-message header-type">
+                            <img id="loading-image-header" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif">
+                        </ul>
+                    </div>
+					<?php if (count($conversations) > 0) { ?>
+                    <a href="<?php echo So_SeoLink('index.php?link1=messenger'); ?>/<?php echo $last_id; ?>" class="view-all bg-purple"><?php echo $so['lang']['view_all']; ?></a>
+					<?php } ?>
+				</div>
+            </div>
+            <div class="control-icon more has-items">
+                <svg class="svg-inline--fa fa-bell fa-w-14 hover-notifications" aria-hidden="true" data-prefix="fas" data-icon="bell" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M433.884 366.059C411.634 343.809 384 316.118 384 208c0-79.394-57.831-145.269-133.663-157.83A31.845 31.845 0 0 0 256 32c0-17.673-14.327-32-32-32s-32 14.327-32 32c0 6.75 2.095 13.008 5.663 18.17C121.831 62.731 64 128.606 64 208c0 108.118-27.643 135.809-49.893 158.059C-16.042 396.208 5.325 448 48.048 448H160c0 35.346 28.654 64 64 64s64-28.654 64-64h111.943c42.638 0 64.151-51.731 33.941-81.941zM224 472a8 8 0 0 1 0 16c-22.056 0-40-17.944-40-40h16c0 13.234 10.766 24 24 24z"></path></svg>
+                <div class="label-avatar bg-primary count-notifications"><?php echo So_CountNotifications(); ?></div>
+                <div class="more-dropdown more-with-triangle triangle-top-center">
+                    <div class="ui-block-title ui-block-title-small">
+                        <h6 class="title"><?php echo $so['lang']['notifications']; ?></h6>
+                    </div>
+                    <div class="mCustomScrollbar" data-mcs-theme="dark">
+                        <ul class="notification-list content-notifications">
+                            <img id="loading-image-header" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif">
+                        </ul>
+                    </div>
+                    <a href="<?php echo So_SeoLink('index.php?link1=notifications'); ?>" data-ajax="?link1=notifications" class="view-all bg-primary"><?php echo $so['lang']['view_all']; ?></a>
+                </div>
+            </div>
+            <div class="author-page author vcard inline-items more">
+                <div class="author-thumb">
+                    <img alt="author" src="<?php echo $so['user']['avatar']; ?>" width="35px" class="avatar">
+                    <span class="icon-status online"></span>
+                    <div class="more-dropdown more-with-triangle">
+                        <div class="mCustomScrollbar" data-mcs-theme="dark">
+                            <div class="ui-block-title ui-block-title-small">
+                                <h6 class="title"><?php echo $so['lang']['your_account']; ?></h6>
+                            </div>
+                            <ul class="account-settings">
+                                <li>
+                                    <a href="<?php echo So_SeoLink('index.php?link1=settings'); ?>" data-ajax="?link1=settings" data-nav="settings">
+                                        <i class="fas fa-sliders-h"></i>
+                                        <?php echo $so['lang']['settins_and_privacy']; ?>
+                                    </a>
+                                </li>
+                                <?php if ($so['user']['admin'] > 0) { ?>
+                                        <li>
+                                            <a href="<?php echo $so['config']['site_url']; ?>/admincp" data-nav="settings">
+                                                <svg class="svg-inline--fa fa-unlock-alt fa-w-14" aria-hidden="true" data-prefix="fas" data-icon="unlock-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M400 256H152V152.9c0-39.6 31.7-72.5 71.3-72.9 40-.4 72.7 32.1 72.7 72v16c0 13.3 10.7 24 24 24h32c13.3 0 24-10.7 24-24v-16C376 68 307.5-.3 223.5 0 139.5.3 72 69.5 72 153.5V256H48c-26.5 0-48 21.5-48 48v160c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48zM264 408c0 22.1-17.9 40-40 40s-40-17.9-40-40v-48c0-22.1 17.9-40 40-40s40 17.9 40 40v48z"></path></svg>
+                                                Admincp
+                                            </a>
+                                        </li>
+                                <?php } ?>
+                                <?php if ($so['config']['adsense'] > 0) { ?>
+                                        <!--<li>
+                                                <a href="<?php echo So_SeoLink('index.php?link1=adsense'); ?>" data-nav="settings">
+                                        <?php echo $so['lang']['my_adsense']; ?>
+                                                </a>
+                                        </li>-->
+                                <?php } ?>
+                                <?php if ($so['config']['live_stream'] == 1) { ?>
+                                        <?php if ($so['config']['live_stream_all_users'] == 1) { ?>
+                                                <li>
+                                                    <a href="<?php echo So_SeoLink('index.php?link1=live&type=create'); ?>" data-nav="settings">
+                                                        <i class="fas fa-video"></i>
+                                                        <?php echo $so['lang']['live_stream']; ?>
+                                                    </a>
+                                                </li>
+                                        <?php } else if ($so['user']['verified'] == 1) { ?>
+                                                <li>
+                                                    <a href="<?php echo So_SeoLink('index.php?link1=live&type=create'); ?>" data-nav="settings">
+                                                        <i class="fas fa-video"></i>
+                                                        <?php echo $so['lang']['live_stream']; ?>
+                                                    </a>
+                                                </li>
+                                        <?php } ?>
+                                <?php } ?>
+                                <li>
+                                    <button class="btn" type="button" onclick="So_Logout();"><?php echo $so['lang']['log_out']; ?></button>
+                                </li>
+                            </ul>
+
+                            <div class="ui-block-title ui-block-title-small">
+                                <h6 class="title"><?php echo $so['lang']['about']; ?> <?php echo $so['config']['site_name']; ?></h6>
+                            </div>
+                            <ul>
+                                <li>
+                                        <a href="<?php echo So_SeoLink('index.php?link1=about'); ?>" rel="noopener"><?php echo $so['lang']['terms_about']; ?></a>
+                                </li>
+                                <li>
+                                        <a href="<?php echo So_SeoLink('index.php?link1=tos'); ?>" rel="noopener"><?php echo $so['lang']['terms']; ?></a>
+                                </li>
+                                <li>
+                                        <a href="<?php echo So_SeoLink('index.php?link1=privacy'); ?>" rel="noopener"><?php echo $so['lang']['terms_privacy']; ?></a>
+                                </li>
+                                <li>© <?php echo date('Y'); ?> <?php echo $so['config']['site_name']; ?></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <a href="<?php echo $so['user']['url']; ?>" data-ajax="?link1=timeline&username=<?php echo $so['user']['username']; ?>" class="author-name fn">
+                    <div class="author-title">
+                        <?php echo $so['user']['name']; ?> <svg class="olymp-dropdown-arrow-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use></svg>
+                    </div>
+                    <span class="author-subtitle"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ... end Header-BP -->
+
+<!-- Responsive Header-BP -->
+
+<header class="header header-responsive" id="site-header-responsive">
+    <div class="header-content-wrapper">
+        <ul class="nav nav-tabs mobile-app-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#chat" role="tab">
+                    <div class="control-icon has-items">
+                        <svg class="svg-inline--fa fa-envelope fa-w-16 hover-messages" aria-hidden="true" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg>
+                        <div class="label-avatar bg-purple count-messages"><?php echo So_CountMessages(); ?></div>
+                    </div>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#notification" role="tab">
+                    <div class="control-icon has-items">
+                        <svg class="svg-inline--fa fa-bell fa-w-14 hover-notifications" aria-hidden="true" data-prefix="fas" data-icon="bell" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M433.884 366.059C411.634 343.809 384 316.118 384 208c0-79.394-57.831-145.269-133.663-157.83A31.845 31.845 0 0 0 256 32c0-17.673-14.327-32-32-32s-32 14.327-32 32c0 6.75 2.095 13.008 5.663 18.17C121.831 62.731 64 128.606 64 208c0 108.118-27.643 135.809-49.893 158.059C-16.042 396.208 5.325 448 48.048 448H160c0 35.346 28.654 64 64 64s64-28.654 64-64h111.943c42.638 0 64.151-51.731 33.941-81.941zM224 472a8 8 0 0 1 0 16c-22.056 0-40-17.944-40-40h16c0 13.234 10.766 24 24 24z"></path></svg>
+                        <div class="label-avatar bg-primary count-notifications"><?php echo So_CountNotifications(); ?></div>
+                    </div>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#search" role="tab">
+                    <svg class="svg-inline--fa fa-search fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path></svg>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Tab panes -->
+    <div class="tab-content tab-content-responsive" id="open-tab-panel-asdasd">
+
+        <div class="tab-pane " id="chat" role="tabpanel">
+
+            <div class="mCustomScrollbar" data-mcs-theme="dark">
+                <div class="ui-block-title ui-block-title-small">
+                    <h6 class="title"><?php echo $so['lang']['messages']; ?></h6>
+					<a class="pointer" style="float: right;" onclick="So_CloseTabMessages();"><?php echo $so['lang']['close']; ?><i style="margin-left: 10px;" class="fas fa-times-circle"></i></a>
+                </div>
+
+                <ul class="notification-list chat-message header-type">
+                    <img id="loading-image-header" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif">
+                </ul>
+
+				<?php if (count($conversations) > 0) { ?>
+				<a href="<?php echo So_SeoLink('index.php?link1=messenger'); ?>/<?php echo $last_id; ?>" class="view-all bg-purple"><?php echo $so['lang']['view_all']; ?></a>
+				<?php } ?>
+			</div>
+
+        </div>
+
+        <div class="tab-pane " id="notification" role="tabpanel">
+
+            <div class="mCustomScrollbar" data-mcs-theme="dark">
+                <div class="ui-block-title ui-block-title-small">
+                    <h6 class="title"><?php echo $so['lang']['notifications']; ?></h6>
+					<a class="pointer" style="float: right;" onclick="So_CloseTabNotifications();"><?php echo $so['lang']['close']; ?><i style="margin-left: 10px;" class="fas fa-times-circle"></i></a>
+                </div>
+
+                <ul class="notification-list content-notifications">
+                    <img id="loading-image-header" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif">
+
+                    <!--<li class="with-comment-photo">
+                        <div class="author-thumb">
+                            <img src="img/avatar64-sm.jpg" alt="author">
+                        </div>
+                        <div class="notification-event">
+                            <div><a href="#" class="h6 notification-friend">Sarah Hetfield</a> commented on your <a href="#" class="notification-link">photo</a>.</div>
+                            <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">Yesterday at 5:32am</time></span>
+                        </div>
+                        <span class="notification-icon">
+                            <svg class="olymp-comments-post-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
+                        </span>
+
+                        <div class="comment-photo">
+                            <img src="img/comment-photo1.jpg" alt="photo">
+                            <span>“She looks incredible in that outfit! We should see each...”</span>
+                        </div>
+
+                        <div class="more">
+                            <svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
+                            <svg class="olymp-little-delete"><use xlink:href="svg-icons/sprites/icons.svg#olymp-little-delete"></use></svg>
+                        </div>
+                    </li>-->
+                </ul>
+
+                <a href="<?php echo So_SeoLink('index.php?link1=notifications'); ?>" data-ajax="?link1=notifications" class="view-all bg-primary"><?php echo $so['lang']['view_all']; ?></a>
+            </div>
+
+        </div>
+
+        <div class="tab-pane " id="search" role="tabpanel">
+
+
+            <form class="search-bar w-search notification-list friend-requests" action="<?php echo So_SeoLink('index.php?link1=search'); ?>">
+                <div class="form-group with-button">
+                    <input class="form-control js-user-search" onkeyup="So_SearchUsers(this.value);" placeholder="<?php echo $so['lang']['search_on']; ?> <?php echo $so['config']['site_name']; ?>" name="q" autocomplete="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-owns="typeahead-dropdown-1" type="text">
+                </div>
+            </form>
+
+
+        </div>
+
+    </div>
+    <!-- ... end  Tab panes -->
+
+</header>
+
+<!-- ... end Responsive Header-BP -->
+<div class="header-spacer"></div>
+
+<div class="floopz-music"></div>
+
+<script>
+    function So_GetChatEmoticons(user_id) {
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box, .opened-chats .chat-box-normal .chat-footer .chat-list-box').hide();
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box').html('<img id="chat-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+        $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').show();
+        $.post(So_Requests() + '?type=get-chat-emoticons', {
+            user_id: user_id
+        }, function (data) {
+            if (data.status == 200) {
+                $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').html(data.html);
+            } else {
+                return false;
+            }
+        });
+    }
+    function So_GetChatUpload(user_id) {
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box, .opened-chats .chat-box-normal .chat-footer .chat-list-box').hide();
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box').html('<img id="chat-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+        $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').show();
+        $.post(So_Requests() + '?type=get-chat-upload', {
+            user_id: user_id
+        }, function (data) {
+            if (data.status == 200) {
+                $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').html(data.html);
+            } else {
+                return false;
+            }
+        });
+    }
+    function So_GetChatGifs(user_id) {
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box, .opened-chats .chat-box-normal .chat-footer .chat-list-box').hide();
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box').html('<img id="chat-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+        $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').show();
+        $.post(So_Requests() + '?type=get-chat-gifs', {
+            user_id: user_id
+        }, function (data) {
+            if (data.status == 200) {
+                $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').html(data.html);
+            } else {
+                return false;
+            }
+        });
+    }
+    function So_GetChatStickers(user_id) {
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box, .opened-chats .chat-box-normal .chat-footer .chat-list-box').hide();
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box').html('<img id="chat-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+        $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').show();
+        $.post(So_Requests() + '?type=get-chat-stickers', {
+            user_id: user_id
+        }, function (data) {
+            if (data.status == 200) {
+                $('.opened-chats #chat-' + user_id + ' .chat-footer .chat-extra-box').html(data.html);
+            } else {
+                return false;
+            }
+        });
+    }
+    function So_PutGifChat(image, user_id) {
+        $('.opened-chats').find('#chat-' + user_id).find('input#post-gif-chat').val(image);
+        $('form.chat-form-' + user_id).submit();
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box, .opened-chats .chat-box-normal .chat-footer .chat-list-box').hide();
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box').html('<img id="chat-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+    }
+    function So_GetPackageType(package, to_id) {
+        $('.chat-form-' + to_id).find('.stickers-body').html('<img id="chat-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+        $.post(So_Requests() + '?type=get-packge-type', {
+            sticker_id: package,
+            to_id: to_id
+        }, function (data) {
+            if (data.status == 200) {
+                $('.chat-form-' + to_id).find('.stickers-body').html(data.html);
+            } else {
+                return false;
+            }
+        });
+    }
+    function So_Logout() {
+        window.location.href = '<?php echo So_SeoLink('index.php?link1=logout'); ?>';
+    }
+	function So_CloseTabMessages() {
+		$('#open-tab-panel-asdasd').find('#notification').attr('class', 'tab-pane ');
+		$('#open-tab-panel-asdasd').find('#search').attr('class', 'tab-pane ');
+		if($('#open-tab-panel-asdasd').find('#chat').attr('class') == 'tab-pane active') {
+			$('#open-tab-panel-asdasd').find('#chat').attr('class', 'tab-pane ');
+			$('ul.nav.nav-tabs.mobile-app-tabs li:nth-child(1)').attr('class', 'nav-item');
+			$('ul.nav.nav-tabs.mobile-app-tabs li:nth-child(1) a').attr('aria-expanded', 'false');
+		} else {
+			$('#open-tab-panel-asdasd').find('#chat').attr('class', 'tab-pane active');
+		}
+	}
+	function So_CloseTabNotifications() {
+		$('#open-tab-panel-asdasd').find('#chat').attr('class', 'tab-pane ');
+		$('#open-tab-panel-asdasd').find('#search').attr('class', 'tab-pane ');
+		if($('#open-tab-panel-asdasd').find('#notification').attr('class') == 'tab-pane active') {
+			$('#open-tab-panel-asdasd').find('#notification').attr('class', 'tab-pane ');
+			$('ul.nav.nav-tabs.mobile-app-tabs li:nth-child(2)').attr('class', 'nav-item');
+			$('ul.nav.nav-tabs.mobile-app-tabs li:nth-child(2) a').attr('aria-expanded', 'false');
+		} else {
+			$('#open-tab-panel-asdasd').find('#notification').attr('class', 'tab-pane active');
+		}
+	}
+	$(document).on('click', 'ul.nav.nav-tabs.mobile-app-tabs li:nth-child(3) a', function () {
+		$('#open-tab-panel-asdasd').find('#notification').attr('class', 'tab-pane ');
+		$('#open-tab-panel-asdasd').find('#chat').attr('class', 'tab-pane ');
+		if($('#open-tab-panel-asdasd').find('#search').attr('class') == 'tab-pane active') {
+			$('#open-tab-panel-asdasd').find('#search').attr('class', 'tab-pane ');
+			$('ul.nav.nav-tabs.mobile-app-tabs li:nth-child(3)').attr('class', 'nav-item');
+			$('ul.nav.nav-tabs.mobile-app-tabs li:nth-child(3) a').attr('aria-expanded', 'false');
+		} else {
+			$('#open-tab-panel-asdasd').find('#search').attr('class', 'tab-pane active');
+		}
+	});
+</script>

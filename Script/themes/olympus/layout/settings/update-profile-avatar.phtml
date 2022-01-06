@@ -1,0 +1,77 @@
+<div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
+	<div class="ui-block">
+		<div class="ui-block-title">
+			<h6 class="title"><?php echo $so['lang'][str_replace('-', '_', $so['page'])]; ?></h6>
+		</div>
+		<div class="ui-block-content">
+			<form id="change-profile-avatar" class="t1-form form-horizontal requires-password" autocomplete="off" method="POST">
+				<div class="row">
+					<div id="settings-alert-box" class="settings-alert hidden">
+						<div class="alert-errors"></div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<div id="username_fieldset" class="control-group">
+							<label for="user_screen_name" class="t1-label control-label"></label>
+							<div class="description-toggle">
+								<div class="controls">
+									<p id="username_notification" class="notification"></p>
+									<input id="user_screen_name" accept="image/jpeg,image/png" type="file" name="avatar" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<div class="description-toggle">
+							<div class="publisher-hidden-option">
+								<div id="progress">
+									<span id="percent">0%</span>
+									<div class="progress">
+										<div id="bar" class="progress-bar active"></div> 
+									</div>
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+						<div class="form-group label-floating is-select">
+							<button id="settings_save" class="btn btn-primary btn-lg full-width" type="submit"><?php echo $so['lang']['save_changes']; ?></button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+    $(function () {
+		$('#progress').slideUp(200);
+        var bar = $('#bar');
+        var percent = $('#percent');
+        $('form#change-profile-avatar').ajaxForm({
+            url: So_Requests() + '?type=change-profile-avatar',
+            beforeSend: function () {
+                var percentVal = '0%';
+                bar.width(percentVal);
+                percent.html(percentVal);
+            },
+            uploadProgress: function (event, position, total, percentComplete) {
+                var percentVal = percentComplete + '%';
+                bar.width(percentVal);
+                $('#progress').slideDown(200);
+                percent.html(percentVal);
+            },
+            success: function (data) {
+                $('#progress').slideUp(200);
+                if (data.status == 200) {
+                    window.location.href = '<?php echo So_SeoLink('index.php?link1=settings&page=update-profile-avatar'); ?>';
+                } else if (data.status == 400) {
+                    $('.settings-alert').html(data.errors);
+                    $('.settings-alert').removeClass('hidden');
+                } else {
+                    return false;
+                }
+            }
+        });
+    });
+</script>

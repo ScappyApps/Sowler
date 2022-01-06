@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="<?php echo So_Language(); ?>">
+    <head>
+        <title><?php echo $so['title']; ?></title>
+        <meta charset="UTF-8">
+        <meta name="title" content="<?php echo $so['title']; ?>">
+        <meta name="description" content="<?php echo $so['description']; ?>">
+        <meta name="keywords" content="<?php echo $so['keywords']; ?>">
+        <meta name="author" content="Titiasnu Official">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta property="og:image" content="<?php echo $so['config']['site_url']; ?>/upload/images/icon.png">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="600">
+        <meta property="og:image:height" content="600"> 
+
+        <script type="text/javascript" src="<?php echo $so['config']['theme_url']; ?>/javascript/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="<?php echo $so['config']['theme_url']; ?>/javascript/readmore.js"></script>
+
+        <link rel="shortcut icon" href="<?php echo $so['config']['theme_url']; ?>/img/ico.ico"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+        <link rel="stylesheet" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+		<link href="<?php echo $so['config']['theme_url']; ?>/stylesheet/video-js.css" rel="stylesheet">
+		<link href="<?php echo $so['config']['theme_url']; ?>/stylesheet/videojs-vjsdownload.css" rel="stylesheet">
+		<!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+
+        <?php if ($so['loggedin'] == true) { ?>
+        <link rel="stylesheet" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/twidley.css?<?php echo time(); ?>">    
+        <?php } ?>
+        
+        <script type="text/javascript">
+            function So_Requests() {
+                return "<?php echo $so['config']['site_url'] . '/requests.php'; ?>";
+            }
+            function So_Requests_Ajax() {
+                return "<?php echo $so['config']['site_url'] . '/index_ajax.php'; ?>";
+            }
+
+            function So_StartBar() {
+                $('#loading-ajax-icon').attr('src', '<?php echo $so['config']['site_url']; ?>/upload/images/load.gif');
+            }
+            function So_FinishBar() {
+                $('#loading-ajax-icon').attr('src', '<?php echo $so['config']['site_url']; ?>/upload/images/logo.png');
+            }
+            function decodeHtml(html) {
+                var txt = document.createElement("textarea");
+                txt.innerHTML = html;
+                return txt.value;
+            }
+            var WebSiteUrl = "<?php echo $so['config']['site_url']; ?>";
+
+            $(document).on('click', 'a[data-ajax]', function (e) {
+                var url = $(this).attr('data-ajax');
+                e.preventDefault();
+
+                So_StartBar();
+
+                $.post(So_Requests_Ajax() + url, {
+                    url: url
+                }, function (data) {
+                    json_data = JSON.parse($(data).filter('#json-data').val());
+
+                    $('#container-to-ajax-loading').html(data);
+                    if (json_data.page == 'welcome') {
+                        window.history.pushState({state: 'new'}, '', WebSiteUrl);
+                    } else {
+                        window.history.pushState({state: 'new'}, '', json_data.url);
+                    }
+
+                    if (json_data.page == 'home') {
+                        $('#global-new-tweet-button').show();
+                    } else {
+                        $('#global-new-tweet-button').hide();
+                    }
+
+                    window.onpopstate = function (event) {
+                        $(window).unbind('popstate');
+                        window.location.href = document.location;
+                    };
+
+                    document.title = decodeHtml(json_data.title);
+
+                    $("html, body").animate({scrollTop: 0}, 150);
+                    So_FinishBar();
+                });
+            });
+            function So_AlertMessage(message) {
+                $('.alert-messages').find('.message-text').html(message);
+                $('.alert-messages').addClass('js-message-drawer-visible');
+                $('.alert-messages').removeClass('hidden');
+                setTimeout(function () {
+                    $('.alert-messages').removeClass('js-message-drawer-visible');
+                    $('.alert-messages').addClass('hidden');
+                    $('.alert-messages').find('.message-text').html('');
+                }, 2000);
+            }
+			function So_CreateAds() {
+				$('.lightbox').show();
+				$('body').css('overflow-y', 'hidden');
+			}
+        </script>
+        <script type="text/javascript" src="<?php echo $so['config']['theme_url']; ?>/javascript/api-click.js?<?php echo time(); ?>"></script>
+
+        <?php echo So_GetPage('style'); ?>
+
+        <?php if ($so['loggedin'] == true && isset($_SESSION['night_mode']) && $_SESSION['night_mode'] == 1) { ?>
+            <link rel="stylesheet" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/night_mode_loggedin.css">
+        <?php } ?>
+        <link href="https://vjs.zencdn.net/7.1.0/video-js.css" rel="stylesheet">
+    </head>
+    <body <?php if ($so['page'] == 'login') { ?>class="three-col logged-out ms-windows no-nav-banners"<?php } ?><?php if ($so['loggedin'] == true) { ?>class="three-col logged-in user-style-BuuhFenix ms-windows enhanced-mini-profile supports-drag-and-drop profile-field-editing"<?php } ?>>
+        <div id="bar_loading"></div>
+        <div class="lightbox"><?php echo So_GetPage('adsense/ads_manager/create-ads'); ?></div>
+        <header class="header-container">
+            <?php echo So_GetPage('adsense/header'); ?>
+        </header>
+        <div class="content-container container-fluid" id="container-to-ajax-loading">
+            <?php echo $so['content']; ?>
+        </div>
+        <div id="profile-hover-container" data-associated-tweet-id="" data-screen-name="" data-user-id="">
+        </div>
+        <footer>
+        </footer>
+        <div class="content-share"></div>
+        <div id="dm_dialog" class="DMDialog modal-container hidden" style="z-index: 4002;"></div>
+		
+        <!-- JS FILES -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="<?php echo $so['config']['theme_url']; ?>/javascript/jquery.form.min.js"></script>
+        <!-- AUDIOS -->
+
+    </body>
+</html>

@@ -1,0 +1,20 @@
+<li class="js-stream-item stream-item stream-item js-activity js-activity-favorite" data-item-id="<?php echo $so['notification']['id']; ?>" id="stream-item-activity-<?php echo $so['notification']['id']; ?>" data-item-type="activity" data-component-context="favorite_activity">
+    <div class="stream-item-content clearfix stream-item-activity stream-item-favorite stream-item-activity-notification" data-activity-type="favorite" data-activity-min-position="1533294086630" data-activity-max-position="1533294086630" data-component-context="favorite_activity">
+        <div class="ActivityItem">
+            <div class="ActivityItem-container">
+                <div class="ActivityItem-mainBody">
+                    <div class="ActivityItem-displayText js-actionable-user" data-aria-label-part="">
+                        <a class="pretty-link js-user-profile-link js-nav" href="javascript:void(0);" data-user-id="<?php echo $so['notification']['user_id']; ?>"><strong class="fullname"><?php echo $so['notification']['from']['name']; ?></strong></a>
+                        <?php echo $so['lang'][$so['notification']['type']]; ?>
+                        <div class="ActivityItem-activityTimestamp">
+                            <div class="activity-timestamp">
+                                <span class="_timestamp"  data-long-form="true" aria-hidden="true"><?php echo So_Time($so['notification']['time']); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <ol class="ActivityItem-hiddenSupplementContainer js-navigable-stream " data-aria-label-part=""></ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

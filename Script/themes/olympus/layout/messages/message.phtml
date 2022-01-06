@@ -1,0 +1,40 @@
+<li style="padding-bottom: 0px" id="message-content-with-id" data-message="<?php echo $so['message']['user_id']; ?>">
+	<div class="author-thumb">
+		<img width="35px" src="<?php echo $so['message']['from']['avatar']; ?>" alt="author">
+	</div>
+	<div class="notification-event">
+		<a href="<?php echo $so['message']['from']['url']; ?>" class="h6 notification-friend"><?php echo $so['message']['from']['username']; ?></a>
+		<span class="notification-date"><time class="entry-date updated" datetime="" style="margin-left: 10px;"><?php echo So_Time($so['message']['time']); ?></time></span>
+		<p style="margin-top: 25px;color: #777;">
+			<?php if (!empty($so['message']['postText'])) { echo $so['message']['postText']; } ?>
+		</p>
+		<?php if (!empty($so['message']['postImage'])) { ?>
+		<div class="DirectMessage-contentContainer">
+			<div class="DirectMessage-media">
+			<?php echo So_GetPage('messages/media/post-image'); ?>
+			</div>
+		</div>
+		<?php } ?>
+		<?php if (!empty($so['message']['postGif'])) { ?>
+		<div class="DirectMessage-contentContainer">
+			<div class="DirectMessage-media">
+			<?php echo So_GetPage('messages/media/post-gif'); ?>
+			</div>
+		</div>
+		<?php } ?>
+		<?php if (!empty($so['message']['postVideo'])) { ?>
+		<div class="DirectMessage-contentContainer">
+			<div class="DirectMessage-media">
+			<?php echo So_GetPage('messages/media/post-video'); ?>
+			</div>
+		</div>
+		<?php } ?>
+		<?php if (!empty($so['message']['postSticker'])) { ?>
+		<div class="DirectMessage-contentContainer">
+			<div class="DirectMessage-media">
+			<?php echo So_GetPage('messages/media/sticker'); ?>
+			</div>
+		</div>
+		<?php } ?>
+	</div>
+</li>

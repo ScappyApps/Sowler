@@ -1,0 +1,161 @@
+<div class="container">
+	<div class="row">
+
+		<!-- Main Content -->
+
+		<main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+			<div id="newsfeed-items-grid">
+			<?php echo So_GetPage('story/content'); ?>
+			</div>
+		</main>
+
+		<!-- ... end Main Content -->
+
+
+		<!-- Left Sidebar -->
+
+		<aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-12 col-12">
+			<div class="ui-block">
+				<div class="widget w-wethear" style="padding: 0;">
+					<div id="new-weather">
+						<div class="weather1" style="margin-bottom: 0px;"></div>
+					</div>
+					<script id="weather-app" src='<?php echo $so['config']['theme_url']; ?>/weather/js/app.js'></script>
+				</div>
+
+				<!-- W-Weather -->			
+			</div>
+
+			<div class="ui-block">
+				<!-- W-Calendar -->
+
+				<div class="w-calendar calendar-container">
+					<div>
+						<!-- define the calendar element -->
+						<div id="my-calendar"></div>
+
+						<!-- initialize the calendar on ready -->
+						<script>
+							$(function () {
+								$("#my-calendar").zabuto_calendar();
+							});
+						</script>
+					</div>
+				</div>
+
+				<!-- ... end W-Calendar -->			
+			</div>
+		</aside>
+
+		<!-- ... end Left Sidebar -->
+
+
+		<!-- Right Sidebar -->
+
+		<aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
+
+		
+			<?php
+			$birthday = So_Birthday();
+			if ($birthday !== false) {
+			?>
+			<div class="ui-block">
+
+				<!-- W-Birthsday-Alert -->
+				<div class="widget w-birthday-alert">
+					<div class="icons-block">
+						<svg class="olymp-cupcake-icon"><use xlink:href="#olymp-cupcake-icon"></use></svg>
+						<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="#olymp-three-dots-icon"></use></svg></a>
+					</div>
+
+					<div class="content">
+						<div class="author-thumb">
+							<img width="30px" src="<?php echo $birthday['avatar']; ?>" alt="author">
+						</div>
+						<span><?php echo $so['lang']['today_is']; ?></span>
+						<a href="<?php echo $birthday['url']; ?>" data-ajax="?link1=timeline&username=<?php echo $birthday['username']; ?>" class="h4 title"><?php echo $birthday['name']; ?> <?php echo $so['lang']['is_birthday']; ?>!</a>
+						<p><?php echo $so['lang']['leave_her_message']; ?></p>
+					</div>
+				</div>
+
+				<!-- ... end W-Birthsday-Alert -->
+			</div>
+			<?php } ?>
+
+			<div class="ui-block">
+				<div class="ui-block-title">
+					<h6 class="title"><?php echo $so['lang']['suggestions_follow']; ?></h6>
+					<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="#olymp-three-dots-icon"></use></svg></a>
+				</div>
+
+
+
+				<!-- W-Action -->
+
+				<ul class="widget w-friend-pages-added notification-list friend-requests">
+					<?php
+						$suggestions = So_GetSuggestions();
+						if (count($suggestions) > 0) {
+							foreach ($suggestions as $so['suggestion']) {
+								?>
+					
+					<li class="inline-items">
+						<div class="author-thumb">
+							<img width="30px" src="<?php echo $so['suggestion']['avatar']; ?>" alt="author">
+						</div>
+						<div class="notification-event">
+							<a href="#" class="h6 notification-friend"><?php echo $so['suggestion']['name']; ?></a>
+							<span class="chat-message-item">@<?php echo $so['suggestion']['username']; ?></span>
+						</div>
+						<span class="notification-icon" id="register-follow-button-<?php echo $so['suggestion']['user_id']; ?>">
+							<?php echo So_GetPage('buttons/sidebar-button-follow'); ?>
+						</span>
+					</li>
+					<?php
+							}
+						}
+					?>
+				</ul>
+
+				<!-- ... end W-Action -->
+			</div>
+			<div class="ui-block">
+				<!-- W-Action -->
+
+				<div class="widget w-action">
+
+					<img src="<?php echo $so['config']['theme_url']; ?>/img/logo.png" alt=" Sowler">
+					<div class="content">
+						<h4 class="title"><?php echo $so['config']['site_name']; ?></h4>
+						<h5 class="title"> Sowler</h4>
+						<span>THE BEST SOCIAL NETWORK THEME!</span>
+					</div>
+				</div>
+
+				<!-- ... end W-Action -->
+			</div>
+
+		</aside>
+
+		<!-- ... end Right Sidebar -->
+
+	</div>
+</div>
+<style> .w-wethear>* {margin-bottom: 0px;} </style>
+<script>
+$(document).ready(function() {
+	$('.weather1').weather({
+		city: null,
+		autocompleteMinLength: 3
+	});
+
+	/**$('.weather2').weather({
+		city: 'Kharkiv, UA',
+		tempUnit: 'C',
+		displayDescription: true,
+		displayMinMaxTemp: true,
+		displayWind: true,
+		displayHumidity: true
+	});**/
+});
+</script>

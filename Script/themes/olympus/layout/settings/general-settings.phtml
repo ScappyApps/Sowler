@@ -1,0 +1,247 @@
+<div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
+	<div class="ui-block">
+		<div class="ui-block-title">
+			<h6 class="title"><?php echo $so['lang'][str_replace('-', '_', $so['page'])]; ?></h6>
+		</div>
+		<div class="ui-block-content">
+
+			
+			<!-- Personal Account Settings Form -->
+			<form id="account-form" class="t1-form form-horizontal requires-password" autocomplete="off" method="POST">
+				<div class="row">
+					<div id="settings-alert-box" class="settings-alert hidden">
+						<div class="alert-errors"></div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+					<label for="user_screen_name" class="t1-label control-label"><?php echo $so['lang']['username']; ?></label>
+						<div class="description-toggle">
+							<div class="controls">
+								<p id="username_notification" class="notification"></p>
+								<input id="user_screen_name" maxlength="15" name="username" type="text" value="<?php echo $so['user']['username']; ?>">
+								<p class="notification t1-infotext"><?php echo $so['config']['site_url']; ?>/t/<span id="username_path"><?php echo $so['user']['username']; ?></span></p>
+							</div>
+						</div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label for="user_screen_name" class="t1-label control-label"><?php echo $so['lang']['username']; ?></label>
+						<div class="description-toggle">
+							<div class="controls">
+								<p id="username_notification" class="notification"></p>
+								<input id="user_screen_name" maxlength="15" name="first_name" type="text" value="<?php echo $so['user']['first_name']; ?>">
+							</div>
+						</div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label for="user_screen_name" class="t1-label control-label"><?php echo $so['lang']['last_name']; ?></label>
+						<div class="description-toggle">
+							<div class="controls">
+								<p id="username_notification" class="notification"></p>
+								<input id="user_screen_name" maxlength="25" name="last_name" type="text" value="<?php echo $so['user']['last_name']; ?>">
+							</div>
+						</div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label for="user_email" class="t1-label control-label"><?php echo $so['lang']['email']; ?></label>
+						<div class="description-toggle">
+							<div class="controls">
+								<p id="email_notification" class="notification"></p>
+								<input id="user_email" class="email-input" name="email" type="text" value="<?php echo $so['user']['email']; ?>">
+								<p class="t1-infotext"></p>
+							</div>
+						</div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label for="user_email" class="t1-label control-label"><?php echo $so['lang']['phone_number']; ?></label>
+						<div class="description-toggle">
+							<div class="controls">
+								<p id="email_notification" class="notification"></p>
+								<input id="user_email" class="email-input" name="phone_number" type="number" value="<?php echo $so['user']['phone_number']; ?>">
+								<p class="t1-infotext"></p>
+							</div>
+						</div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label for="user_email" class="t1-label control-label"><?php echo $so['lang']['location']; ?></label>
+						<div class="description-toggle">
+							<div class="controls">
+								<p id="email_notification" class="notification"></p>
+								<input id="user_location" class="email-input" name="location" type="text" value="<?php echo $so['user']['location']; ?>">
+								<p class="t1-infotext"></p>
+							</div>
+						</div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label for="user_screen_name" class="t1-label control-label"><?php echo $so['lang']['about']; ?></label>
+						<div class="description-toggle">
+							<div class="controls">
+								<p id="username_notification" class="notification"></p>
+								<textarea name="about"><?php echo So_DecodeBr2nl($so['user']['about']); ?></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label for="user_screen_name" class="t1-label control-label"><?php echo $so['lang']['auto_message']; ?></label>
+						<div class="description-toggle">
+							<div class="controls">
+								<p id="username_notification" class="notification"></p>
+								<textarea name="auto_message"><?php echo So_DecodeBr2nl($so['user']['auto_message']); ?></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label for="user_lang" class="t1-label control-label"><?php echo $so['lang']['language']; ?></label>
+						<div class="description-toggle">
+							<div class="controls">
+								<select class="t1-select" id="user_lang" name="language">
+									<option value="pt-br" <?php if ($so['user']['language'] == 'pt-br') { ?>selected<?php } ?>>PT-BR</option>
+									<option value="en-US" <?php if ($so['user']['language'] == 'en-US') { ?>selected<?php } ?>>en-US</option>
+									<option value="arabic" <?php if ($so['user']['language'] == 'arabic') { ?>selected<?php } ?>>Arabic</option>
+									<option value="ru" <?php if ($so['user']['language'] == 'ru') { ?>selected<?php } ?>>Russian</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label for="user_lang" class="t1-label control-label"><?php echo $so['lang']['gender']; ?></label>
+						<div class="description-toggle">
+							<div class="controls">
+								<select class="t1-select" id="user_lang" name="gender">
+									<option value="male" <?php if ($so['user']['gender'] == 'male') { ?>selected<?php } ?>><?php echo $so['lang']['male']; ?></option>
+									<option value="female" <?php if ($so['user']['gender'] == 'female') { ?>selected<?php } ?>><?php echo $so['lang']['female']; ?></option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label for="user_lang" class="t1-label control-label"><?php echo $so['lang']['privacy']; ?></label>
+						<div class="description-toggle">
+							<div class="controls">
+								<select class="t1-select" id="user_lang" name="privacy">
+									<option value="1" <?php if ($so['user']['privacy'] == 1) { ?>selected<?php } ?>><?php echo $so['lang']['everyone']; ?></option>
+									<option value="4" <?php if ($so['user']['privacy'] == 4) { ?>selected<?php } ?>><?php echo $so['lang']['only_me']; ?></option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label for="user_lang" class="t1-label control-label"><?php echo $so['lang']['birthday']; ?></label>
+						<div class="description-toggle">
+							<div class="controls">
+								<select id="user_day" name="day">
+									<option value="0"><?php echo $so['lang']['day']; ?></option>
+									<?php
+									for ($day = 1; $day <= 31; $day++) {
+										?>
+										<option value="<?php echo $day; ?>" <?php if ($so['user']['day'] == $day) { ?>selected<?php } ?>><?php echo $day; ?></option>
+									<?php } ?>
+								</select>
+								<select id="user_month" name="month">
+									<option value="0"><?php echo $so['lang']['month']; ?></option>
+									<?php
+									foreach ($so['months'] as $keys => $value) {
+										?>
+										<option value="<?php echo $keys; ?>" <?php if ($so['user']['month'] == $keys) { ?>selected<?php } ?>><?php echo $value; ?></option>
+									<?php } ?>
+								</select>
+								<select id="user_year" name="year">
+									<option value="0"><?php echo $so['lang']['year']; ?></option>
+									<?php
+									$actual_year = date('Y') - 12;
+									$first_year = date('Y') - 70;
+									for ($year = $actual_year; $year > $first_year; $year--) {
+										?>
+										<option value="<?php echo $year; ?>" <?php if ($so['user']['year'] == $year) { ?>selected<?php } ?>><?php echo $year; ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+						<div class="form-group label-floating is-select">
+							<button id="settings_save" class="btn btn-primary btn-lg full-width" type="submit"><?php echo $so['lang']['save_changes']; ?></button>
+						</div>
+					</div>
+					<div class="col-md-5" style="margin-left: 10px;">
+						<div class="form-group label-floating is-select">
+							<div class="control-group">
+								<div class="controls">
+									<a class="btn btn-secondary btn-lg full-width" id="account_deactivate_link" href="<?php echo So_SeoLink('index.php?link1=settings&page=delete-account'); ?>" data-ajax="?link1=settings&page=delete-account" rel="noopener">
+										<?php echo $so['lang']['delete_account']; ?>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<!-- ... end Personal Account Settings Form  -->
+
+		</div>
+	</div>
+</div>
+<script>
+    $(function () {
+		<?php if ($so['user']['user_id'] <> 112) { ?>
+        $('form#account-form').ajaxForm({
+            url: So_Requests() + '?type=update-general-settings',
+            beforeSend: function () {
+                $('.spinner-small.settings-save-spinner').css('display', 'inline-flex');
+            },
+            success: function (data) {
+                $('.spinner-small.settings-save-spinner').css('display', 'none');
+                $("html, body").animate({scrollTop: 0}, 150);
+                if (data.status == 200) {
+                    So_AlertMessage(data.message);
+                    $('.settings-alert').html(data.message);
+                    $('.settings-alert').removeClass('hidden');
+                } else if (data.status == 400) {
+                    $('.settings-alert').html(data.errors);
+                    $('.settings-alert.hidden').removeClass('hidden');
+                } else {
+                    return false;
+                }
+            }
+        });
+		<?php } ?>
+    });
+    var pac_input = document.getElementById('user_location');
+    (function pacSelectFirst(input) {
+        // store the original event binding function
+        var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
+        function addEventListenerWrapper(type, listener) {
+            // Simulate a 'down arrow' keypress on hitting 'return' when no pac suggestion is selected,
+            // and then trigger the original listener.
+            if (type == "keydown") {
+                var orig_listener = listener;
+                listener = function (event) {
+                    var suggestion_selected = $(".pac-item-selected").length > 0;
+                    if (event.which == 13 && !suggestion_selected) {
+                        var simulated_downarrow = $.Event("keydown", {
+                            keyCode: 40,
+                            which: 40
+                        });
+                        orig_listener.apply(input, [simulated_downarrow]);
+                    }
+                    orig_listener.apply(input, [event]);
+                };
+            }
+            // add the modified listener
+            _addEventListener.apply(input, [type, listener]);
+        }
+        if (input.addEventListener)
+            input.addEventListener = addEventListenerWrapper;
+        else if (input.attachEvent)
+            input.attachEvent = addEventListenerWrapper;
+    })(pac_input);
+
+    $(function () {
+        var autocomplete = new google.maps.places.Autocomplete(pac_input);
+    });
+</script>
+<style>
+textarea {
+    width: 100%;
+    border: solid 1px #f1f1f1;
+    border-radius: 2px;
+}
+</style>

@@ -1,0 +1,102 @@
+<div class="color-box">
+	<ul>
+		<li>
+			<a class="pointer" onclick="So_Background('default');">
+				<div class="_2j78 _4ydl _23ju"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('rgb(198, 0, 255)');">
+				<div class="_2j78" style="background-color: rgb(198, 0, 255);"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('35042177_365653837289982_7409090813512122368_n');">
+				<div class="_2j78" style="background-image: url(<?php echo $so['config']['theme_url']?>/img/color-box/35078101_365653850623314_9045977006923055104_n.jpg);"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('36989473_618093751905489_1391369623500226560_n');">
+				<div class="_2j78" style="background-image: url(<?php echo $so['config']['theme_url']?>/img/color-box/36962797_618093738572157_8851470105729564672_n.jpg);"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('36847463_191761998158041_2455674622666866688_n');">
+				<div class="_2j78" style="background-image: url(<?php echo $so['config']['theme_url']?>/img/color-box/36947432_191762004824707_967889614800945152_n.jpg);"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('36932507_2193627803985414_2343808531540475904_n');">
+				<div class="_2j78" style="background-image: url(<?php echo $so['config']['theme_url']?>/img/color-box/37005769_2193627800652081_338898466119876608_n.jpg);"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('37098371_200521344131972_292343430107889664_n');">
+				<div class="_2j78" style="background-image: url(<?php echo $so['config']['theme_url']?>/img/color-box/37027573_200521354131971_2724077110497902592_n.jpg);"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('35159126_1821844104550025_8011892767745638400_n');">
+				<div class="_2j78" style="background-image: url(<?php echo $so['config']['theme_url']?>/img/color-box/35248832_1821844107883358_868452227021275136_n.jpg);"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('35161904_177465492945163_1572012365967261696_n');">
+				<div class="_2j78" style="background-image: url(<?php echo $so['config']['theme_url']?>/img/color-box/35274869_177465486278497_2759756726675701760_n.jpg);"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('35223661_160419731481316_7678908583261503488_n');">
+				<div class="_2j78" style="background-image: url(<?php echo $so['config']['theme_url']?>/img/color-box/35117689_160419754814647_1978378613619163136_n.jpg);"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('35125692_255989558470829_596049909161918464_n');">
+				<div class="_2j78" style="background-image: url(<?php echo $so['config']['theme_url']?>/img/color-box/35082653_255989568470828_5742585619389874176_n.jpg);"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('36962807_240401823438372_1129770943686639616_n');">
+				<div class="_2j78" style="background-image: url(<?php echo $so['config']['theme_url']?>/img/color-box/37030123_241614136650474_2121141814709714944_n.jpg);"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('35234395_217508892373781_7932510613790523392_n');">
+				<div class="_2j78" style="background-image: url(<?php echo $so['config']['theme_url']?>/img/color-box/35078511_217508905707113_2429966670714896384_n.jpg);"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('35143921_234778280631497_9024257056659472384_n');">
+				<div class="_2j78" style="background-image: url(<?php echo $so['config']['theme_url']?>/img/color-box/35201439_234778273964831_1925510735891267584_n.jpg);"></div>
+			</a>
+		</li>
+		<li>
+			<a class="pointer" onclick="So_Background('35219770_215948355866959_192751234527002624_n');">
+				<div class="_2j78" style="background-image: url(<?php echo $so['config']['theme_url']?>/img/color-box/35187126_215948365866958_9119128662275260416_n.jpg);"></div>
+			</a>
+		</li>
+	</ul>
+</div>
+<input type="hidden" id="background-publisher-box" name="background" />
+<script>
+function So_Background(color) {
+	var box = $('textarea#tweet-box-home-timeline');
+	var box2 = $('.RichEditor-scrollContainer.u-borderRadiusInherit');
+	if (color == 'default') {
+		So_BackgroundHidden();
+	} else {
+		box.attr('style', "background-image: url('<?php echo $so['config']['theme_url']?>/img/color-box/" + color + ".jpg');background-color: " + color + ";height: 357px;max-height: 357px!important;color: rgb(255, 255, 255);font-size: 30px;font-weight: 700;line-height: 1.2em;padding: 100px 27px;text-align: center;");
+		box2.attr('style', 'height: 357px;');
+		box.attr('data-color', 'true');
+		$('#background-publisher-box').attr('value', color);
+	}
+}
+function So_BackgroundHidden() {
+	var box = $('textarea#tweet-box-home-timeline');
+	var box2 = $('.RichEditor-scrollContainer.u-borderRadiusInherit');
+	box.attr('style', 'height: 80px;');
+	box2.attr('style', 'height: 80px;');
+	box.attr('data-color', 'false');
+	$('#background-publisher-box').attr('value', '');
+}
+</script>

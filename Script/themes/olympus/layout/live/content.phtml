@@ -1,0 +1,47 @@
+<div class="container">
+	<div class="row">
+
+		<!-- Main Content -->
+
+		<div class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-6 col-sm-12 col-12">
+			<div class="ui-block">
+				<div class="ui-block-title">
+					<?php echo So_GetPage('live/live-creator'); ?>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-5 order-lg-2">
+			<div class="ui-block">
+				<div class="chat-live">
+					<div class="content-chat">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ... end Main Content -->
+
+	</div>
+</div>
+<script>
+$(function () {
+	$('form#form-live').ajaxForm({
+		url: So_Requests() + '?type=start-live-stream',
+		beforeSend: function () {
+			
+		},
+		success: function (data) {
+			if (data.status == 200) {
+				$('#form-live').remove();
+				$('#story-box').append(data.html);
+				$('.chat-live .content-chat').html(data.chat);
+				$('.chat-live').show();
+			} else {
+				return false;
+			}
+		}
+	});
+});
+</script>

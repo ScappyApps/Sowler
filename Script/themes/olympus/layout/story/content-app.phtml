@@ -1,0 +1,263 @@
+<?php
+$classPost = new Post();
+$classComment = new Comment();
+$shared_id = 0;
+$post_id = $so['story']['post_id'];
+$data_user = '';
+if (isset($so['page']) && $so['page'] == 'timeline') {
+	$data_user = 'data-user-id="' . $so['profile']['user_id'] . '"';
+}
+?>
+<div class="ui-block twidley-post" id="stream-item-tweet-<?php echo $so['story']['post_id']; ?>" data-id="<?php echo $so['story']['post_id']; ?>" <?php echo $data_user; ?>>
+
+	<article class="hentry post has-post-thumbnail">
+
+		<?php
+		if (!empty($so['story']['share_id'])) {
+		?>
+		<div class="context">
+            <i class="fas fa-retweet"></i> <?php
+            if ($so['story']['user_id'] == $so['user']['user_id']) {
+                echo $so['lang']['you'];
+            } else {
+                echo $so['story']['user']['name'];
+            }
+            ?> <?php echo $so['lang']['retwidleyd']; ?>
+            <p dir="auto">
+                <?php echo $so['story']['postText']; ?>
+            </p>
+        </div>
+		<?php } ?>
+		<?php
+		if (!empty($so['story']['share_id'])) {
+			$shared_id = $so['story']['share_id'];
+			$so['origin'] = $so['story'];
+			$so['story'] = $classPost->So_PostData($so['story']['share_id']);
+		}
+		?>
+		<div class="post__author author vcard inline-items">
+			<img src="<?php echo $so['story']['user']['avatar']; ?>" alt="author">
+
+			<div class="author-date">
+				<a class="h6 post__author-name fn" href="<?php echo So_SeoLink('index.php?link1=timeline-app&user_id=' . $so['story']['user_id']); ?>">
+				<?php echo $so['story']['user']['name']; ?>
+				<?php if ($so['story']['user']['verified'] == 1) { ?>
+					<span class="UserBadges">
+						<span class="Icon">
+							<i class="fas fa-check-circle" style="color: #009688;"></i>  
+						</span>
+					</span>
+				<?php } ?>
+				</a>
+				<div class="post__date">
+					<time class="published" title="<?php echo $so['story']['hour']; ?>">
+						<?php echo So_Time($so['story']['time']); ?> - <?php echo $so['story']['day'] . '/' . $so['months'][$so['story']['month']] . '/' . $so['story']['year']; ?>
+					</time>
+					<span>
+					<?php
+					if (!empty($so['story']['postType'])) {
+						echo ' - ' . $so['lang'][$so['story']['postType']];
+					}
+					?>
+					</span>
+				</div>
+			</div>
+			
+			<div class="more">
+				<svg class="svg-inline--fa fa-ellipsis-h fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>
+				<ul class="more-dropdown">
+					<?php if (isset($so['origin']['user_id'])) {
+					if ($so['origin']['user_id'] == $so['user']['user_id'] || $so['user']['admin'] > 0) { ?>
+					<a onclick="So_DeletePost(<?php echo $so['origin']['post_id']; ?>);" href="javascript:void(0);">
+						<?php echo $so['lang']['delete_twidley']; ?>
+					</a>
+					<?php } ?>
+					<?php } else if ($so['story']['user_id'] === $so['user']['user_id'] || $so['user']['admin'] > 0) { ?>
+					<li>
+						<a onclick="So_DeletePost(<?php echo $so['story']['post_id']; ?>);" href="javascript:void(0);">
+							<?php echo $so['lang']['delete_twidley']; ?>
+						</a>
+					</li>
+					<?php } ?>
+					<li>
+						<a href="<?php echo So_SeoLink('index.php?link1=post-app&post_id=' . $so['story']['post_id']); ?>" target="_blank"><?php echo $so['lang']['open_in_new_guia']; ?></a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+		<h3><?php echo $so['story']['titleMoment']; ?></h3>
+		<?php if (!empty($so['story']['postText'])) { ?>
+			<p <?php echo So_GetPage('story/extra/background'); ?> id="translate-p-<?php echo $so['story']['post_id']; ?>" lang="<?php echo So_Language(); ?>" data-aria-label-part="0"><?php echo $so['story']['postText']; ?></p>
+			<a class="pointer" id="translate-button-<?php echo $so['story']['post_id']; ?>" style="display: none;"><?php echo $so['lang']['translate']; ?></a>
+		<?php } ?>
+		
+		<?php
+		if (!empty($so['story']['html_url']) && empty($so['story']['postYoutube'])) {
+			echo So_GetPage('story/extra/url-embed');
+		}
+		if (!empty($so['story']['postGif'])) {
+			echo So_GetPage('story/post-gif');
+		}
+		if (!empty($so['story']['postSticker'])) {
+			echo So_GetPage('story/sticker');
+		}
+		if (!empty($so['story']['postImage'])) {
+			echo So_GetPage('story/post-image');
+		}
+		if (!empty($so['story']['postVideo'])) {
+			echo So_GetPage('story/post-video');
+		}
+		if (!empty($so['story']['postType']) && $so['story']['postType'] == 'started_live_stream') {
+			echo So_GetPage('live/player-feed');
+		}
+		?>
+		<?php if (!empty($so['story']['postYoutube'])) { ?>
+			<iframe id="iframe-youtube" data-src="https://www.youtube.com/embed/<?php echo $so['story']['postYoutube']; ?>" frameborder="0" scrolling="no" allowtransparency="true" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" src="https://www.youtube.com/embed/<?php echo $so['story']['postYoutube']; ?>?autoplay=0&amp;auto_play=false"></iframe>
+		<?php } ?>
+
+		<div class="post-additional-info inline-items">
+			<?php
+			if ($so['config']['type_button'] == 'reactions') {
+				echo '<span id="total-reactions-' . $so['story']['post_id'] . '" style="display: inline-flex;">' . So_GetPage('buttons/reactions/total') . '</span>';
+			}
+			?>
+			
+			<div class="comments-shared">
+				<?php if ($so['config']['type_button'] != 'reactions') { ?>
+				<a href="#" class="post-add-icon inline-items" id="count-like-<?php echo $so['story']['post_id']; ?>">
+				<?php
+					echo So_GetPage('buttons/count-like');
+				?>
+				</a>
+				<?php } ?>
+				<a href="javascript:void(0);" class="post-add-icon inline-items">
+					<svg class="svg-inline--fa fa-comment fa-w-18" aria-hidden="true" data-prefix="fas" data-icon="comment" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg="" style="margin-bottom: 3px;"><path fill="currentColor" d="M576 240c0 115-129 208-288 208-48.3 0-93.9-8.6-133.9-23.8-40.3 31.2-89.8 50.3-142.4 55.7-5.2.6-10.2-2.8-11.5-7.7-1.3-5 2.7-8.1 6.6-11.8 19.3-18.4 42.7-32.8 51.9-94.6C21.9 330.9 0 287.3 0 240 0 125.1 129 32 288 32s288 93.1 288 208z"></path></svg>
+					<span>
+					<?php
+					if (!empty($shared_id)) {
+						$countPostComment = $classPost->So_CountPostComment($post_id);
+					} else {
+						$countPostComment = $classPost->So_CountPostComment($so['story']['post_id']);
+					}
+					echo $countPostComment;
+					?>
+					</span>
+				</a>
+				<a href="javascript:void(0);" class="post-add-icon inline-items">
+					<svg class="svg-inline--fa fa-share-alt fa-w-14" aria-hidden="true" data-prefix="fas" data-icon="share-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" style="margin-bottom:  3px;margin-left: -1px;"><path fill="currentColor" d="M352 320c-22.608 0-43.387 7.819-59.79 20.895l-102.486-64.054a96.551 96.551 0 0 0 0-41.683l102.486-64.054C308.613 184.181 329.392 192 352 192c53.019 0 96-42.981 96-96S405.019 0 352 0s-96 42.981-96 96c0 7.158.79 14.13 2.276 20.841L155.79 180.895C139.387 167.819 118.608 160 96 160c-53.019 0-96 42.981-96 96s42.981 96 96 96c22.608 0 43.387-7.819 59.79-20.895l102.486 64.054A96.301 96.301 0 0 0 256 416c0 53.019 42.981 96 96 96s96-42.981 96-96-42.981-96-96-96z"></path></svg>
+					<span>
+					<?php
+					if (!empty($shared_id)) {
+						$countPostShare = $classPost->So_CountPostShare($post_id);
+					} else {
+						$countPostShare = $classPost->So_CountPostShare($so['story']['post_id']);
+					}
+					if ($countPostShare > 0) {
+						echo $countPostShare;
+					}
+					?>
+					</span>
+				</a>
+			</div>
+
+
+		</div>
+
+		<div class="control-block-button post-control-button">
+			
+			<?php
+			if ($so['config']['type_button'] == 'reactions') {
+				echo '<span id="button-like-' . $so['story']['post_id'] . '">' . So_GetPage('buttons/reactions/content') . '</span>';
+			} else {
+				echo '<span id="button-like-' . $so['story']['post_id'] . '">' . So_GetPage('buttons/like') . '</span>';
+			} ?>
+			
+			<a href="javascript:void(0);" onclick="So_ShowPublisherBoxComment(<?php echo $so['story']['post_id']; ?>);" class="btn btn-control">
+				<svg class="svg-inline--fa fa-comment fa-w-18" aria-hidden="true" data-prefix="fas" data-icon="comment" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg="" style="margin-bottom: 3px;"><path fill="currentColor" d="M576 240c0 115-129 208-288 208-48.3 0-93.9-8.6-133.9-23.8-40.3 31.2-89.8 50.3-142.4 55.7-5.2.6-10.2-2.8-11.5-7.7-1.3-5 2.7-8.1 6.6-11.8 19.3-18.4 42.7-32.8 51.9-94.6C21.9 330.9 0 287.3 0 240 0 125.1 129 32 288 32s288 93.1 288 208z"></path></svg>
+			</a>
+			<div class="nav-item dropdown">
+				<a href="#" class="btn btn-control nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<svg class="svg-inline--fa fa-share-alt fa-w-14" aria-hidden="true" data-prefix="fas" data-icon="share-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" style="margin-bottom:  3px;margin-left: -1px;"><path fill="currentColor" d="M352 320c-22.608 0-43.387 7.819-59.79 20.895l-102.486-64.054a96.551 96.551 0 0 0 0-41.683l102.486-64.054C308.613 184.181 329.392 192 352 192c53.019 0 96-42.981 96-96S405.019 0 352 0s-96 42.981-96 96c0 7.158.79 14.13 2.276 20.841L155.79 180.895C139.387 167.819 118.608 160 96 160c-53.019 0-96 42.981-96 96s42.981 96 96 96c22.608 0 43.387-7.819 59.79-20.895l102.486 64.054A96.301 96.301 0 0 0 256 416c0 53.019 42.981 96 96 96s96-42.981 96-96-42.981-96-96-96z"></path></svg>
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="asfaassfsf">
+					<button class="dropdown-item" onclick="So_SharePost(<?php echo $so['story']['post_id']; ?>);" style="padding: 10px;border-bottom: solid 1px #f1f1f1;">
+						<?php echo $so['lang']['share_here']; ?>
+					</button>
+					<button class="dropdown-item" rel="publisher" onclick="So_ShareTo('https://www.facebook.com/sharer/sharer.php?u=<?php echo So_SeoLink('index.php?link1=post&post_id=' . $so['story']['post_id']); ?>');" target="_blank" style="padding: 10px;border-bottom: solid 1px #f1f1f1;">
+						<span><?php echo $so['lang']['share_in']; ?> Facebook</span>
+					</button>
+					<button class="dropdown-item" onclick="So_ShareTo('https://twitter.com/intent/tweet?text=<?php echo So_SeoLink('index.php?link1=post&post_id=' . $so['story']['post_id']); ?>');" target="_blank" style="padding: 10px;border-bottom: solid 1px #f1f1f1;">
+						<span><?php echo $so['lang']['share_in']; ?> Twitter</span>
+					</button>
+					<button class="dropdown-item" rel="publisher" onclick="So_ShareTo('https://plus.google.com/share?url=<?php echo So_SeoLink('index.php?link1=post&post_id=' . $so['story']['post_id']); ?>');" target="_blank" style="padding: 10px;border-bottom: solid 1px #f1f1f1;">
+						<span><?php echo $so['lang']['share_in']; ?> Google Plus</span>
+					</button>
+					<button class="dropdown-item" onclick="So_ShareTo('https://api.whatsapp.com/send?text=<?php echo So_SeoLink('index.php?link1=post&post_id=' . $so['story']['post_id']); ?>');" target="_blank" style="padding: 10px;border-bottom: solid 1px #f1f1f1;">
+						<span><?php echo $so['lang']['share_in']; ?> Whatsapp</span>
+					</button>
+					<button class="dropdown-item" onclick="So_ShareTo('https://telegram.me/share/url?url=<?php echo So_SeoLink('index.php?link1=post&post_id=' . $so['story']['post_id']); ?>');" target="_blank" style="padding: 10px;border-bottom: solid 1px #f1f1f1;">
+						<span><?php echo $so['lang']['share_in']; ?> Telegram</span>
+					</button>
+					<button class="dropdown-item" onclick="So_ShareTo('https://pinterest.com/pin/create/button/?url=<?php echo So_SeoLink('index.php?link1=post&post_id=' . $so['story']['post_id']); ?>');" target="_blank" style="padding: 10px;border-bottom: solid 1px #f1f1f1;">
+						<span><?php echo $so['lang']['share_in']; ?> Pinterest</span>
+					</button>
+					<button class="dropdown-item" onclick="So_ShareTo('https://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo So_SeoLink('index.php?link1=post&post_id=' . $so['story']['post_id']); ?>');" target="_blank" style="padding: 10px;border-bottom: solid 1px #f1f1f1;">
+						<span><?php echo $so['lang']['share_in']; ?> Linkedin</span>
+					</button>
+				</div>
+			</div>
+
+		</div>
+
+	</article>
+	
+	<!-- Comments -->
+
+	<ul class="comments-list" id="comments-list-<?php echo $so['story']['post_id']; ?>">
+		<?php
+		$comments = $classComment->So_GetComments($shared_id);
+		
+		if ($comments > 0) {
+			foreach ($comments as $so['comment']) {
+				echo So_GetPage('comment/content');
+			}
+		}
+		?>
+	</ul>
+
+	<!-- ... end Comments -->
+	<?php if (count($comments) > 0) { ?>
+	<!--<a href="#" class="more-comments"><?php echo $so['lang']['view_more_comments']; ?><span>+</span></a>-->
+	<?php } ?>
+
+	<!-- Comment Form  -->
+
+	<?php echo So_GetPage('comment/publisher-box'); ?>
+
+	<!-- ... end Comment Form  -->
+	<script type="text/javascript">
+    <?php if (!empty($so['story']['postText'])) { ?>
+            $(document).ready(function () {
+                So_DetectLanguage('<?php echo $so['story']['postText']; ?>', <?php echo $so['story']['post_id']; ?>, '<?php echo $so['config']['yandex_api']; ?>', '<?php echo substr(So_Language(), 0, 2); ?>');
+                $('#translate-button-<?php echo $so['story']['post_id']; ?>').click(function () {
+                    So_TranslateText('<?php echo $so['story']['postText']; ?>', <?php echo $so['story']['post_id']; ?>, '<?php echo $so['config']['yandex_api']; ?>', '<?php echo substr(So_Language(), 0, 2); ?>');
+                });
+        <?php if (empty($so['story']['background'])) { ?>
+                    $("#translate-p-<?php echo $so['story']['post_id']; ?>").readmore({
+                        speed: 75,
+                        moreLink: '<a href="#" class="pointer"><b><?php echo $so["lang"]["read_more"]; ?></b></a>',
+                        lessLink: '<a href="#" class="pointer"><b><?php echo $so["lang"]["read_less"]; ?></b></a>'
+                    });
+        <?php } ?>
+            });
+    <?php } ?>
+	<?php if (count($comments) > 0) { ?>
+    var divList = $("ul#comments-list-<?php echo $so['story']['post_id']; ?> li.comment-item");
+    divList.sort(function (a, b) {
+        return $(a).attr("data-id") - $(b).attr("data-id");
+    });
+    $("ul#comments-list-<?php echo $so['story']['post_id']; ?>").html(divList);
+	<?php } ?>
+    </script>
+</div>

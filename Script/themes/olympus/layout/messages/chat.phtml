@@ -1,0 +1,69 @@
+<?php
+$classMessage = new Message();
+$classUser = new User();
+$so['chat'] = $classUser->So_UserData(So_Secure($_GET['user_id']));
+$messages = $classMessage->So_GetMessages(array('user_id' => $so['chat']['user_id']), 50);
+?>
+<div class="messenger-chat-opened" data-messenger="<?php echo $so['chat']['user_id']; ?>"></div>
+<div class="ui-block-title">
+	<h6 class="title"><?php echo $so['chat']['name']; ?></h6>
+	<a href="<?php echo $so['chat']['url']; ?>" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
+</div>
+<div class="mCustomScrollbar" data-mcs-theme="dark">
+	<ul class="notification-list chat-message chat-message-field" id="list-messages">
+		
+	</ul>
+</div>
+<?php echo So_GetPage('messages/publisher-box'); ?>
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            So_UpdateSeenMessages(<?php echo $so['chat']['user_id']; ?>);
+        }, 2000);
+        So_LoadMessages();
+<?php if ($so['config']['websocket'] == 0) { ?>
+            So_GetMessagesNews();
+<?php } ?>
+    });
+    function So_LoadMessages() {
+        $.post(So_Requests() + '?type=load-messages-messenger', {
+           user_id: <?php echo $so['chat']['user_id']; ?>
+        }, function (data) {
+            if (data.status == 200) {
+                $('#list-messages').html(data.html);
+                setTimeout(function () {
+                    <?php if ($classMessage->So_CheckLastSeenMessage($so['chat']['user_id']) === true) { ?>
+                            $('#list-messages').append('<div class="visto" style="background: #ffffff;padding: 0px 10px 5px; text-align: rigth;"><?php echo $so['lang']['message_seen']; ?></div>');
+                    <?php } ?>
+                    var div_scroll = $('#list-messages')[0];
+                    div_scroll.scrollTop = div_scroll.scrollHeight;
+                }, 1000);
+            } else {
+                $('#list-messages').html('');
+            }
+        });
+    }
+</script>
+<style>
+    .visto {
+        display: none;
+    }
+    .DMActivity.DMConversation.js-ariaDocument.u-chromeOverflowFix.DMActivity--open {
+        margin: 40px auto;
+    }
+    .DirectMessage-media {
+        width: 100%;
+    }
+    .AdaptiveMedia-video {
+        width: 340px;
+    }
+	ul#list-messages {
+		overflow-y: scroll;
+		max-height: 400px;
+	}
+    @media (max-width: 640px) {
+        .timeline-tweet-box {
+            display: block;
+        }
+    }
+</style>

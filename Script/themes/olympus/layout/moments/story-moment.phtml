@@ -1,0 +1,36 @@
+<div class="MomentCapsuleSummary MomentCapsuleSummary--portrait" id="id-more-moments" data-moment-id="<?php echo $so['moment']['post_id']; ?>" data-moment-visibility="public" data-component-context="list" tabindex="0">
+	<a href="<?php echo So_SeoLink('index.php?link1=moments&id=' . $so['moment']['post_id']); ?>" class="MomentCapsuleSummary-cover js-default-link js-nav">
+		<div class="MomentMediaItem MomentMediaItem--preview" data-crop-aspect-ratio="portrait-three-by-four">
+			<img class="MomentMediaItem-entity MomentMediaItem-entity--image" src="<?php echo $so['moment']['postImage']; ?>" data-height="300" data-width="300" data-square-crop-x="0" data-square-crop-y="0" data-square-crop-width="298" data-square-crop-height="298" data-portrait-three-by-four-crop-x="75" data-portrait-three-by-four-crop-y="0" data-portrait-three-by-four-crop-width="223" data-portrait-three-by-four-crop-height="297" data-mobile-portrait-crop-x="108" data-mobile-portrait-crop-y="0" data-mobile-portrait-crop-width="167" data-mobile-portrait-crop-height="296" data-mobile-no-crop="false" data-media-id="1055878153447636992" data-preview-image-src="<?php echo $so['moment']['postImage']; ?>">
+		</div>
+	</a>
+	<div class="MomentCapsuleSummary-details">
+		<a href="<?php echo So_SeoLink('index.php?link1=moments&id=' . $so['moment']['post_id']); ?>" class="MomentCapsuleSummary-title u-textUserColorHover js-default-link js-nav js-ellipsis u-dir" title="Como assim? Ter um cachorro custa o mesmo que ter dois carros?" dir="ltr">
+			<?php echo $so['moment']['titleMoment']; ?>
+		</a>
+		<div class="MomentCapsuleSubtitle">
+			<span class="MomentCapsuleSubtitle-category u-dir" dir="ltr">
+				<?php echo $so['category_moment'][$so['moment']['categoryMoment']]; ?>
+			</span>
+			<span class="MomentCapsuleSubtitle-context">
+				<?php echo So_Time($so['moment']['time']); ?>
+			</span>
+		</div>
+		<div class="MomentCapsuleSummary-description  js-ellipsis u-dir" dir="ltr">
+			<?php echo $so['moment']['postText']; ?>
+		</div>
+		<div class="MomentCapsuleSummary-misc">
+			<div class="MomentCapsuleLikesCount">
+			   <?php
+				if ($so['config']['type_button'] == 'reactions') {
+					$so['story']['post_id'] = $so['moment']['post_id'];
+					echo So_GetPage('buttons/reactions/count-reactions');
+				} else {
+					$countPostLike = $classPost->So_CountPostLike($so['moment']['post_id']);
+					echo $countPostLike;
+				}
+				?>
+			</div>
+		</div>
+	</div>
+</div>

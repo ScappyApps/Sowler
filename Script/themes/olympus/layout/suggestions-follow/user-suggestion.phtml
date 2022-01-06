@@ -1,0 +1,51 @@
+<?php
+$classPost = new Post();
+$classUser = new User();
+?>
+<div class="ui-block">
+
+	<!-- Search Result -->
+	
+	<article class="hentry post searches-item">
+	
+		<div class="post__author author vcard inline-items">
+			<img width="35px" src="<?php echo $so['result']['avatar']; ?>" alt="author">
+	
+			<div class="author-date">
+				<a class="h6 post__author-name fn" href="<?php echo $so['result']['url']; ?>" data-ajax="?link1=timeline&username=<?php echo $so['result']['username']; ?>"><?php echo $so['result']['name']; ?></a>
+				<div class="country"><?php echo $so['result']['location']; ?></div>
+			</div>
+	
+			<span class="notification-icon">
+				<div class="user-actions btn-group not-following not-muting " id="result-button-follow-<?php echo $so['result']['user_id']; ?>" data-user-id="<?php echo $so['result']['user_id']; ?>" data-screen-name="<?php echo $so['result']['username']; ?>" data-name="<?php echo $so['result']['name']; ?>" data-protected="false">
+					<?php echo So_GetPage('buttons/result-button-follow'); ?>
+				</div>
+			</span>
+		</div>
+	
+		<p class="user-description">
+			<span class="title"><?php echo $so['lang']['about']; ?>:</span> <?php echo $so['result']['about']; ?>
+		</p>
+	
+		<div class="post-additional-info" style="border-top: none;">
+
+			<div class="friend-count">
+				<a href="#" class="friend-count-item">
+					<div class="title"><?php echo $so['lang']['following']; ?></div>
+					<div class="h6"><?php echo $classUser->So_CountFollowingUser($so['result']['user_id']); ?></div>
+				</a>
+				<a href="#" class="friend-count-item">
+					<div class="title">Posts</div>
+					<div class="h6"><?php echo $classPost->So_CountPostsUser($so['result']['user_id']); ?></div>
+				</a>
+				<a href="#" class="friend-count-item">
+					<div class="title"><?php echo $so['lang']['followers']; ?></div>
+					<div class="h6"><?php echo $classUser->So_CountFollowersUser($so['result']['user_id']); ?></div>
+				</a>
+			</div>
+	
+		</div>
+	
+	</article>
+	<!-- ... end Search Result -->
+</div>

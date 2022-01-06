@@ -1,0 +1,125 @@
+<link rel="stylesheet" href="<?php echo $so['config']['theme_url']; ?>/stylesheet/twidley_more_2.css?<?php echo time(); ?>" />
+<div class="swift-loading no-nav-banners three-col logged-in user-style-BuuhFenix ms-windows MomentsPage MomentsGuidePage">
+    <div class="MomentMakerTopBar topbar u-bgUserColor" data-visibility-mode="private">
+        <span class="Icon MomentMakerTopBar-birdIcon bird-topbar-etched">
+            <img width="100px" height="30px" src="<?php echo $so['config']['site_url']; ?>/upload/images/logo.png?<?php echo time(); ?>">
+        </span>
+        <div class="MomentMakerTopBar-buttonContainer">
+            <div class="MomentMakerTopBar-leftActions"></div>
+            <div class="MomentMakerTopBar-rightActions">
+                <a class="EdgeButton EdgeButton--invertedSecondary MomentMakerTopBar-finishLaterButton js-nav btn" href="<?php echo So_SeoLink('index.php?link1=moments'); ?>" data-ajax="?link1=moments">
+                    <?php echo $so['lang']['publish_later']; ?>
+                </a>
+                <button class="EdgeButton EdgeButton--invertedPrimary MomentMakerTopBar-publishButton btn" type="button" onclick="So_SubmitForm('form-moments');">
+                    <span class="MomentMakerTopBar-publishButtonLabel for-privateToPublic">
+                        <?php echo $so['lang']['publish']; ?>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="MomentMakerPage-content">
+        <form class="MomentMakerCapsuleCover" id="form-moments" method="post" enctype="multipart/form-data">
+            <div class="MomentCapsuleEditableMeta">
+                <div class="MomentCapsuleEditableMeta-title is-empty">
+                    <input type="text" name="titleMoment" class="is-singleLine rich-editor is-plainText is-showPlaceholder" contenteditable="true" spellcheck="true" aria-multiline="true" data-field="title" placeholder="<?php echo $so['lang']['title_of_moments']; ?>" role="textbox" dir="ltr">
+                </div>
+                <div class="MomentCapsuleEditableMeta-description is-empty">
+                    <textarea name="postText" class="is-singleLine rich-editor is-plainText is-showPlaceholder" contenteditable="true" spellcheck="true" aria-multiline="true" data-field="description" placeholder="<?php echo $so['lang']['add_a_description']; ?>" role="textbox"></textarea>
+                </div>
+				<div class="form-group">
+					<label class="col-md-3 pull-left" for="textinput" style="font-weight: bold;margin-bottom: 10px;"><?php echo $so['lang']['category']; ?></label>  
+					<select class="form-control" name="categoryMoment">
+						<option value="1"><?php echo $so['lang']['news']; ?></option>
+						<option value="2"><?php echo $so['lang']['sports']; ?></option>
+						<option value="3"><?php echo $so['lang']['entertainment']; ?></option>
+						<option value="4"><?php echo $so['lang']['fun']; ?></option>
+					</select>
+				</div>
+            </div>
+            <div class="MomentMakerCapsuleCover-media  is-editable">
+                <div class="publisher-hidden-option" style="display: none;">
+					<div id="progress">
+						<span id="percent">0%</span>
+						<div class="progress">
+							<div id="bar" class="progress-bar active"></div> 
+						</div>
+						<div class="clear"></div>
+					</div>
+					<br>
+				</div>
+                <div class="MomentMakerCapsuleCover-empty" style="padding: 10px;">
+                    <i class="fas fa-image Icon--large"></i>
+                    <div class="MomentMakerCapsuleCover-emptyText">
+                        <?php echo $so['lang']['upload_any_images_to_moment']; ?>
+                    </div>
+                    <button type="button" class="MomentMakerCapsuleCover-setButton EdgeButton EdgeButton--secondary btn">
+                        <?php echo $so['lang']['set_cover']; ?>
+                    </button>
+                    <div class="sadasasgerr">
+                        <label class="t1-label">
+                            <input type="file" name="media_empty" accept="image/gif,image/jpeg,image/jpg,image/png" multiple="" class="file-input js-tooltip" data-delay="150">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+$(function () {
+        var bar_ = $('#bar');
+        var percent_ = $('#percent');
+        $('form#form-moments').ajaxForm({
+            url: So_Requests() + '?type=insert-new-post-moment',
+            beforeSend: function () {
+                var percentVal = '0%';
+                bar_.width(percentVal);
+                percent_.html(percentVal);
+            },
+            uploadProgress: function (event, position, total, percentComplete) {
+                var percentVal = percentComplete + '%';
+                bar_.width(percentVal);
+				$('.publisher-hidden-option').show();
+                percent_.html(percentVal);
+            },
+            success: function (data) {
+                $('#progress').slideUp(200);
+                $('.publisher-hidden-option').hide();
+                if (data.status == 200) {
+                    $('input, textarea').val('');
+                } else {
+                    return false;
+                }
+            }
+        });
+});
+</script>
+<style>
+    header {
+        display: none;
+    }
+    .MomentGuideNavigation {
+        display: none;
+    }
+    textarea.is-singleLine.rich-editor.is-plainText.is-showPlaceholder::-webkit-input-placeholder, input.is-singleLine.rich-editor.is-plainText.is-showPlaceholder::-webkit-input-placeholder {
+        color: #cecece;
+    }
+    textarea.is-singleLine.rich-editor.is-plainText.is-showPlaceholder:-moz-placeholder, input.is-singleLine.rich-editor.is-plainText.is-showPlaceholder:-moz-placeholder {
+        color: #cecece;
+    }
+    textarea.is-singleLine.rich-editor.is-plainText.is-showPlaceholder::-moz-placeholder, input.is-singleLine.rich-editor.is-plainText.is-showPlaceholder::-moz-placeholder {
+        color: #cecece;
+    }
+    textarea.is-singleLine.rich-editor.is-plainText.is-showPlaceholder:-ms-input-placeholder, input.is-singleLine.rich-editor.is-plainText.is-showPlaceholder:-ms-input-placeholder {
+        color: #cecece;
+    }
+    .sadasasgerr {
+        position: absolute;
+        top: 85px;
+        width: 125px;
+        opacity: 0;
+        z-index: 1;
+        cursor: pointer;
+    }
+</style>

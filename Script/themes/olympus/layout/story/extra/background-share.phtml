@@ -1,0 +1,20 @@
+<?php
+if (!empty($so['origin']['background']) && empty($so['origin']['postImage']) && empty($so['origin']['postGif']) && empty($so['origin']['postVideo']) && empty($so['origin']['postFile'])) {
+?>
+style="
+background-image: url('<?php echo $so['config']['theme_url']?>/img/color-box/<?php echo $so['origin']['background']; ?>.jpg');
+background-color: <?php echo $so['origin']['background']; ?>;
+background-size: 100% 100%;
+background-position: center;
+background-repeat: no-repeat;
+height: 300px;
+max-height: 357px!important;
+color: rgb(255, 255, 255);
+font-size: 30px;
+font-weight: 700;
+line-height: 1.2em;
+padding: 100px 27px;
+text-align: center;
+border-radius: 6px;
+overflow: hidden;"
+<?php } ?>

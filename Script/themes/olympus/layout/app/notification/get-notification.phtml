@@ -1,0 +1,70 @@
+<?php
+$so['notification'] = So_NotificationsRest($_GET['notifi_id'], $_GET['user_id']);
+
+if ($so['notification']['type'] == 'followed_you') {
+    
+    echo So_GetPage('app/notification/events/followed-you');
+    
+} else if ($so['notification']['type'] == 'liked_your_post' || $so['notification']['type'] == 'liked_your_profile_picture' || $so['notification']['type'] == 'liked_your_profile_cover') {
+    
+    echo So_GetPage('app/notification/events/liked-your-post');  
+    
+} else if ($so['notification']['type'] == 'mentioned_you_on_a_post') {
+    
+    echo So_GetPage('app/notification/events/mentioned-you-on-a-post');  
+    
+} else if ($so['notification']['type'] == 'shared_your_post') {
+    
+    echo So_GetPage('app/notification/events/shared-your-post');  
+    
+} else if ($so['notification']['type'] == 'commented_on_your_post') {
+    
+    echo So_GetPage('app/notification/events/commented-on-your-post');  
+    
+} else if ($so['notification']['type'] == 'mentioned_you_on_a_comment') {
+    
+    echo So_GetPage('app/notification/events/mentioned-you-on-a-comment');  
+    
+} else if ($so['notification']['type'] == 'liked_your_comment') {
+    
+    echo So_GetPage('app/notification/events/liked-your-comment');  
+    
+} else if ($so['notification']['type'] == 'started_live_stream') {
+    
+    echo So_GetPage('app/notification/events/started-live-stream');  
+    
+} else if ($so['notification']['type'] == 'reacted_on_your_post') {
+    
+    echo So_GetPage('app/notification/events/reacted-on-your-post');  
+    
+} else {
+	echo 'error';
+}
+
+?>
+<style>
+.stream-item:not(.no-header-background-module) {
+    background: transparent;
+    border-left: 1px solid #e6ecf0;
+    border-right: 1px solid #e6ecf0;
+    background-clip: padding-box;
+    text-decoration: none;
+    list-style: none;
+}
+.ActivityItem {
+    padding: 0;
+    border-bottom: 1px solid #e6ecf0;
+}
+.ActivityItem-quoteTweetContainer {
+    margin-top: 0;
+}
+.QuoteTweet {
+    border: solid 1px #e6ecf0;
+    cursor: pointer;
+    border-radius: 4px;
+    background: #FFFFFF;
+}
+body {
+    background-color: #ffffff;
+}
+</style>

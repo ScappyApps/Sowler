@@ -1,0 +1,241 @@
+<?php $classPost = new Post(); ?>
+<div class="news-feed-form" style="border-top: solid 1px #f1f1f1;">
+	<!-- Tab panes -->
+	<div class="tab-content">
+		<div class="tab-pane active" id="home-1" role="tabpanel" aria-expanded="true">
+			<form id="publisher-box" method="post">
+				<div class="author-thumb">
+					<img width="30px" src="<?php echo $so['user']['avatar']; ?>" alt="author">
+				</div>
+				<div class="form-group with-icon label-floating is-empty">
+					<label class="control-label"><?php echo $so['lang']['type_something']; ?></label>
+					<textarea name="postText" onkeyup="verificachars();" id="tweet-box-home-timeline" onkeydown="So_SubmitMessenger(event);" onfocus="So_UpdateSeenMessages(<?php echo $so['chat']['user_id']; ?>);" class="form-control"><?php
+					if (isset($so['profile']['user_id'])) {
+						echo '@' . $so['profile']['username'] . ' ';
+					}
+					?></textarea>
+					<span class="material-input"></span>
+				</div>
+				<div class="embed-url"></div>
+				<div class="TweetBoxUploadProgress">
+					<div class="publisher-hidden-option">
+						<div id="progress">
+							<span id="percent">0%</span>
+							<div class="progress">
+								<div id="bar" class="progress-bar active"></div> 
+							</div>
+							<div class="clear"></div>
+						</div>
+						<br>
+					</div>
+				</div>
+				<div class="thumbnail-wrapper">
+					<div class="ComposerThumbnails">
+						<div role="button" tabindex="0" aria-label="GIF thumbnail" class="ComposerThumbnail ComposerThumbnail--gif" data-file-id="1" >
+							<div class="ComposerThumbnail-imageContainer" >
+								<img class="ComposerThumbnail-image" src=""  draggable="false" alt="">
+							</div>
+							<div class="ComposerThumbnail-overlay ComposerThumbnail-gifBadge">
+								<div class="Icon Icon--medium">GIF</div>
+							</div>
+							<div class="ComposerThumbnail-overlay ComposerThumbnail-remove">
+								<div id="askfjaskj-close" style="padding-left: 5px;" class="fas fa-times"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<?php echo So_GetPage('story/emoticons-publisher-box'); ?>
+				<div class="add-options-message">
+					<a href="javascript:void(0);" class="options-message" data-toggle="tooltip" data-placement="top">
+						<svg class="svg-inline--fa fa-camera-retro fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="camera-retro" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M48 32C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48H48zm0 32h106c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H38c-3.3 0-6-2.7-6-6V80c0-8.8 7.2-16 16-16zm426 96H38c-3.3 0-6-2.7-6-6v-36c0-3.3 2.7-6 6-6h138l30.2-45.3c1.1-1.7 3-2.7 5-2.7H464c8.8 0 16 7.2 16 16v74c0 3.3-2.7 6-6 6zM256 424c-66.2 0-120-53.8-120-120s53.8-120 120-120 120 53.8 120 120-53.8 120-120 120zm0-208c-48.5 0-88 39.5-88 88s39.5 88 88 88 88-39.5 88-88-39.5-88-88-88zm-48 104c-8.8 0-16-7.2-16-16 0-35.3 28.7-64 64-64 8.8 0 16 7.2 16 16s-7.2 16-16 16c-17.6 0-32 14.4-32 32 0 8.8-7.2 16-16 16z"></path></svg>
+						<input type="file" name="media_empty" accept="image/gif,image/jpeg,image/jpg,image/png,video/mp4" multiple="" class="file-input js-tooltip" data-delay="150">
+					</a>
+					
+					<a href="javascript:void(0);" onclick="So_OpenNewsFeedGif();" class="options-message" data-toggle="tooltip" data-placement="top">
+						<svg class="svg-inline--fa fa-gift fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="gift" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M488 192h-64.512C438.72 175.003 448 152.566 448 128c0-52.935-43.065-96-96-96-41.997 0-68.742 20.693-95.992 54.15C226.671 50.192 199.613 32 160 32c-52.935 0-96 43.065-96 96 0 24.566 9.28 47.003 24.512 64H24c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h8v112c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V320h8c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24zm-208-32c24-56 55.324-64 72-64 17.645 0 32 14.355 32 32s-14.355 32-32 32h-72zM160 96c16.676 0 48 8 72 64h-72c-17.645 0-32-14.355-32-32s14.355-32 32-32zm48 128h96v184c0 13.255-10.745 24-24 24h-48c-13.255 0-24-10.745-24-24V224z"></path></svg>
+					</a>
+
+					<a href="javascript:void(0);" onclick="So_OpenEmoticons();" class="options-message" data-toggle="tooltip" data-placement="top">
+						<svg class="svg-inline--fa fa-smile fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="smile" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zm-122.526 75.34c11.479-17.755-15.349-35.194-26.873-17.374-53.418 82.627-143.71 82.681-197.164 0-11.502-17.79-38.364-.401-26.873 17.374 66.014 102.107 184.795 102.265 250.91 0zM108 192c0 37.497 30.503 68 68 68s68-30.503 68-68-30.503-68-68-68-68 30.503-68 68zm160.5 0c0 37.221 30.279 67.5 67.5 67.5s67.5-30.279 67.5-67.5-30.279-67.5-67.5-67.5-67.5 30.279-67.5 67.5zm67.5-48a47.789 47.789 0 0 0-22.603 5.647h.015c10.916 0 19.765 8.849 19.765 19.765s-8.849 19.765-19.765 19.765-19.765-8.849-19.765-19.765v-.015A47.789 47.789 0 0 0 288 192c0 26.51 21.49 48 48 48s48-21.49 48-48-21.49-48-48-48zm-160 0a47.789 47.789 0 0 0-22.603 5.647h.015c10.916 0 19.765 8.849 19.765 19.765s-8.849 19.765-19.765 19.765-19.765-8.849-19.765-19.765v-.015A47.789 47.789 0 0 0 128 192c0 26.51 21.49 48 48 48s48-21.49 48-48-21.49-48-48-48z"></path></svg>
+					</a>
+
+					<a href="javascript:void(0);" onclick="So_GetPostStickers();" class="options-message" data-toggle="tooltip" data-placement="top">
+						<svg class="svg-inline--fa fa-magic fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="magic" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M101.1 505L7 410.9c-9.4-9.4-9.4-24.6 0-33.9L377 7c9.4-9.4 24.6-9.4 33.9 0l94.1 94.1c9.4 9.4 9.4 24.6 0 33.9L135 505c-9.3 9.3-24.5 9.3-33.9 0zM304 159.2l48.8 48.8 89.9-89.9-48.8-48.8-89.9 89.9zM138.9 39.3l-11.7 23.8-26.2 3.8c-4.7.7-6.6 6.5-3.2 9.8l19 18.5-4.5 26.1c-.8 4.7 4.1 8.3 8.3 6.1L144 115l23.4 12.3c4.2 2.2 9.1-1.4 8.3-6.1l-4.5-26.1 19-18.5c3.4-3.3 1.5-9.1-3.2-9.8L160.8 63l-11.7-23.8c-2-4.1-8.1-4.1-10.2.1zm97.7-20.7l-7.8 15.8-17.5 2.6c-3.1.5-4.4 4.3-2.1 6.5l12.6 12.3-3 17.4c-.5 3.1 2.8 5.5 5.6 4L240 69l15.6 8.2c2.8 1.5 6.1-.9 5.6-4l-3-17.4 12.6-12.3c2.3-2.2 1-6.1-2.1-6.5l-17.5-2.5-7.8-15.8c-1.4-3-5.4-3-6.8-.1zm-192 0l-7.8 15.8L19.3 37c-3.1.5-4.4 4.3-2.1 6.5l12.6 12.3-3 17.4c-.5 3.1 2.8 5.5 5.6 4L48 69l15.6 8.2c2.8 1.5 6.1-.9 5.6-4l-3-17.4 12.6-12.3c2.3-2.2 1-6.1-2.1-6.5l-17.5-2.5-7.8-15.8c-1.4-3-5.4-3-6.8-.1zm416 223.5l-7.8 15.8-17.5 2.5c-3.1.5-4.4 4.3-2.1 6.5l12.6 12.3-3 17.4c-.5 3.1 2.8 5.5 5.6 4l15.6-8.2 15.6 8.2c2.8 1.5 6.1-.9 5.6-4l-3-17.4 12.6-12.3c2.3-2.2 1-6.1-2.1-6.5l-17.5-2.5-7.8-15.8c-1.4-2.8-5.4-2.8-6.8 0z"></path></svg>
+					</a>
+
+					<button class="btn btn-primary btn-md-2"><?php echo $so['lang']['publish']; ?></button>
+
+				</div>
+				
+				<input type="hidden" id="post-gif" name="postGif" />
+				<input type="hidden" id="post-sticker" name="postSticker" />
+				<input type="hidden" id="post-emoticon" name="emoticon" />
+				<input type="hidden" id="to_id" name="to_id" value="<?php echo $so['chat']['user_id']; ?>"/>
+				
+			</form>
+			<div id="stickers-post" style="position: absolute;top: 308px;">
+				<div class="dropdown-menu" id="dropdown-menu-sticker" aria-labelledby="navbarDropdownMenuLink" style="padding: 0px;">
+					<div class="box-stickers">
+						<img id="sticker-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />
+					</div>
+				</div>
+			</div>
+			<div class="ajfajdawda dropdown-menu" id="twidley-dropdown-menu" style="top: 308px;">
+				<div class="sasdsadsada-input">
+					<input type="text" id="asfasssfdsadwq" autocomplete="off" onkeyup="So_SearchGif(this.value);" placeholder="<?php echo $so['lang']['search_gif']; ?>"/>
+					<span class="Icon">
+						<i class="fas fa-search"></i>
+					</span>
+				</div>
+				<div class="qawsquioddqy">
+					<div class="FoundMediaSearch-items" id="askfjasfsakhlkhfalfhyef"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('textarea#tweet-box-home-timeline').focus(function () {
+            $('.TweetBoxToolbar-tweetButton.tweet-button, .color-box').show();
+            if ($('textarea#tweet-box-home-timeline').attr('data-color') == 'true') {
+                return false;
+            }
+            $(this).css({'height': '80px'});
+            $('.RichEditor-scrollContainer.u-borderRadiusInherit').css({'height': '80px'});
+        });
+
+        var bar_ = $('#bar');
+        var percent_ = $('#percent');
+        $('form#publisher-box').ajaxForm({
+            url: So_Requests() + '?type=insert-new-message',
+            beforeSend: function () {
+                var percentVal = '0%';
+                bar_.width(percentVal);
+                percent_.html(percentVal);
+                $('.askfjafklj.pull-right').css('opacity', '0.5');
+                $('.askfjafklj.pull-right').find('a').attr('onclick', '');
+            },
+            uploadProgress: function (event, position, total, percentComplete) {
+                var percentVal = percentComplete + '%';
+                bar_.width(percentVal);
+				$('.TweetBoxUploadProgress').show();
+                percent_.html(percentVal);
+            },
+            success: function (jsondata) {
+				var data = JSON.parse(jsondata)[0];
+                $('.TweetBoxUploadProgress').hide();
+                if ($('.stream-footer').length > 0) {
+                    $('.stream-footer').remove();
+                }
+                if (data.status == 200) {
+                    $('#stickers-post').find('.dropdown-menu').hide();
+                    $('.color-box').hide();
+                    $('.ComposerThumbnail-image').attr('src', '');
+                    $('.thumbnail-container').hide();
+                    $('#list-messages').append(data.html);
+                    $('form#publisher-box').clearForm();
+                    $('#post-gif').val('');
+                    $('#post-sticker').val('');
+                    $("#html-title").val('');
+                    $("#html-image").val('');
+                    $("#html-body").val('');
+                    $("#html-url").val('');
+                    if ($('.safjafhasiuoh').length > 0) {
+                        $('.safjafhasiuoh').hide();
+                    }
+					
+					var div_scroll = $('#list-messages')[0];
+                    div_scroll.scrollTop = div_scroll.scrollHeight;
+					
+                } else {
+                    return false;
+                }
+            }
+        });
+
+    });
+    $('.EmojiPicker-categoryItems .EmojiPicker-item').click(function () {
+        var key = $(this).attr('data-key');
+        var value = $('textarea#tweet-box-home-timeline').val();
+        var emoticon = $('#post-emoticon').val();
+        $('#post-emoticon').val(emoticon + key + ',');
+        $('textarea#tweet-box-home-timeline').val(value + key + ' ');
+    });
+    function So_OpenEmoticons() {
+        $('.EmojiPicker-dropdownMenu').toggle(200);
+    }
+    function So_SearchGif(search) {
+        $.get('https://api.giphy.com/v1/gifs/search', {
+            api_key: '<?php echo $so['config']['giphy_api']; ?>',
+            limit: 20,
+            q: search
+        }, function (data) {
+            number = 1;
+            for (i = 0; i < 20; i++) {
+                var gif_image = "'" + data.data[i].images.downsized.url + "'";
+                $('#askfjasfsakhlkhfalfhyef').prepend('<div class="FoundMediaSearch-categoryContainer FoundMediaSearch-categoryContainer--bg' + number + ' FoundMediaSearch-focusable FoundMediaSearch-categoryContainer--bg3"><button type="button" id="put-gif-publisher-box" class="FoundMediaSearch-category" data-name="agree" data-display-name="Agree" onclick="So_PutGifPublisherBox(' + gif_image + ');" data-image="' + data.data[i].images.downsized.url + '" style="background-image: url(' + data.data[i].images.downsized.url + ');width: 208px;background-position:  center;background-repeat"><div class="FlexEmbed u-borderRadiusInherit" style="padding-bottom: 50%"><div class="FlexEmbed-item u-borderRadiusInherit"><div class="FoundMediaSearch-categoryName"></div></div></div></button></div>');
+                number++;
+                if (number == 6) {
+                    number = 1;
+                }
+            }
+            var images = 0;
+            So_LoadImg($('button[style]'), function () {
+                images++;
+            })
+        });
+    }
+    $(document).ready(function () {
+        So_SearchGif('happyness');
+    });
+
+    function So_ClosePublisherBox() {
+        $('.embed-url').attr('data', 'false');
+        $('.embed-url').html('');
+        $("#html-title").val('');
+        $("#html-image").val('');
+        $("#html-body").val('');
+        $("#html-url").val('');
+    }
+    function So_GetPostStickers() {
+        $('.opened-chats .chat-box-normal .chat-footer .chat-extra-box, .opened-chats .chat-box-normal .chat-footer .chat-list-box').hide();
+        $.post(So_Requests() + '?type=get-post-stickers', {
+
+        }, function (data) {
+            if (data.status == 200) {
+                $('#stickers-post').find('.dropdown-menu').toggle();
+                $('.box-stickers').html(data.html);
+            } else {
+                return false;
+            }
+        });
+    }
+    function So_GetPackageTypePost(package) {
+        if ($('.box-stickers').find('.stickers-body').length < 1) {
+            $('.box-stickers').html('<img id="sticker-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+        } else {
+            $('.box-stickers').find('.stickers-body').html('<img id="sticker-loading-img" src="<?php echo $so['config']['site_url']; ?>/upload/images/loading.gif" />');
+        }
+        $.post(So_Requests() + '?type=get-packge-type-post', {
+            sticker_id: package
+        }, function (data) {
+            if (data.status == 200) {
+                if ($('.box-stickers').find('.stickers-body').length < 1) {
+                    $('.box-stickers').html(data.html);
+                } else {
+                    $('.box-stickers').find('.stickers-body').html(data.html);
+                }
+            } else {
+                return false;
+            }
+        });
+    }
+	function So_OpenNewsFeedGif() {
+		$('.ajfajdawda.dropdown-menu').toggle();
+	}
+	
+	function So_BackgroundHidden() {
+		return true;
+	}
+</script>

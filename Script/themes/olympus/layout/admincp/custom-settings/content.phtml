@@ -1,0 +1,105 @@
+<div class="container">
+    <div class="row">
+        <form id="account-form" class="form-horizontal" autocomplete="off" method="POST">
+            <h2><?php echo $so['lang']['custom_settings']; ?></h2>
+            <hr>
+            <fieldset>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['color_box']; ?></label>  
+                    <div class="col-md-4">
+                        <select class="form-control" name="color_box">
+                            <option value="1" <?php if ($so['config']['color_box'] == 1) { ?>selected<?php } ?>><?php echo $so['lang']['enabled']; ?></option>
+                            <option value="0" <?php if ($so['config']['color_box'] == 0) { ?>selected<?php } ?>><?php echo $so['lang']['disabled']; ?></option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['type_button']; ?></label>  
+                    <div class="col-md-4">
+                        <select class="form-control" name="type_button">
+                            <option value="reactions" <?php if ($so['config']['type_button'] == 'reactions') { ?>selected<?php } ?>><?php echo $so['lang']['reactions']; ?></option>
+                            <option value="love" <?php if ($so['config']['type_button'] == 'love') { ?>selected<?php } ?>><?php echo $so['lang']['love']; ?></option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['floopz_music']; ?></label>  
+                    <div class="col-md-4">
+                        <select class="form-control" name="floopz_music">
+                            <option value="1" <?php if ($so['config']['floopz_music'] == 1) { ?>selected<?php } ?>><?php echo $so['lang']['enabled']; ?></option>
+                            <option value="0" <?php if ($so['config']['floopz_music'] == 0) { ?>selected<?php } ?>><?php echo $so['lang']['disabled']; ?></option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['moments']; ?></label>  
+                    <div class="col-md-4">
+                        <select class="form-control" name="moments">
+                            <option value="1" <?php if ($so['config']['moments'] == 1) { ?>selected<?php } ?>><?php echo $so['lang']['enabled']; ?></option>
+                            <option value="0" <?php if ($so['config']['moments'] == 0) { ?>selected<?php } ?>><?php echo $so['lang']['disabled']; ?></option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['websocket']; ?></label>  
+                    <div class="col-md-4">
+                        <select class="form-control" name="websocket">
+                            <option value="1" <?php if ($so['config']['websocket'] == 1) { ?>selected<?php } ?>><?php echo $so['lang']['enabled']; ?></option>
+                            <option value="0" <?php if ($so['config']['websocket'] == 0) { ?>selected<?php } ?>><?php echo $so['lang']['disabled']; ?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['site_port']; ?></label>  
+                    <div class="col-md-4">
+                        <input id="textinput" name="site_port" type="text" value="<?php echo $so['config']['site_port']; ?>" class="form-control input-md">
+                    </div>
+                </div>
+                <hr>
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="singlebutton"></label>
+                    <div class="col-md-4">
+                        <div class="form-actions">
+                            <button id="settings_save" class="EdgeButton EdgeButton--primary EdgeButton--medium btn btn-primary" type="submit"><?php echo $so['lang']['save_changes']; ?></button>
+                            <span class="spinner-small settings-save-spinner"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('form#account-form').ajaxForm({
+            url: So_Requests() + '?type=update-site-settings',
+            beforeSend: function () {
+                $('.spinner-small.settings-save-spinner').css('display', 'inline-flex');
+            },
+            success: function (data) {
+                $('.spinner-small.settings-save-spinner').css('display', 'none');
+                $("html, body").animate({scrollTop: 0}, 150);
+                if (data.status == 200) {
+                    $('.btn.btn-primary').html('SUCCESS');
+                    $('.settings-alert').html('');
+                    $('.settings-alert').addClass('hidden');
+                    setTimeout(function () {
+                        $('.btn.btn-primary').html('<?php echo $so['lang']['save_changes']; ?>');
+                    }, 2000);
+                } else if (data.status == 400) {
+                    $('.settings-alert').html(data.errors);
+                    $('.settings-alert.hidden').removeClass('hidden');
+                } else {
+                    return false;
+                }
+            }
+        });
+    });
+</script>

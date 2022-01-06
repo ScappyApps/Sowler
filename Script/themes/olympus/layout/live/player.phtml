@@ -1,0 +1,37 @@
+<?php
+$classPost = new Post();
+$postData = $classPost->So_PostData($so['live']['post_id']);
+?>
+
+<div class="stop-live">
+	<a class="pointer btn btn-success" onclick="So_DeletePostLive(<?php echo $so['live']['post_id']; ?>);">
+		<?php echo $so['lang']['finish_livestream']; ?>
+	</a>
+	<p dir="auto">
+	<?php echo $postData['postText']; ?>
+	</p>
+</div>
+<input type="hidden" value="<?php echo $so['live']['post_id']; ?>" id="live-post-id" />
+<script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
+<video id="live-video" class="video-js" controls muted="muted" controls preload="auto" width="480" height="280" poster="<?php echo $so['user']['cover']; ?>"
+data-setup='{}'>
+	<source src="https://live.<?php echo str_replace("https://www.", "", $so['config']['site_url']); ?>/live/<?php echo $so['user']['secret_key']; ?>.m3u8" type="application/x-mpegURL">
+	<div id="error"></div>
+</video>
+<script src="https://unpkg.com/video.js/dist/video.js"></script>
+<script>
+$(document).ready(function () {
+	$('#live-video #error').html('If you cannot see this video its because you need start live broadast on OBS first.');
+});
+function So_DeletePostLive(post_id) {
+    $.get(So_Requests() + '?type=delete-post', {
+        post_id: post_id
+    }, function (data) {
+        if (data.status == 200) {
+			window.location.href = window.location;
+        } else {
+            return false;
+        }
+    });
+}
+</script>

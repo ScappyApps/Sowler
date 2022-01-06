@@ -1,0 +1,47 @@
+<div class="col col-xl-3 order-xl-1 col-lg-3 order-lg-1 col-md-12 order-md-2 col-sm-12  responsive-display-none">
+	<div class="ui-block">
+
+		
+		
+		<!-- Your Profile  -->
+		
+		<div class="your-profile">
+			<div class="ui-block-title ui-block-title-small">
+				<h6 class="title"><?php echo $so['lang']['settings']; ?></h6>
+			</div>
+		
+			<div id="accordion" role="tablist" aria-multiselectable="true">
+				<div class="card">
+					<!--<div class="card-header" role="tab" id="headingOne">
+						<h6 class="mb-0">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+								Profile Settings
+								<svg class="olymp-dropdown-arrow-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use></svg>
+							</a>
+						</h6>
+					</div>-->
+		
+					<div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+						<ul class="your-profile-menu">
+							<?php foreach ($so['list_pages'] as $key => $value) { ?>
+							<li class="<?php if ($so['page'] == $key) { echo 'active'; } ?>">
+								<a class="list-link js-nav" href="<?php echo So_SeoLink('index.php?link1=settings&page=' . $key); ?>" data-ajax="?link1=settings&page=<?php echo $key; ?>">
+									<?php echo $so['lang'][$value]; ?>
+									<span class="Icon">
+										<i class="fas fa-angle-right"></i>
+									</span>
+								</a>
+							</li>
+							<?php } ?>
+						</ul>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+		
+		<!-- ... end Your Profile  -->
+		
+
+	</div>
+</div>

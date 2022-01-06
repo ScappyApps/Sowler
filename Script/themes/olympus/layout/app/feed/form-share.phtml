@@ -1,0 +1,95 @@
+<div id="retweet-tweet-dialog" class="RetweetDialog modal-container tweet-showing" style="z-index: 4002; display: block;">
+    <div class="RetweetDialog-modal modal draggable" style="display: block!important;" id="retweet-tweet-dialog-dialog" role="alertdialog" aria-labelledby="retweet-tweet-dialog-header" aria-describedby="retweet-tweet-dialog-body" style="top: 20%; left: 388px;">
+        <div class="js-first-tabstop" tabindex="0"></div>
+        <div class="modal-content" role="document">
+            <div class="modal-header">
+                <h3 class="modal-title" id="retweet-tweet-dialog-header"><?php echo $so['lang']['retwidley_this']; ?></h3>
+            </div>
+            <form id="form-share" method="post" class="t1-form tweet-form RetweetDialog-tweetForm isWithoutComment condensed">
+                <div class="RetweetDialog-commentBox">
+                    <span class="visuallyhidden" id="retweet-with-comment-label">Optional comment for Retweet</span>
+                    <div class="tweet-content">
+                        <div class="RichEditor RichEditor--emojiPicker">
+                            <div class="RichEditor-mozillaCursorWorkaround">&nbsp;</div>
+                            <div class="RichEditor-container u-borderRadiusInherit">
+                                <div class="RichEditor-scrollContainer u-borderRadiusInherit" style="height: 60px;">
+                                    <textarea style="padding: 10px;height: 60px;" name="postText" placeholder="<?php echo $so['lang']['add_a_comment']; ?>"></textarea>
+                                    <div class="RichEditor-pictographs" aria-hidden="true"></div>
+                                </div>
+                            </div>
+                            <div class="RichEditor-mozillaCursorWorkaround">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="RetweetDialog-footer u-cf">
+                    <ul>
+                    <?php echo So_GetPage('story/content-app'); ?>
+                    </ul>
+                    <div class="tweet-button">
+                        <span class="add-tweet-button">
+                            <button class="js-add-tweet EdgeButton EdgeButton--secondary EdgeButton--icon EdgeButton--medium js-tooltip disabled" title="Add another Tweet" aria-label="Add another Tweet" data-placement="top" data-delay="150" disabled="">
+                                <span class="Icon Icon--add Icon--medium"></span>
+                            </button>
+                        </span>
+                        <button class="EdgeButton EdgeButton--primary retweet-action" type="submit">
+                            <span class="RetweetDialog-retweetActionLabel">
+                                Retwidley
+                            </span>
+                            <span class="RetweetDialog-tweetActionLabel">
+                                Tweet
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div style="position: absolute; visibility: hidden;">
+                    <div><br></div>
+                </div>
+                <input type="hidden" name="share_id" value="<?php echo $so['story']['post_id']; ?>">
+            </form>
+        </div>
+        <a href="javascript:void(0);" onclick="So_CloseFormShare();" class="pointer modal-btn modal-close js-close" style="color: #ddd;" aria-controls="retweet-tweet-dialog-dialog" aria-describedby="retweet-tweet-dialog-body">
+            <span class="Icon Icon--medium">
+                <i class="fas fa-times"></i>
+                <span class="visuallyhidden">Close</span>
+            </span>
+        </a>
+        <div class="js-last-tabstop" tabindex="0"></div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('form#form-share').ajaxForm({
+            url: So_Requests() + '?type=share-post-app',
+            beforeSend: function () {
+               
+           },
+           success: function (data) {
+               if (data.status == 200) {
+                   So_CloseFormShare();
+                   So_AlertMessage(data.message);
+                   $('ol#qadqwdqw').prepend(data.html);
+               } else {
+                   return false;
+               }
+           }
+        });
+    });
+</script>
+<style>
+    .tweet {
+        border-bottom: none;
+    }
+    .tweet:hover {
+        background-color: transparent;
+    }
+    .stream-item:not(.no-header-background-module) {
+        border: none;
+    }
+    .ProfileTweet-action--more, .ProfileTweet-actionList {
+        display: none;
+    }
+    #iframe-youtube {
+        width: 100%;
+    }
+</style>

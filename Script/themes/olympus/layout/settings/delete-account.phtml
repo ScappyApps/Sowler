@@ -1,0 +1,64 @@
+<?
+if ($so['user']['user_id'] == 112) {
+	header("Location: " . So_SeoLink('index.php?link1=home'));
+    exit();
+}
+?>
+<div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
+	<div class="ui-block">
+		<div class="ui-block-title">
+			<h6 class="title"><?php echo $so['lang'][str_replace('-', '_', $so['page'])]; ?></h6>
+		</div>
+		<div class="ui-block-content">
+			<form id="account-form" class="t1-form form-horizontal requires-password" autocomplete="off" method="POST">
+				<div class="row">
+					<div id="settings-alert-box" class="settings-alert hidden">
+						<div class="alert-errors"></div>
+					</div>
+					<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label for="user_screen_name" class="t1-label control-label"><?php echo $so['lang']['actual_password']; ?></label>
+						<div class="description-toggle">
+							<div class="controls">
+								<p id="username_notification" class="notification"></p>
+								<input id="user_screen_name" maxlength="32" name="actual" type="text" />
+							</div>
+						</div>
+					</div>
+					<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+						<div class="form-group label-floating is-select">
+							<button id="settings_save" class="btn btn-primary btn-lg full-width" type="submit"><?php echo $so['lang']['save_changes']; ?></button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+    $(function () {
+		<?php if ($so['user']['user_id'] <> 112) { ?>
+        $('form#account-form').ajaxForm({
+            url: So_Requests() + '?type=delete-account',
+            beforeSend: function () {
+                $('.spinner-small.settings-save-spinner').css('display', 'inline-flex');
+            },
+            success: function (data) {
+                $('.spinner-small.settings-save-spinner').css('display', 'none');
+                $("html, body").animate({scrollTop: 0}, 150);
+                if (data.status == 200) {
+                   $('.settings-alert').html(data.message);
+				   $('.settings-alert.hidden').removeClass('hidden');
+                    setTimeout(function () {
+                        window.location.href = '<?php echo So_SeoLink('index.php?link1=logout'); ?>';
+                    }, 2000);
+                } else if (data.status == 400) {
+                    $('.settings-alert').html(data.errors);
+                    $('.settings-alert.hidden').removeClass('hidden');
+                } else {
+                    return false;
+                }
+            }
+        });
+		<?php } ?>
+    });
+</script>

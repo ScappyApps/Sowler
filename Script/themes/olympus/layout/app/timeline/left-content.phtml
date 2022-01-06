@@ -1,0 +1,41 @@
+ <div class="col-md-3" style="background-color: #ffffff;border-right: solid 2px #ecf0f0;padding-top: 20px;">
+    <div class="grid-content">
+        <?php if (!empty($so['profile']['about'])) { ?>
+            <p id="asasdfa" dir="auto">
+                <?php echo $so['profile']['about']; ?>
+            </p>
+        <?php } ?>
+        <ul>
+            <?php if ($so['profile']['privacy'] == 1 || $so['profile']['user_id'] == $so['user']['user_id']) { ?>
+                <li class="ProfileHeaderCard-location ">
+                    <span class="Icon Icon--medium" aria-hidden="true" role="presentation">
+                    </span>
+                    <span class="ProfileHeaderCard-locationText u-dir" dir="ltr" style="margin-left: 25px;">
+                        <?php echo $so['profile']['location']; ?>
+                    </span>
+                </li>
+            <?php } ?>
+            <li class="ProfileHeaderCard-joinDate">
+                <span class="Icon Icon--medium" aria-hidden="true" role="presentation">
+                </span>
+                <span class="ProfileHeaderCard-joinDateText js-tooltip u-dir" dir="ltr" title="<?php echo $so['profile']['registered_day']; ?> <?php echo $so['months'][$so['profile']['registered_month']]; ?> <?php echo $so['profile']['registered_year']; ?>"><?php echo $so['lang']['joined']; ?> <?php echo $so['profile']['registered_day']; ?> <?php echo $so['months'][$so['profile']['registered_month']]; ?> <?php echo $so['profile']['registered_year']; ?></span>
+            </li>
+            <?php if ($so['profile']['privacy'] == 1 || $so['profile']['user_id'] == $so['user']['user_id']) { ?>
+                <li class="ProfileHeaderCard-birthdate">
+                    <span class="Icon Icon--medium" aria-hidden="true" role="presentation">
+                    </span>
+                    <span class="ProfileHeaderCard-birthdateText u-dir" dir="ltr" title="<?php echo $so['profile']['day']; ?> <?php echo $so['months'][$so['profile']['month']]; ?> <?php echo $so['profile']['year']; ?>"><?php echo $so['lang']['birthday']; ?> <?php echo $so['profile']['day']; ?> <?php echo $so['months'][$so['profile']['registered_month']]; ?> <?php echo $so['profile']['year']; ?></span>
+                </li>
+            <?php } ?>
+        </ul>
+    </div>
+</div>
+<?php if ($so['profile']['user_id'] <> $so['user']['user_id']) { ?>
+<style>
+@media (max-width: 400px) {
+	.profile-container-top-bottom .details .pull-right .user-actions.btn-group.following.not-muting.including {
+		margin-bottom: -10px;
+	}
+}
+</style>
+<?php } ?>

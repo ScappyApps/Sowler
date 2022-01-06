@@ -1,0 +1,101 @@
+<?php
+$classPost = new Post();
+$classUser = new User();
+?>
+<div class="ProfileCanopy ProfileCanopy--withNav ProfileCanopy--large js-variableHeightTopBar">
+    <div class="ProfileCanopy-inner">
+        <div class="ProfileCanopy-header u-bgUserColor" style="margin-top: 0px;">
+            <div class="ProfileCanopy-headerBg">
+                <img alt="" src="<?php echo $so['profile']['cover']; ?>" style="transform: none;">
+            </div>
+            <div class="AppContainer">
+                <div class="ProfileCanopy-avatar">
+                    <div class="ProfileAvatar">
+                        <a class="ProfileAvatar-placeholder u-block js-nav js-tooltip profile-picture u-hidden" href="/<?php echo $so['profile']['name']; ?>?edit=true" title="Add a profile photo" data-placement="right" data-scribe-element="profile_avatar">
+                            <img class="ProfileAvatar-placeholderImage u-bgUserColor" data-avatar-placeholder="true" src="<?php echo $so['profile']['avatar']; ?>" alt="<?php echo $so['profile']['name']; ?>">
+                        </a>
+                        <a class="ProfileAvatar-container u-block js-tooltip profile-picture " href="<?php echo $so['profile']['avatar']; ?>" title="<?php echo $so['profile']['name']; ?>" data-resolved-url-large="<?php echo $so['profile']['avatar']; ?>" data-url="<?php echo $so['profile']['avatar']; ?>" target="_blank" rel="noopener">
+                            <img class="ProfileAvatar-image" src="<?php echo $so['profile']['avatar']; ?>" alt="<?php echo $so['profile']['name']; ?>">
+                        </a>
+                    </div>
+                </div>
+                <div class="ProfileCanopy-headerPromptAnchor"></div>
+            </div>
+        </div>
+        <div class="ProfileCanopy-navBar u-boxShadow">
+            <div class="ProfilePage-editingOverlay"></div>
+            <div class="AppContainer">
+                <div class="Grid Grid--withGutter">
+                    <div class="Grid-cell u-size1of3 u-lg-size1of4">
+                        <div class="ProfileCanopy-card" role="presentation" aria-hidden="true">
+                            <div class="ProfileCardMini">
+                                <a class="ProfileCardMini-avatar profile-picture js-tooltip" href="<?php echo $so['profile']['avatar']; ?>" title="<?php echo $so['profile']['name']; ?>" data-resolved-url-large="<?php echo $so['profile']['avatar']; ?>" data-url="<?php echo $so['profile']['avatar']; ?>" target="_blank" rel="noopener" tabindex="-1">
+                                    <img class="ProfileCardMini-avatarImage" alt="<?php echo $so['profile']['name']; ?>" src="<?php echo $so['profile']['avatar']; ?>">
+                                </a>
+                                <div class="ProfileCardMini-details">
+                                    <div class="ProfileNameTruncated account-group">
+                                        <div class="u-textTruncate u-inlineBlock">
+                                            <a class="fullname ProfileNameTruncated-link u-textInheritColor js-nav" href="<?php echo So_SeoLink('index.php?link1=timeline&username=' . $so['profile']['username']); ?>" data-ajax="?link1=timeline&username=<?php echo $so['profile']['username']; ?>" data-aria-label-part="" tabindex="-1">
+                                                <?php echo $so['profile']['name']; ?>
+                                            </a>
+                                        </div>
+                                        <span class="UserBadges"></span>
+                                    </div>
+                                    <div class="ProfileCardMini-screenname">
+                                        <a href="<?php echo So_SeoLink('index.php?link1=timeline&username=' . $so['profile']['username']); ?>" data-ajax="?link1=timeline&username=<?php echo $so['profile']['username']; ?>" class="ProfileCardMini-screennameLink u-linkComplex js-nav u-dir" dir="ltr" tabindex="-1">
+                                            <span class="username u-dir" dir="ltr">@<b class="u-linkComplex-target"><?php echo $so['profile']['username']; ?></b></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="Grid-cell u-size2of3 u-lg-size3of4">
+                        <div class="ProfileCanopy-nav">
+                            <div class="ProfileNav" role="navigation" data-user-id="<?php echo $so['profile']['user_id']; ?>">
+                                <ul class="ProfileNav-list">
+                                    <li class="ProfileNav-item ProfileNav-item--tweets <?php if (!isset($_GET['type'])) { ?>is-active<?php } ?>">
+                                        <a class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav" href="<?php echo So_SeoLink('index.php?link1=timeline&username=' . $so['profile']['username']); ?>" data-ajax="?link1=timeline&username=<?php echo $so['profile']['username']; ?>" data-nav="tweets" tabindex="0" data-original-title="<?php echo $classPost->So_CountPostsUser($so['profile']['user_id']); ?> Twidleys">
+                                            <span class="ProfileNav-label" aria-hidden="true">Twidleys</span>
+                                            <span class="u-hiddenVisually"></span>
+                                            <span class="ProfileNav-value" data-count="<?php echo $classPost->So_CountPostsUser($so['profile']['user_id']); ?>" data-is-compact="false">
+                                                <?php echo $classPost->So_CountPostsUser($so['profile']['user_id']); ?>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="ProfileNav-item ProfileNav-item--following <?php if (isset($_GET['type']) && $_GET['type'] == 'following') { ?>is-active<?php } ?>">
+                                        <a class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav u-textUserColor" data-nav="following" href="<?php echo So_SeoLink('index.php?link1=timeline&username=' . $so['profile']['username'] . '&type=following'); ?>" data-ajax="?link1=timeline&username=<?php echo $so['profile']['username']; ?>&type=following" data-original-title="<?php echo $classUser->So_CountFollowingUser($so['profile']['user_id']); ?> <?php echo $so['lang']['following']; ?>">
+                                            <span class="ProfileNav-label" aria-hidden="true"><?php echo $so['lang']['following']; ?></span>
+                                            <span class="u-hiddenVisually"></span>
+                                            <span class="ProfileNav-value" data-count="2" data-is-compact="false"><?php echo $classUser->So_CountFollowingUser($so['profile']['user_id']); ?></span>
+                                        </a>
+                                    </li>
+                                    <li class="ProfileNav-item ProfileNav-item--following <?php if (isset($_GET['type']) && $_GET['type'] == 'followers') { ?>is-active<?php } ?>">
+                                        <a class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav u-textUserColor" data-nav="following" href="<?php echo So_SeoLink('index.php?link1=timeline&username=' . $so['profile']['username'] . '&type=followers'); ?>" data-ajax="?link1=timeline&username=<?php echo $so['profile']['username']; ?>&type=followers" data-original-title="<?php echo $classUser->So_CountFollowersUser($so['profile']['user_id']); ?> <?php echo $so['lang']['followers']; ?>">
+                                            <span class="ProfileNav-label" aria-hidden="true"><?php echo $so['lang']['followers']; ?></span>
+                                            <span class="u-hiddenVisually"></span>
+                                            <span class="ProfileNav-value" data-count="2" data-is-compact="false"><?php echo $classUser->So_CountFollowersUser($so['profile']['user_id']); ?></span>
+                                        </a>
+                                    </li>
+                                    <li class="ProfileNav-item ProfileNav-item--userActions u-floatRight u-textRight with-rightCaret ">
+                                        <div class="UserActions   u-textLeft">
+                                            <div class="user-actions btn-group following not-muting including " data-user-id="<?php echo $so['profile']['user_id']; ?>" data-screen-name="<?php echo $so['profile']['username']; ?>" data-name="<?php echo $so['profile']['name']; ?>" data-protected="false">
+                                                <?php
+                                                if ($so['profile']['user_id'] <> $so['user']['user_id']) {
+                                                    echo So_GetPage('buttons/button-timeline-follow');
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

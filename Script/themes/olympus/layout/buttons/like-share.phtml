@@ -1,0 +1,25 @@
+<?php $classPost = new Post(); ?>
+<div class="IconContainer js-tooltip" data-original-title="<?php echo $so['lang']['like']; ?>">
+    <?php if ($classPost->So_PostLiked($so['origin']['post_id'], $so['user']['user_id']) === true) { ?>
+        <span role="presentation" class="Icon Icon--medium" style="color: #e0245e!important;">
+            <i class="fas fa-heart"></i>
+        </span>
+    <?php } else { ?>
+        <span role="presentation" class="Icon Icon--heart Icon--medium"></span>
+        <div class="HeartAnimation"></div>
+    <?php } ?>
+</div>
+<span class="ProfileTweet-actionCount ProfileTweet-actionCount--isZero">
+    <?php if ($classPost->So_PostLiked($so['origin']['post_id'], $so['user']['user_id']) === true) { ?>
+        <span class="ProfileTweet-actionCountForPresentation" aria-hidden="true" style="color: #e0245e!important;">
+        <?php } else { ?>
+            <span class="ProfileTweet-actionCountForPresentation" aria-hidden="true" style="color: #e0245e!important;">
+            <?php } ?>
+            <?php
+            $countPostLike = $classPost->So_CountPostLike($so['origin']['post_id']);
+            if ($countPostLike > 0) {
+                echo $countPostLike;
+            }
+            ?>
+        </span>
+</span>

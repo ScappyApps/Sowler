@@ -1,0 +1,87 @@
+<?php
+$classPost = new Post();
+$classUser = new User();
+?>
+<div class="profile-card ProfileCard with-banner component profile-header hovercard gravity-north weight-left" data-component-context="profile_hover">
+    <div class="hover-offset">
+        <div class="arrow" style=""></div>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="100" viewBox="0 0 600 200">
+            <defs>
+                <clipPath id="clipping">
+                    <polygon points="50,10 60,0 70,10 50,10"></polygon>
+                </clipPath>
+            </defs>
+            <image xlink:href="<?php echo $so['user_hover']['cover']; ?>" width="600" height="200" clip-path="url(#clipping)"></image>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="100" viewBox="0 0 600 200" class="right-side">
+            <defs>
+                <clipPath id="clipping">
+                    <polygon points="450,10 460,0 470,10 450,10"></polygon>
+                </clipPath>
+            </defs>
+            <image xlink:href="<?php echo $so['user_hover']['cover']; ?>" width="600" height="200" clip-path="url(#clipping)"></image>
+        </svg>
+    </div>
+    <div class="ProfileCard-bg" style="background-image: url('<?php echo $so['user_hover']['cover']; ?>');background-color: #009688;"></div>
+    <a href="<?php echo $so['user_hover']['url']; ?>" class="ProfileCard-avatarLink js-nav" tabindex="-1" aria-hidden="true" data-send-impression-cookie="true">
+        <span class="visuallyhidden"><?php echo $so['user_hover']['name']; ?></span>
+        <img src="<?php echo $so['user_hover']['avatar']; ?>" alt="" class="ProfileCard-avatarImage js-action-profile-avatar">
+    </a>
+    <div class="ProfileCard-actions">
+        <div class="UserActions   UserActions--small u-textLeft">
+            <div class="user-actions btn-group following not-muting including " data-user-id="<?php echo $so['user_hover']['user_id']; ?>" data-screen-name="<?php echo $so['user_hover']['username']; ?>" data-name="<?php echo $so['user_hover']['name']; ?>" data-protected="false">
+                <span class="user-actions-follow-button js-follow-btn follow-button" id="user-actions-follow-button-<?php echo $so['user_hover']['user_id']; ?>">
+                    <?php if ($so['user_hover']['user_id'] <> $so['user']['user_id']) { echo So_GetPage('buttons/profile-hover-container'); } ?>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="ProfileCard-content " data-screen-name="<?php echo $so['user_hover']['username']; ?>" data-user-id="<?php echo $so['user_hover']['user_id']; ?>">
+        <div class="ProfileCard-userFields">
+            <div class="ProfileNameTruncated account-group">
+                <div class="u-textTruncate u-inlineBlock ProfileNameTruncated-withBadges ProfileNameTruncated-withBadges--1">
+                    <a class="fullname ProfileNameTruncated-link u-textInheritColor js-nav" href="<?php echo $so['user_hover']['url']; ?>" data-aria-label-part="" data-send-impression-cookie="true">
+                        <?php echo $so['user_hover']['name']; ?>
+                    </a>
+                </div>
+                <?php if ($so['user_hover']['verified'] == 1) { ?>
+                    <span class="UserBadges">
+                        <span class="Icon">
+                            <i class="fas fa-check-circle" style="color: #009688;"></i>  
+                        </span>
+                    </span>
+                <?php } ?>
+            </div>
+            <div class="ProfileCard-screenname">
+                <a href="<?php echo $so['user_hover']['url']; ?>" class="ProfileCard-screennameLink u-linkComplex js-nav" data-aria-label-part="" data-send-impression-cookie="true">
+                    <span class="username u-dir" dir="ltr">@<b class="u-linkComplex-target"><?php echo $so['user_hover']['username']; ?></b></span>
+                </a>
+            </div>
+        </div>
+        <div class="bio-container">
+            <p class="bio profile-field u-dir" dir="ltr"><?php echo $so['user_hover']['about']; ?></p>
+        </div>
+    </div>
+    <div class="ProfileCardStats">
+        <ul class="ProfileCardStats-statList Arrange Arrange--bottom Arrange--equal">
+            <li class="ProfileCardStats-stat Arrange-sizeFit">
+                <a class="ProfileCardStats-statLink u-textUserColor u-linkClean u-block js-nav js-tooltip" href="<?php echo $so['user_hover']['url']; ?>" data-ajax="?link1=timeline&username=<?php echo $so['user_hover']['username']; ?>" data-element-term="tweet_stats" data-send-impression-cookie="true" data-original-title="64,703 Tweets">
+                    <span class="ProfileCardStats-statLabel u-block">Twidleys</span>
+                    <span class="ProfileCardStats-statValue" data-count="64703" data-is-compact="true"><?php echo $classPost->So_CountPostsUser($so['user_hover']['user_id']); ?></span>
+                </a>
+            </li>
+            <li class="ProfileCardStats-stat Arrange-sizeFit">
+                <a class="ProfileCardStats-statLink u-textUserColor u-linkClean u-block js-nav js-tooltip" href="<?php echo $so['user_hover']['url']; ?>" data-ajax="?link1=timeline&username=<?php echo $so['user_hover']['username']; ?>" data-element-term="tweet_stats" data-send-impression-cookie="true" data-original-title="64,703 Tweets">
+                    <span class="ProfileCardStats-statLabel u-block"><?php echo $so['lang']['followers']; ?></span>
+                    <span class="ProfileCardStats-statValue" data-count="64703" data-is-compact="true"><?php echo $classUser->So_CountFollowersUser($so['user_hover']['user_id']); ?></span>
+                </a>
+            </li>
+            <li class="ProfileCardStats-stat Arrange-sizeFit">
+                <a class="ProfileCardStats-statLink u-textUserColor u-linkClean u-block js-nav js-tooltip" href="<?php echo $so['user_hover']['url']; ?>" data-ajax="?link1=timeline&username=<?php echo $so['user_hover']['username']; ?>" data-element-term="tweet_stats" data-send-impression-cookie="true" data-original-title="64,703 Tweets">
+                    <span class="ProfileCardStats-statLabel u-block"><?php echo $so['lang']['following']; ?></span>
+                    <span class="ProfileCardStats-statValue" data-count="64703" data-is-compact="true"><?php echo $classUser->So_CountFollowingUser($so['user_hover']['user_id']); ?></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

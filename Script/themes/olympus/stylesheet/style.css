@@ -1,0 +1,429 @@
+html {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+textarea {
+    resize: none;
+}
+button,
+a {
+    outline: 0 !important;
+}
+a:hover {
+	text-decoration: none;
+}
+div, a {
+	word-break: break-word;
+}
+div#bar_loading {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 2px;
+	background-color: #0096883b;
+	z-index: 1031;
+}
+svg:not(:root) {
+    overflow: hidden;
+}
+ol, ul {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+li {
+    text-align: inherit;
+}
+#doc {
+    height: 565px;
+}
+.StaticLoggedOutHomePage {
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -moz-box-orient: vertical;
+    -moz-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-height: 100%;
+}
+.StaticLoggedOutHomePage-content {
+    background-color: #fff;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    -moz-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+.StaticLoggedOutHomePage-cell {
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -moz-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    position: relative;
+}
+.StaticLoggedOutHomePage-communicationBlock {
+    background: #009688;
+    overflow: hidden;
+    position: relative;
+}
+.StaticLoggedOutHomePage-communicationBlock .twitterIcon-bird {
+    max-width: none;
+    position: absolute;
+}
+.StaticLoggedOutHomePage-communicationContent {
+    max-width: 440px;
+}
+.StaticLoggedOutHomePage-communicationItem {
+    color: #fff;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 24px;
+    margin: 48px auto;
+    position: relative;
+}
+.StaticLoggedOutHomePage-communicationItem .Icon {
+    font-size: 35px;
+    margin-right: 16px;
+}
+.Icon {
+    background: transparent;
+    display: inline-block;
+    font-style: normal;
+    vertical-align: baseline;
+    position: relative;
+}
+.StaticLoggedOutHomePage .StreamsFooter {
+    position: static;
+}
+.StreamsFooter--fixed {
+    width: 100%;
+    bottom: 0;
+}
+.StreamsFooter {
+    border-top: 1px solid #e6ecf0;
+    padding: 11px 0;
+    position: fixed;
+    background-color: #fff;
+    bottom: -10%;
+    width: 100%;
+    z-index: 2;
+}
+.StaticLoggedOutHomePage .StreamsFooter-list {
+    background: #fff;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: auto;
+}
+.StreamsFooter-list {
+    margin: 0 auto;
+    text-align: center;
+    width: 890px;
+}
+.u-cf:before, .u-cf:after {
+    content: " ";
+    display: table;
+}
+.StreamsFooter-item {
+    display: inline-block;
+    padding: 0 9px 0 9px;
+}
+.StaticLoggedOutHomePage-signupBlock {
+    max-width: 350px;
+}
+.StaticLoggedOutHomePage-getStartedBlock, .StaticLoggedOutHomePage-signupHeader {
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin: 16px auto;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.StaticLoggedOutHomePage-signupBlock .Icon--bird {
+    color: #009688;
+    font-size: 45px;
+    margin-bottom: 8px;
+}
+
+.StaticLoggedOutHomePage-narrowLoginButton {
+    display: none;
+}
+.StaticLoggedOutHomePage-input {
+    padding: 12px;
+}
+.EdgeButton--secondary {
+    background-color: #fff;
+    border: 1px solid #009688;
+    color: #009688;
+}
+.EdgeButton--small {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 4px 12px;
+}
+.u-floatRight {
+    float: right!important;
+}
+.StaticLoggedOutHomePage-signupTitle {
+    font-size: 27px;
+    line-height: 32px;
+    font-weight:  bold;
+    color:  #000;
+    margin-top: 0;
+}
+.StaticLoggedOutHomePage-noSignupForm .StaticLoggedOutHomePage-signupSubtitle {
+    margin-top: 48px;
+}
+.StaticLoggedOutHomePage-signupSubtitle {
+    color: #14171a;
+    font-size: 18px;
+    line-height: 24px;
+    margin: 16px auto;
+}
+.EdgeButton, .EdgeButton:visited {
+    border-radius: 100px;
+    box-shadow: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 20px;
+    padding: 6px 16px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+}
+.EdgeButton--primary:hover {
+	color: #ffffff;
+}
+.EdgeButton--secondary:hover {
+	color: #009688;
+}
+.StaticLoggedOutHomePage-buttonSignup, .StaticLoggedOutHomePage-buttonLogin {
+    display: block;
+    margin-bottom: 16px;
+}
+.EdgeButton--primary {
+    background-color: #009688;
+    border: 1px solid #009688;
+    color: #fff;
+}
+.EdgeButton--medium {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 6px 16px;
+}
+.akjfajdddiwe {
+    width: 100%;
+    height: -webkit-fill-available;
+    min-height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px 0px;
+    position:  fixed;
+    z-index: 10;
+    overflow-y:  scroll;
+}
+.akjfajdddiwe .oakopsidps {
+    width: 600px;
+    height: auto;
+    background-color: #fff;
+    box-shadow: 0px 2px 3px #33333373;
+    margin: auto;
+    border: solid 1px #b2b2b2;
+    border-radius: 6px;
+}
+.header-askfjal {
+    display: inline-flex;
+    width: 100%;
+    height: auto;
+}
+.header-askfjal .asfjaklj {
+    width: 90%;
+    text-align: center;
+    padding: 10px;
+    font-size: 25px;
+    color: #03A9F4;
+    margin: auto;
+    padding-left: 60px;
+	cursor: pointer;
+}
+.header-askfjal .askfjafklj.pull-right {
+    font-size: 15px;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    margin: auto;
+    border: solid 1px #03a9f4;
+    border-radius: 20px;
+    margin-right: 10px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    background-color: #03a9f4;
+    font-weight: bold;
+    opacity: 0.5;
+    cursor:  pointer;
+}
+.header-askfjal .askfjafklj.pull-right a {
+	color: #ffffff;
+}
+
+.body-akslhja {
+    height: 100%;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.body-akslhja h1 {
+	font-size: 2.7rem;
+	font-weight:  bold;
+}
+.body-akslhja .kasjfulakjaslaj {
+	padding-left: 0;
+	float:  left;
+	width: 20px;
+}
+.body-akslhja form input.textinput {
+    border: none;
+    border-bottom: solid 1px #b2b2b2;
+    border-radius: 0;
+    padding: 24px;
+    padding-left: 5px;
+    font-size: 20px;
+    color: #000;
+}
+.body-akslhja form input.textinput:focus {
+	border-bottom: solid 2px #03a9f4;
+}
+div#idjoqajdqioio {
+    text-align: center;
+	display: none;
+}
+button.askjfjhljka {
+	width: 100%;
+    border-radius: 20px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #29a8df;
+    padding: 10px;
+}
+.efsaesed {
+    margin: auto;
+    width: 150px;
+    height: 150px;
+    background-size: 100% 100%;
+    text-align:  center;
+}
+.btn-upload {
+	color: #ffffff;
+}
+.btn-upload svg {
+    width: 30px;
+    margin: 55px;
+    text-align: center;
+    color: #03A9F4;
+    vertical-align: middle;
+}
+.wsdfsdr input#file-image {
+    position: absolute;
+    top: 185px;
+    width: auto;
+    margin: auto;
+    height: 150px;
+    opacity: 0;
+    left: 0;
+    text-align: center!important;
+    cursor: pointer;
+    padding: 0;
+    margin-left: -90px;
+}
+.container, .container-fluid {
+    height: 100%;
+}
+.alert-errors {
+    color: red;
+    margin-bottom: 10px;
+}
+@media screen and (min-width: 1236px) {
+	.StreamsFooter-list {
+		width: 1190px;
+	}
+}
+@media only screen and (max-width: 1023px), screen and (max-height: 660px) {
+	.StaticLoggedOutHomePage-narrowLoginButton {
+		display: inline-block;
+	}
+}
+@media only screen and (min-width: 800px) {
+	.StaticLoggedOutHomePage-communicationBlock .twitterIcon-bird {
+		height: 140vh;
+		right: -80vh;
+		top: -20vh;
+	}
+}
+@media (max-width: 630px) {
+	.akjfajdddiwe .oakopsidps {
+		width: 100%;
+	}
+}
+@media (max-width: 1200px) {
+	.wsdfsdr input#file-image {
+		margin-left: 400px;
+	}
+}
+@media (max-width: 1000px) {
+	.wsdfsdr input#file-image {
+		margin-left: 300px;
+	}
+}
+@media (max-width: 800px) {
+	.wsdfsdr input#file-image {
+		margin-left: 200px;
+	}
+}
+@media (max-width: 600px) {
+	.wsdfsdr input#file-image {
+		margin-left: 100px;
+	}
+}
+@media (max-width: 400px) {
+	.wsdfsdr input#file-image {
+		margin-left: 0px!important;
+		top: 245px;
+		width: 100%;
+	}
+}

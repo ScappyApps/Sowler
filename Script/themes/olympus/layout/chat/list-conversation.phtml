@@ -1,0 +1,49 @@
+<?php
+$time = time() - 60;
+$classMessage = new Message();
+$messages_not_saw = $classMessage->So_CheckMessagesNotSaw($so['conversation']['user_id']);
+?>
+<li class="inline-items js-chat-open" id="chat-list" onclick="So_OpenBoxChat(<?php echo $so['conversation']['user_id']; ?>);">
+    <div class="author-thumb">
+        <img width="30px" alt="<?php echo $so['conversation']['name']; ?>" src="<?php echo $so['conversation']['avatar']; ?>" class="avatar">
+        <?php
+        if ($so['conversation']['lastseen'] > $time) {
+            ?>
+            <span class="icon-status online"></span>
+        <?php } else { ?>
+            <span class="icon-status disconected"></span>
+        <?php } ?>
+    </div>
+    <div class="author-status">
+        <a href="#" class="h6 author-name">
+            <?php echo $so['conversation']['name']; ?> 
+            <?php if ($so['conversation']['connected_via'] == 'mobile') { ?><i class="fas fa-mobile-alt"></i><?php } ?> 
+            <?php if ($messages_not_saw > 0) { ?>
+                <span class="chat-total-messages"><?php echo $messages_not_saw; ?></span>
+            <?php } ?>
+        </a>
+        <span class="status">
+            <?php
+            if ($so['conversation']['lastseen'] > $time) {
+                echo 'ONLINE';
+            } else {
+                echo 'OFFLINE';
+            }
+            ?>
+        </span>
+    </div>
+    <div class="more">
+        <svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
+        <ul class="more-icons">
+            <li>
+                <svg data-toggle="tooltip" data-placement="top" data-original-title="START CONVERSATION" class="olymp-comments-post-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
+            </li>
+            <li>
+                <svg data-toggle="tooltip" data-placement="top" data-original-title="ADD TO CONVERSATION" class="olymp-add-to-conversation-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-add-to-conversation-icon"></use></svg>
+            </li>
+            <li>
+                <svg data-toggle="tooltip" data-placement="top" data-original-title="BLOCK FROM CHAT" class="olymp-block-from-chat-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-block-from-chat-icon"></use></svg>
+            </li>
+        </ul>
+    </div>
+</li>

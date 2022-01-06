@@ -1,0 +1,18 @@
+<div>
+<?php
+$array = array(
+	'dashboard' => 'dashboard',
+	'ads_manager' => 'ads_manager'
+);
+if (!isset($_GET['type'])) {
+	$page = 'dashboard';
+}
+
+if (isset($_GET['type']) && !in_array($_GET['type'], $array)) {
+	$page = 'dashboard';
+} else if (isset($_GET['type']) && in_array($_GET['type'], $array)) {
+	$page = $_GET['type'];
+}
+echo So_GetPage('adsense/' . $page . '/content');
+?>
+</div>

@@ -1,0 +1,8 @@
+<a class="btn btn-control button-hover-get-reactions" id="reaction-grr" href="javascript:void(0);" title="<?php echo $so['lang']['grr']; ?>" data-story="<?php echo $so['story']['post_id']; ?>" onclick="So_RegisterReaction(<?php echo $so['story']['post_id']; ?>, '<?php echo So_ButtonReaction($so['story']['post_id']); ?>');">
+    <span class="_9zc _19km _1ktw _2hoq _3uet _4e-m">
+        <i class="<?php echo So_ButtonReaction($so['story']['post_id']); ?>" style="background-image: url(<?php echo $so['config']['theme_url']; ?>/img/reactions/<?php echo So_ButtonReaction($so['story']['post_id']); ?>.png);"></i>
+    </span>
+    <div class="list-reactions" id="list-reactions-<?php echo $so['story']['post_id']; ?>">
+
+    </div>
+</a>

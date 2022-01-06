@@ -1,0 +1,145 @@
+<?php
+$classMessage = new Message();
+$conversations = $classMessage->So_GetMessagesOpen(200);
+?>
+<!-- Main Header Account -->
+
+<div class="main-header">
+	<div class="content-bg-wrap bg-account"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col col-lg-8 m-auto col-md-8 col-sm-12 col-12">
+				<div class="main-header-content">
+					<h1><?php echo $so['lang']['messages']; ?></h1>
+					<p><?php echo $so['config']['site_name']; ?></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ... end Main Header Account -->
+
+
+<!-- Your Account Personal Information -->
+
+<div class="container" style="margin-top: initial;">
+	<div class="row">
+		<div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
+			<div class="ui-block">
+				<div class="ui-block-title">
+					<h6 class="title">Chat / Messages</h6>
+					<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
+				</div>
+
+				<div class="row">
+					<div class="col col-xl-7 col-lg-6 col-md-12 col-sm-12  padding-r-0">
+
+						
+						<!-- Chat Field -->
+						
+						<div class="chat-field">
+							<?php echo So_GetPage('messages/chat'); ?>
+						</div>
+						
+						<!-- ... end Chat Field -->
+
+					</div>
+				
+					<div class="col-md-5 padding-l-0">
+
+						
+						<!-- Notification List Chat Messages -->
+						
+						<ul class="notification-list chat-message">
+							
+							<?php
+                            if (count($conversations) > 1) {
+                                foreach ($conversations as $so['conversation']) {
+                                    if ($so['conversation']['user_id'] <> $so['user']['user_id']) {
+                                        echo So_GetPage('messages/list-conversation');
+                                    }
+                                }
+                            }
+                            ?>
+						</ul>
+						
+						<!-- ... end Notification List Chat Messages -->
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		<aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-12 col-12">
+			<div class="ui-block">
+				<div class="widget w-wethear" style="padding: 0;">
+					<div id="new-weather">
+						<div class="weather1" style="margin-bottom: 0px;"></div>
+					</div>
+					<script id="weather-app" src='<?php echo $so['config']['theme_url']; ?>/weather/js/app.js'></script>
+				</div>
+
+				<!-- W-Weather -->			
+			</div>
+
+			<div class="ui-block">
+				<!-- W-Calendar -->
+
+				<div class="w-calendar calendar-container">
+					<div>
+						<!-- define the calendar element -->
+						<div id="my-calendar"></div>
+
+						<!-- initialize the calendar on ready -->
+						<script>
+							$(function () {
+								$("#my-calendar").zabuto_calendar();
+							});
+						</script>
+					</div>
+				</div>
+
+				<!-- ... end W-Calendar -->			
+			</div>
+		</aside>
+
+		<!-- ... end Left Sidebar -->
+	</div>
+</div>
+
+<!-- ... end Your Account Personal Information -->
+<style>
+.ui-block-title {
+    padding: 23px 25px 18px;
+    line-height: 1;
+    border-bottom: 1px solid #e6ecf5;
+    border-top: none;
+    border-right: 1px solid #e6ecf5;
+    display: table;
+    width: 100%;
+    position: relative;
+    border-radius: 0;
+}
+.news-feed-form {
+    border-right: solid 1px #f1f1f1;
+}
+ .w-wethear>* {margin-bottom: 0px;} </style>
+<script>
+$(document).ready(function() {
+	$('.weather1').weather({
+		city: null,
+		autocompleteMinLength: 3
+	});
+
+	/**$('.weather2').weather({
+		city: 'Kharkiv, UA',
+		tempUnit: 'C',
+		displayDescription: true,
+		displayMinMaxTemp: true,
+		displayWind: true,
+		displayHumidity: true
+	});**/
+});
+</script>

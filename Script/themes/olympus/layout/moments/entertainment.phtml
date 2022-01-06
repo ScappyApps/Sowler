@@ -1,0 +1,182 @@
+<?php
+$classPost = new Post();
+$last_moment = $classPost->So_LastMoment(3);
+?>
+<div class="col col-xl-6 col-lg-6 col-md-12 col-sm-12  sorting-item ecommerce natural">
+	<div class="ui-block">
+		
+		<article class="hentry post video">
+		
+			<div class="post__author author vcard inline-items">
+				<div class="author-date">
+					<a class="h6 post__author-name fn" href="<?php echo So_SeoLink('index.php?link1=post&post_id=' . $last_moment['post_id']); ?>" data-ajax="?link1=post&post_id=<?php echo $last_moment['post_id']; ?>"><?php echo $last_moment['titleMoment']; ?></a>
+					<span> - <?php echo $so['category_moment'][$last_moment['categoryMoment']]; ?></span>
+					<div class="post__date">
+						<time class="published">
+							<?php echo So_Time($last_moment['time']); ?>
+						</time>
+					</div>
+				</div>
+		
+				<div class="more">
+					<svg class="svg-inline--fa fa-ellipsis-h fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>
+					<ul class="more-dropdown">
+						<li>
+							<a href="<?php echo So_SeoLink('index.php?link1=post&post_id=' . $last_moment['post_id']); ?>" target="_blank"><?php echo $so['lang']['open_in_new_guia']; ?></a>
+						</li>
+					</ul>
+				</div>
+		
+			</div>
+		
+			<p><?php echo $last_moment['postText']; ?></p>
+			
+			<?php if (!empty($last_moment['postImage'])) { ?>
+			<div class="post-video">
+				<img src="<?php echo $last_moment['postImage']; ?>" alt="photo">
+			</div>
+			<?php } ?>
+			<?php
+			if ($so['config']['type_button'] == 'reactions') {
+				$so['story']['post_id'] = $last_moment['post_id'];
+				echo So_GetPage('buttons/reactions/count-reactions');
+			} else {
+				$countPostLike = $classPost->So_CountPostLike($last_moment['post_id']);
+				echo $countPostLike;
+			}
+			?>
+		</article>
+	</div>
+</div>
+<div class="col col-xl-6 col-lg-6 col-md-12 col-sm-12  sorting-item ecommerce natural">
+<?php foreach ($classPost->So_GetThreeMoments(3) as $so['moment']) { ?>
+	<div class="ui-block">
+		
+		<article class="hentry post video">
+		
+			<div class="post__author author vcard inline-items">
+				<div class="author-date">
+					<a class="h6 post__author-name fn" href="<?php echo So_SeoLink('index.php?link1=post&post_id=' . $so['moment']['post_id']); ?>" data-ajax="?link1=post&post_id=<?php echo $so['moment']['post_id']; ?>"><?php echo $so['moment']['titleMoment']; ?></a>
+					<span> - <?php echo $so['category_moment'][$so['moment']['categoryMoment']]; ?></span>
+					<div class="post__date">
+						<time class="published">
+							<?php echo So_Time($so['moment']['time']); ?>
+						</time>
+					</div>
+				</div>
+		
+				<div class="more">
+					<svg class="svg-inline--fa fa-ellipsis-h fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>
+					<ul class="more-dropdown">
+						<li>
+							<a href="<?php echo So_SeoLink('index.php?link1=post&post_id=' . $so['moment']['post_id']); ?>" target="_blank"><?php echo $so['lang']['open_in_new_guia']; ?></a>
+						</li>
+					</ul>
+				</div>
+		
+			</div>
+		
+			<p><?php echo $so['moment']['postText']; ?></p>
+		
+			<?php if (!empty($so['moment']['postImage'])) { ?>
+			<div class="post-video">
+				<img src="<?php echo $so['moment']['postImage']; ?>" alt="photo">
+			</div>
+			<?php } ?>
+			<?php
+			if ($so['config']['type_button'] == 'reactions') {
+				$so['story']['post_id'] = $so['moment']['post_id'];
+				echo So_GetPage('buttons/reactions/count-reactions');
+			} else {
+				$countPostLike = $classPost->So_CountPostLike($so['moment']['post_id']);
+				echo $countPostLike;
+			}
+			?>
+		</article>
+	</div>
+<?php } ?>
+</div>
+<div class="col col-xl-6 col-lg-6 col-md-12 col-sm-12  sorting-item ecommerce natural" id="sadasas">
+<?php foreach ($classPost->So_GetAfterThreeMoments(3) as $so['moment']) { ?>
+	<div class="ui-block">
+		
+		<article class="hentry post video">
+		
+			<div class="post__author author vcard inline-items">
+				<div class="author-date">
+					<a class="h6 post__author-name fn" href="<?php echo So_SeoLink('index.php?link1=post&post_id=' . $so['moment']['post_id']); ?>" data-ajax="?link1=post&post_id=<?php echo $so['moment']['post_id']; ?>"><?php echo $so['moment']['titleMoment']; ?></a>
+					<span> - <?php echo $so['category_moment'][$so['moment']['categoryMoment']]; ?></span>
+					<div class="post__date">
+						<time class="published">
+							<?php echo So_Time($so['moment']['time']); ?>
+						</time>
+					</div>
+				</div>
+		
+				<div class="more">
+					<svg class="svg-inline--fa fa-ellipsis-h fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>
+					<ul class="more-dropdown">
+						<li>
+							<a href="<?php echo So_SeoLink('index.php?link1=post&post_id=' . $so['moment']['post_id']); ?>" target="_blank"><?php echo $so['lang']['open_in_new_guia']; ?></a>
+						</li>
+					</ul>
+				</div>
+		
+			</div>
+		
+			<p><?php echo $so['moment']['postText']; ?></p>
+		
+			<?php if (!empty($so['moment']['postImage'])) { ?>
+			<div class="post-video">
+				<img src="<?php echo $so['moment']['postImage']; ?>" alt="photo">
+			</div>
+			<?php } ?>
+			<?php
+			if ($so['config']['type_button'] == 'reactions') {
+				$so['story']['post_id'] = $so['moment']['post_id'];
+				echo So_GetPage('buttons/reactions/count-reactions');
+			} else {
+				$countPostLike = $classPost->So_CountPostLike($so['moment']['post_id']);
+				echo $countPostLike;
+			}
+			?>
+		</article>
+	</div>
+<?php } ?>
+</div>
+<script>
+function So_GetMoreMoments() {
+	var post_id = $('.MomentCapsuleSummaryGroup.MomentCapsuleSummaryGroup--2and2').find('.MomentCapsuleSummaryGroup-list #id-more-moments:last').attr('data-moment-id');
+	var category = 0;
+	$('.safasaffwffef').find('button').html('<?php echo $so['lang']['loading']; ?>');
+	
+	<?php if (isset($_GET['category_id'])) { ?>
+	category = <?php echo So_Secure($_GET['category_id']); ?>;
+	<?php } ?>
+	
+    $.get(So_Requests(3) + '?type=get-more-posts-moments', {
+        category: category,
+		post_id: post_id
+    }, function (data) {
+        scrolled = 0;
+        if (data.status == 200) {
+            $('.MomentCapsuleSummaryGroup.MomentCapsuleSummaryGroup--2and2').find('.MomentCapsuleSummaryGroup-list').append(data.html);
+			$('.safasaffwffef').find('button').html('<?php echo $so['lang']['see_more']; ?>');
+        } else {
+			 $('.safasaffwffef').find('button').removeAttr('onclick');
+            $('.safasaffwffef').find('button').html('<?php echo $so['lang']['no_more_moments']; ?>');
+        }
+    });
+}
+</script>
+<style>
+div#sadasas {
+    max-width: 100%;
+    width: 100%;
+}
+#sadasas .ui-block {
+    float: left;
+    width: 49%;
+    margin-right: 10px;
+}
+</style>

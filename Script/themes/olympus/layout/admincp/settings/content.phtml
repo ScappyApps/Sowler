@@ -1,0 +1,197 @@
+<?php
+$not_array = array(
+    'theme' => 'theme',
+    'language' => 'language',
+    'maintenance_mode' => 'maintenance_mode',
+    'version' => 'version',
+    'amazon_s3' => 'amazon_s3',
+    'region' => 'region',
+    'message_alert' => 'message_alert',
+    'live_stream' => 'live_stream',
+    'live_stream_all_users' => 'live_stream_all_users',
+    'client_id' => 'client_id',
+    'secret' => 'secret',
+    'type_button' => 'type_button',
+    'color_box' => 'color_box',
+    'floopz_music' => 'floopz_music',
+    'moments' => 'moments',
+    'search_background' => 'search_background',
+    'border_search_background' => 'border_search_background',
+    'header_background' => 'header_background',
+    'header_background_two' => 'header_background_two',
+    'cover_background' => 'cover_background',
+    'border_button' => 'border_button',
+    'color_text_button' => 'color_text_button',
+    'color_link' => 'color_link',
+    'color_total_notifications' => 'color_total_notifications',
+    'color_border' => 'color_border',
+    'websocket' => 'websocket',
+    'site_port' => 'site_port'
+);
+?>
+<div class="container">
+    <div class="row">
+        <form id="account-form" class="form-horizontal" autocomplete="off" method="POST">
+            <h2><?php echo $so['lang']['settings']; ?></h2>
+            <hr>
+            <fieldset>
+                <?php
+                foreach (So_GetConfigAdmin() as $so['setting']) {
+                    if (!in_array($so['setting']['name'], $not_array)) {
+                        ?>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang'][$so['setting']['name']]; ?></label>  
+                            <div class="col-md-4">
+                                <input id="textinput" name="<?php echo $so['setting']['name']; ?>" type="text" value="<?php echo $so['setting']['value']; ?>" class="form-control input-md">
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['theme']; ?></label>  
+                    <div class="col-md-4">
+                        <select class="form-control" name="theme">
+                            <?php
+                            $path = "themes/";
+                            $diretorio = dir($path);
+
+                            $types = array(
+                                '.htaccess',
+                                '.html',
+                                '.',
+                                '..',
+                                'index.html'
+                            );
+
+                            while ($arquivo = $diretorio->read()) {
+                                if (!in_array($arquivo, $types)) {
+                                    ?>
+                                    <option value="<?php echo $arquivo; ?>" <?php if ($arquivo == $so['config']['theme']) { ?>selected<?php } ?>><?php echo $arquivo; ?></option>
+                                    <?php
+                                }
+                            }
+                            $diretorio->close();
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['language']; ?></label>  
+                    <div class="col-md-4">
+                        <select class="form-control" name="language">
+                            <?php
+                            $path = "resources/languages/";
+                            $diretorio = dir($path);
+
+                            $types = array(
+                                '.htaccess',
+                                '.html',
+                                '.',
+                                '..',
+                                'index.html'
+                            );
+
+                            while ($arquivo = $diretorio->read()) {
+                                if (!in_array($arquivo, $types)) {
+                                    $arquivo = substr($arquivo, 0, -4);
+                                    ?>
+                                    <option value="<?php echo $arquivo; ?>" <?php if ($arquivo == $so['config']['language']) { ?>selected<?php } ?>><?php echo $arquivo; ?></option>
+                                    <?php
+                                }
+                            }
+                            $diretorio->close();
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['maintenance_mode']; ?></label>  
+                    <div class="col-md-4">
+                        <select class="form-control" name="maintenance_mode">
+                            <option value="1" <?php if ($so['config']['maintenance_mode'] == 1) { ?>selected<?php } ?>><?php echo $so['lang']['enabled']; ?></option>
+                            <option value="0" <?php if ($so['config']['maintenance_mode'] == 0) { ?>selected<?php } ?>><?php echo $so['lang']['disabled']; ?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['amazon_s3']; ?></label>  
+                    <div class="col-md-4">
+                        <select class="form-control" name="amazon_s3">
+                            <option value="1" <?php if ($so['config']['amazon_s3'] == 1) { ?>selected<?php } ?>><?php echo $so['lang']['enabled']; ?></option>
+                            <option value="0" <?php if ($so['config']['amazon_s3'] == 0) { ?>selected<?php } ?>><?php echo $so['lang']['disabled']; ?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['message_alert']; ?></label>
+                    <div class="col-md-4">
+                        <textarea class="form-control" name="message_alert"><?php echo $so['config']['message_alert']; ?></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['live_stream']; ?></label>
+                    <div class="col-md-4">
+                        <select class="form-control" name="live_stream">
+                            <option value="1" <?php if ($so['config']['live_stream'] == 1) { ?>selected<?php } ?>><?php echo $so['lang']['enabled']; ?></option>
+                            <option value="0" <?php if ($so['config']['live_stream'] == 0) { ?>selected<?php } ?>><?php echo $so['lang']['disabled']; ?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['live_stream_all_users']; ?></label>
+                    <div class="col-md-4">
+                        <select class="form-control" name="live_stream_all_users">
+                            <option value="1" <?php if ($so['config']['live_stream_all_users'] == 1) { ?>selected<?php } ?>><?php echo $so['lang']['enabled']; ?></option>
+                            <option value="0" <?php if ($so['config']['live_stream_all_users'] == 0) { ?>selected<?php } ?>><?php echo $so['lang']['disabled']; ?></option>
+                        </select>
+                    </div>
+                </div>
+                <hr>
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="singlebutton"></label>
+                    <div class="col-md-4">
+                        <div class="form-actions">
+                            <button id="settings_save" class="EdgeButton EdgeButton--primary EdgeButton--medium btn btn-primary" type="submit"><?php echo $so['lang']['save_changes']; ?></button>
+                            <span class="spinner-small settings-save-spinner"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('form#account-form').ajaxForm({
+            url: So_Requests() + '?type=update-site-settings',
+            beforeSend: function () {
+                $('.spinner-small.settings-save-spinner').css('display', 'inline-flex');
+            },
+            success: function (data) {
+                $('.spinner-small.settings-save-spinner').css('display', 'none');
+                $("html, body").animate({scrollTop: 0}, 150);
+                if (data.status == 200) {
+                    $('.btn.btn-primary').html('SUCCESS');
+                    $('.settings-alert').html('');
+                    $('.settings-alert').addClass('hidden');
+                    setTimeout(function () {
+                        $('.btn.btn-primary').html('<?php echo $so['lang']['save_changes']; ?>');
+                    }, 2000);
+                } else if (data.status == 400) {
+                    $('.settings-alert').html(data.errors);
+                    $('.settings-alert.hidden').removeClass('hidden');
+                } else {
+                    return false;
+                }
+            }
+        });
+    });
+</script>

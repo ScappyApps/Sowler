@@ -1,0 +1,58 @@
+<a class="post-add-icon inline-items pointer" style="margin-right: 10px;">
+	<span>
+	<?php
+	if ($so['config']['type_button'] == 'reactions') {
+		echo So_GetPage('buttons/reactions/count-reactions');
+	}
+	?>
+	</span>
+</a>
+
+<?php
+if ($so['config']['type_button'] == 'reactions') {
+?>
+<ul class="friends-harmonic count-reactions">
+	<?php
+		if (So_CheckTypeReaction($so['story']['post_id'], 'reaction_like') === true) {
+	?>
+	<span class="_9zc _19km _2hoq _3uet _4e-m">
+		<i class="reaction_like" style="background-image: url(<?php echo $so['config']['theme_url']; ?>/img/reactions/reaction_like.png);"></i>
+	</span>
+	<?php } ?>
+	<?php
+		if (So_CheckTypeReaction($so['story']['post_id'], 'reaction_love') === true) {
+	?>
+	<span class="_9zc _19km _2hoq _3uet _4e-m">
+		<i class="reaction_love" style="background-image: url(<?php echo $so['config']['theme_url']; ?>/img/reactions/reaction_love.png);"></i>
+	</span>
+	<?php } ?>
+	<?php
+		if (So_CheckTypeReaction($so['story']['post_id'], 'reaction_haha') === true) {
+	?>
+	<span class="_9zc _19km _2hoq _3uet _4e-m">
+		<i class="reaction_haha" style="background-image: url(<?php echo $so['config']['theme_url']; ?>/img/reactions/reaction_haha.png);"></i>
+	</span>
+	<?php } ?>
+	<?php
+		if (So_CheckTypeReaction($so['story']['post_id'], 'reaction_wow') === true) {
+	?>
+	<span class="_9zc _19km _2hoq _3uet _4e-m">
+		<i class="reaction_wow" style="background-image: url(<?php echo $so['config']['theme_url']; ?>/img/reactions/reaction_wow.png);"></i>
+	</span>
+	<?php } ?>
+	<?php
+		if (So_CheckTypeReaction($so['story']['post_id'], 'reaction_cry') === true) {
+	?>
+	<span class="_9zc _19km _2hoq _3uet _4e-m">
+		<i class="reaction_cry" style="background-image: url(<?php echo $so['config']['theme_url']; ?>/img/reactions/reaction_cry.png);"></i>
+	</span>
+	<?php } ?>
+	<?php
+		if (So_CheckTypeReaction($so['story']['post_id'], 'reaction_grr') === true) {
+	?>
+	<span class="_9zc _19km _2hoq _3uet _4e-m">
+		<i class="reaction_grr" style="background-image: url(<?php echo $so['config']['theme_url']; ?>/img/reactions/reaction_grr.png);"></i>
+	</span>
+	<?php } ?>
+</ul>
+<?php } ?>

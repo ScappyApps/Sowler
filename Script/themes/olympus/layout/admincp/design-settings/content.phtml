@@ -1,0 +1,112 @@
+<div class="container">
+    <div class="row">
+        <form id="account-form" class="form-horizontal" autocomplete="off" method="POST">
+            <h2><?php echo $so['lang']['design_settings']; ?></h2>
+            <hr>
+            <fieldset>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['search_background']; ?></label>  
+                    <div class="col-md-4">
+                        <input class="form-control" type="text" name="search_background" value="<?php echo $so['config']['search_background']; ?>"/>
+                    </div>
+                </div>
+				<!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['border_search_background']; ?></label>  
+                    <div class="col-md-4">
+                        <input class="form-control" type="text" name="border_search_background" value="<?php echo $so['config']['border_search_background']; ?>"/>
+                    </div>
+                </div>
+				<!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['header_background']; ?></label>  
+                    <div class="col-md-4">
+                        <input class="form-control" type="text" name="header_background" value="<?php echo $so['config']['header_background']; ?>"/>
+                    </div>
+                </div>
+				<!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['cover_background']; ?></label>  
+                    <div class="col-md-4">
+                        <input class="form-control" type="text" name="cover_background" value="<?php echo $so['config']['cover_background']; ?>"/>
+                    </div>
+                </div>
+				<!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['border_button']; ?></label>  
+                    <div class="col-md-4">
+                        <input class="form-control" type="text" name="border_button" value="<?php echo $so['config']['border_button']; ?>"/>
+                    </div>
+                </div>
+				<!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['color_text_button']; ?></label>  
+                    <div class="col-md-4">
+                        <input class="form-control" type="text" name="color_text_button" value="<?php echo $so['config']['color_text_button']; ?>"/>
+                    </div>
+                </div>
+				<!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['color_link']; ?></label>  
+                    <div class="col-md-4">
+                        <input class="form-control" type="text" name="color_link" value="<?php echo $so['config']['color_link']; ?>"/>
+                    </div>
+                </div>
+				<!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['color_total_notifications']; ?></label>  
+                    <div class="col-md-4">
+                        <input class="form-control" type="text" name="color_total_notifications" value="<?php echo $so['config']['color_total_notifications']; ?>"/>
+                    </div>
+                </div>
+				<!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['color_border']; ?></label>  
+                    <div class="col-md-4">
+                        <input class="form-control" type="text" name="color_border" value="<?php echo $so['config']['color_border']; ?>"/>
+                    </div>
+                </div>
+                <hr>
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="singlebutton"></label>
+                    <div class="col-md-4">
+                        <div class="form-actions">
+                            <button id="settings_save" class="EdgeButton EdgeButton--primary EdgeButton--medium btn btn-primary" type="submit"><?php echo $so['lang']['save_changes']; ?></button>
+                            <span class="spinner-small settings-save-spinner"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('form#account-form').ajaxForm({
+            url: So_Requests() + '?type=update-site-settings',
+            beforeSend: function () {
+                $('.spinner-small.settings-save-spinner').css('display', 'inline-flex');
+            },
+            success: function (data) {
+                $('.spinner-small.settings-save-spinner').css('display', 'none');
+                $("html, body").animate({scrollTop: 0}, 150);
+                if (data.status == 200) {
+                    $('.btn.btn-primary').html('SUCCESS');
+                    $('.settings-alert').html('');
+                    $('.settings-alert').addClass('hidden');
+                    setTimeout(function () {
+                        $('.btn.btn-primary').html('<?php echo $so['lang']['save_changes']; ?>');
+                    }, 2000);
+                } else if (data.status == 400) {
+                    $('.settings-alert').html(data.errors);
+                    $('.settings-alert.hidden').removeClass('hidden');
+                } else {
+                    return false;
+                }
+            }
+        });
+    });
+</script>

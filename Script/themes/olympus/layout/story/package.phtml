@@ -1,0 +1,69 @@
+<?php
+$classSticker   = new Sticker();
+$sticker        = $classSticker->So_GetAllStickers($so['package']['id']);
+?>
+<div class="_5r9y _4-u2  _4-u8">
+    <a class="_5r5d" href="#">
+        <div class="clearfix">
+            <div class="_ohe lfloat">
+                <div class="_5rad">
+                    <img class="_5r5s img" src="<?php echo $so['package']['image']; ?>" alt="<?php echo $so['package']['name']; ?>">
+                </div>
+            </div>
+            <div class="_ohf rfloat">
+                <div class="_5rae">
+                    <div class="_5raf">
+                        <img class="_5rag img" src="<?php echo $sticker[0]['image']; ?>" alt="">
+                    </div>
+                    <div class="_5raf">
+                        <img class="_5rag img" src="<?php echo $sticker[1]['image']; ?>" alt="">
+                    </div>
+                    <div class="_5raf">
+                        <img class="_5rag img" src="<?php echo $sticker[2]['image']; ?>" alt="">
+                    </div>
+                    <div class="_5raf">
+                        <img class="_5rag img" src="<?php echo $sticker[3]['image']; ?>" alt="">
+                    </div>
+                    <div class="_5raf">
+                        <img class="_5rag img" src="<?php echo $sticker[4]['image']; ?>" alt="">
+                    </div>
+                    <div class="_5raf">
+                        <img class="_5rag img" src="<?php echo $sticker[5]['image']; ?>" alt="">
+                    </div>
+                    <div class="_5raf">
+                        <img class="_5rag img" src="<?php echo $sticker[6]['image']; ?>" alt="">
+                    </div>
+                    <div class="_5raf">
+                        <img class="_5rag img" src="<?php echo $sticker[7]['image']; ?>" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+    <div class="_5rah clearfix" direction="right">
+        <div class="_ohf rfloat">
+            <div class="_5rr1">
+                <a class="_5r5d _4jy0 _4jy3 _517h _51sy _42ft" href="javascript:void(0);" onclick="So_GetStickerListPost(<?php echo $so['package']['id']; ?>);">
+                    <?php echo $so['lang']['preview']; ?>
+                </a>
+                <?php if ($classSticker->So_HaveStickerPackage($so['package']['id']) === false && $so['package']['id'] <> 2) { ?>
+                <button id="button-package-<?php echo $so['package']['id']; ?>" class="_5r5d _4jy0 _4jy3 _4jy2 _51sy selected _42ft" onclick="So_AddToMyStickersPost(<?php echo $so['package']['id']; ?>);">
+                    <?php echo $so['lang']['free']; ?>
+                </button>
+                <?php } ?>
+            </div>
+        </div>
+        <div class="">
+            <div class="_42ef">
+                <div>
+                    <div class="_5rai ellipsis  _50f7">
+                        <?php echo $so['package']['name']; ?>
+                    </div>
+                    <div class="_5raj ellipsis">
+                        <?php echo $so['config']['site_name']; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

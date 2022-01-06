@@ -1,0 +1,4 @@
+<?php $classPost = new Post(); ?>
+<a <?php if ($classPost->So_PostLiked($so['story']['post_id'], $so['user']['user_id']) === true) { ?>style="background: #e0245e!important;"<?php } ?> href="javascript:void(0);" class="btn btn-control" onclick="So_InsertLike(<?php echo $so['story']['post_id']; ?>);">
+	<i class="fas fa-heart"></i>
+</a>

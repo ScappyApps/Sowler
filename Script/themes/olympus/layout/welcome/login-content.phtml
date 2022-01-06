@@ -1,0 +1,56 @@
+<div id="doc" class="route-login login-responsive">
+    <div id="page-outer">
+        <div id="page-container" class="AppContent wrapper wrapper-login">
+            <div class="page-canvas">
+                <div class="signin-wrapper">
+                    <h1><?php echo $so['lang']['login_in_to']; ?> <?php echo $so['config']['site_name']; ?></h1>
+                    <form id="login" class="t1-form clearfix signin js-signin" method="post">
+                        <fieldset>
+                            <legend class="visuallyhidden"><?php echo $so['lang']['welcome']; ?></legend>
+                            <div class="alert-errors"></div>
+                            <div class="clearfix field">
+                                <input class="js-username-field email-input js-initial-focus" type="text" name="email" autocomplete="on" value="" placeholder="<?php echo $so['lang']['username']; ?>, <?php echo $so['lang']['email']; ?>  <?php echo $so['lang']['or']; ?> <?php echo $so['lang']['phone_number']; ?>">
+                            </div>
+                            <div class="clearfix field">
+                                <input class="js-password-field" type="password" name="password" placeholder="<?php echo $so['lang']['password']; ?>">
+                            </div>
+                        </fieldset>
+                        <div class="clearfix">
+                            <button type="submit" class="submit EdgeButton EdgeButton--primary EdgeButtom--medium"><?php echo $so['lang']['login']; ?></button>
+                            <div class="subchck">
+                                <label class="t1-label remember">
+                                    <a class="forgot" href="<?php echo So_SeoLink('index.php?link1=forgot-password'); ?>" rel="noopener"><?php echo $so['lang']['forgot_password']; ?></a>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="clearfix mobile has-sms">
+                    <p class="signup-helper">
+                        <?php echo $so['lang']['new_on']; ?> <?php echo $so['config']['site_name']; ?>?
+                        <a id="login-signup-link" href="<?php echo So_SeoLink('index.php?link1=signup'); ?>"><?php echo $so['lang']['subscribe']; ?></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('form#login').ajaxForm({
+            url: So_Requests() + '?type=signin',
+            beforeSend: function () {
+
+            },
+            success: function (data) {
+                if (data.status == 200) {
+                    window.location.href = '<?php echo $so['config']['site_url']; ?>';
+                } else if (data.status == 400) {
+                    $('.alert-errors').html(data.errors);
+                } else {
+                    return false;
+                }
+            }
+        });
+    });
+</script>

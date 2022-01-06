@@ -1,0 +1,81 @@
+<div class="ProfileOnboarding-birthdate introduce-yourself" id="introduce-yourself">
+    <div class="ProfileOnboarding-header">
+        <div class="dismiss js-action-dismiss"><span class="Icon"><i class="fas fa-times"></i></span></div>
+        <div class="ProfileOnboarding-title"><?php echo $so['lang']['add_your_birthday']; ?></div>
+        <div class="ProfileOnboarding-subtitle"><?php echo $so['lang']['let_website_know']; ?></div>
+    </div>
+    <div class="ProfileHeaderCardEditing-item">
+        <div class="BirthdateSelect is-expanded" aria-labelledby="BirthdateSelect-label">
+            <fieldset class="BirthdateSelect-fields is-expanded" tabindex="2">
+                <div class="BirthdateSelect-info">
+                    <?php echo $so['lang']['this_should_be']; ?>
+                </div>
+                <div class="BirthdateSelect-birthday u-inlineBlock">
+                    <form class="form-horizontal" id="change-my-birthday" method="post">
+                        <fieldset>
+                            <div class="fdlfjslfsj">
+                                <div class="wsdfsdr">
+                                    <select id="user_day" name="day">
+                                        <option value="0"><?php echo $so['lang']['day']; ?></option>
+                                        <?php
+                                        for ($day = 1; $day <= 31; $day++) {
+                                            ?>
+                                            <option value="<?php echo $day; ?>"><?php echo $day; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <select id="user_month" name="month">
+                                        <option value="0"><?php echo $so['lang']['month']; ?></option>
+                                        <?php
+                                        foreach ($so['months'] as $keys => $value) {
+                                            ?>
+                                            <option value="<?php echo $keys; ?>"><?php echo $value; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <select id="user_year" name="year">
+                                        <option value="0"><?php echo $so['lang']['year']; ?></option>
+                                        <?php
+                                        $actual_year = date('Y') - 12;
+                                        $first_year = date('Y') - 70;
+                                        for ($year = $actual_year; $year > $first_year; $year--) {
+                                            ?>
+                                            <option value="<?php echo $year; ?>"><?php echo $year; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <hr>
+                                <div class="BirthdateSelect-info">
+                                    <?php echo $so['lang']['this_should_be_privacy']; ?>
+                                </div>
+                                <div class="wsdfsdr">
+                                    <select name="privacy">
+                                        <option value="1"><?php echo $so['lang']['everyone']; ?></option>
+                                        <!--<option value="2"><?php echo $so['lang']['follow_me']; ?></option>
+                                        <option value="3"><?php echo $so['lang']['follow_i']; ?></option>-->
+                                        <option value="4"><?php echo $so['lang']['only_me']; ?></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('form#change-my-birthday').ajaxForm({
+            url: So_Requests() + '?type=change-my-birthday',
+            beforeSend: function () {
+
+            },
+            success: function (data) {
+                if (data.status == 200) {
+                    $('form#change-my-birthday').remove();
+                } else {
+                    return false;
+                }
+            }
+        });
+    });
+</script>

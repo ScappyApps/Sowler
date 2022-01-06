@@ -1,0 +1,16 @@
+<?php $classPost = new Post(); ?>
+<div class="IconContainer js-tooltip" data-original-title="<?php echo $so['lang']['like']; ?>">
+	<span role="presentation" class="Icon Icon--heart Icon--medium">
+		<i class="fas fa-heart"></i>
+	</span>
+</div>
+<span class="ProfileTweet-actionCount ProfileTweet-actionCount--isZero">
+	<span class="ProfileTweet-actionCountForPresentation" aria-hidden="true">
+		<?php
+		$countPostLike = $classPost->So_CountPostLike($so['story']['post_id']);
+		if ($countPostLike > 0) {
+			echo $countPostLike;
+		}
+		?>
+	</span>
+</span>

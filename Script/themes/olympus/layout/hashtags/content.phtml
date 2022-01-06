@@ -1,0 +1,151 @@
+<div class="container">
+	<div class="row">
+
+		<!-- Main Content -->
+
+		<div class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+			<div class="ui-block">
+				<div class="ui-block-title">
+					<div class="h6 title">#<?php echo $_GET['hash']; ?></div>
+				</div>
+			</div>
+
+			<div id="search-items-grid">
+				
+				<?php
+				$posts = So_GetHashtagPosts($_GET['hash']);
+
+				if (count($posts) > 0) {
+					foreach ($posts as $so['story']) {
+						echo So_GetPage('story/content');
+					}
+				} else {
+					echo So_GetPage('hashtags/no-tag-found');
+				}
+				?>
+				
+			</div>
+		</div>
+
+		<!-- ... end Main Content -->
+
+
+		<!-- Left Sidebar -->
+
+		<div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-12 col-12">
+			<div class="ui-block">
+
+				<!-- W-Build-Fav -->
+				
+				<div class="widget w-build-fav">
+				
+					<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
+				
+					<div class="widget-thumb">
+						<img src="<?php echo $so['config']['theme_url']; ?>/img/build-fav.png" alt="notebook">
+					</div>
+				
+				</div>
+				
+				<!-- ... end W-Build-Fav -->
+				
+
+			</div>
+
+			
+		</div>
+
+		<!-- ... end Left Sidebar -->
+
+
+		<!-- Right Sidebar -->
+
+		<aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
+
+		
+			<?php
+			$birthday = So_Birthday();
+			if ($birthday !== false) {
+			?>
+			<div class="ui-block">
+
+				<!-- W-Birthsday-Alert -->
+				<div class="widget w-birthday-alert">
+					<div class="icons-block">
+						<svg class="olymp-cupcake-icon"><use xlink:href="#olymp-cupcake-icon"></use></svg>
+						<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="#olymp-three-dots-icon"></use></svg></a>
+					</div>
+
+					<div class="content">
+						<div class="author-thumb">
+							<img width="30px" src="<?php echo $birthday['avatar']; ?>" alt="author">
+						</div>
+						<span><?php echo $so['lang']['today_is']; ?></span>
+						<a href="<?php echo $birthday['url']; ?>" data-ajax="?link1=timeline&username=<?php echo $birthday['username']; ?>" class="h4 title"><?php echo $birthday['name']; ?> <?php echo $so['lang']['is_birthday']; ?>!</a>
+						<p><?php echo $so['lang']['leave_her_message']; ?></p>
+					</div>
+				</div>
+
+				<!-- ... end W-Birthsday-Alert -->
+			</div>
+			<?php } ?>
+
+			<div class="ui-block">
+				<div class="ui-block-title">
+					<h6 class="title"><?php echo $so['lang']['suggestions_follow']; ?></h6>
+					<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="#olymp-three-dots-icon"></use></svg></a>
+				</div>
+
+
+
+				<!-- W-Action -->
+
+				<ul class="widget w-friend-pages-added notification-list friend-requests">
+					<?php
+						$suggestions = So_GetSuggestions();
+						if (count($suggestions) > 0) {
+							foreach ($suggestions as $so['suggestion']) {
+								?>
+					
+					<li class="inline-items">
+						<div class="author-thumb">
+							<img width="30px" src="<?php echo $so['suggestion']['avatar']; ?>" alt="author">
+						</div>
+						<div class="notification-event">
+							<a href="#" class="h6 notification-friend"><?php echo $so['suggestion']['name']; ?></a>
+							<span class="chat-message-item">@<?php echo $so['suggestion']['username']; ?></span>
+						</div>
+						<span class="notification-icon" id="register-follow-button-<?php echo $so['suggestion']['user_id']; ?>">
+							<?php echo So_GetPage('buttons/sidebar-button-follow'); ?>
+						</span>
+					</li>
+					<?php
+							}
+						}
+					?>
+				</ul>
+
+				<!-- ... end W-Action -->
+			</div>
+			<div class="ui-block">
+				<!-- W-Action -->
+
+				<div class="widget w-action">
+
+					<img src="<?php echo $so['config']['theme_url']; ?>/img/logo.png" alt="Olympus">
+					<div class="content">
+						<h4 class="title"><?php echo $so['config']['site_name']; ?></h4>
+						<h5 class="title"> Sowler</h4>
+						<span>THE BEST SOCIAL NETWORK THEME!</span>
+					</div>
+				</div>
+
+				<!-- ... end W-Action -->
+			</div>
+
+		</aside>
+
+		<!-- ... end Right Sidebar -->
+
+	</div>
+</div>

@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="row">
+        <form id="account-form" class="form-horizontal" autocomplete="off" method="POST">
+            <h2><?php echo $so['lang']['adsense']; ?></h2>
+            <hr>
+            <fieldset>
+				<div class="form-group">
+					<label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['adsense']; ?> PayPal</label>  
+					<div class="col-md-4">
+						<select name="adsense" class="form-control input-md">
+							<option value="1"<?php if ($so['config']['adsense'] == 1) { ?>selected<?php } ?>><?php echo $so['lang']['enabled']; ?></option>
+							<option value="0" <?php if ($so['config']['adsense'] == 0) { ?>selected<?php } ?>><?php echo $so['lang']['disabled']; ?></option>
+						</select>
+					</div>
+				</div>
+				<!-- Text input-->
+				<div class="form-group">
+					<label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['client_id_paypal']; ?></label>  
+					<div class="col-md-4">
+						<input id="textinput" name="client_id" type="text" value="<?php echo $so['config']['client_id']; ?>" class="form-control input-md">
+					</div>
+				</div>
+				<!-- Text input-->
+				<div class="form-group">
+					<label class="col-md-3 pull-left" for="textinput"><?php echo $so['lang']['secret_paypal']; ?></label>  
+					<div class="col-md-4">
+						<input id="textinput" name="secret" type="text" value="<?php echo $so['config']['secret']; ?>" class="form-control input-md">
+					</div>
+				</div>
+				<hr>
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="singlebutton"></label>
+                    <div class="col-md-4">
+                        <div class="form-actions">
+                            <button id="settings_save" class="EdgeButton EdgeButton--primary EdgeButton--medium btn btn-primary" type="submit"><?php echo $so['lang']['save_changes']; ?></button>
+                            <span class="spinner-small settings-save-spinner"></span>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('form#account-form').ajaxForm({
+            url: So_Requests() + '?type=update-site-settings',
+            beforeSend: function () {
+                $('.spinner-small.settings-save-spinner').css('display', 'inline-flex');
+            },
+            success: function (data) {
+                $('.spinner-small.settings-save-spinner').css('display', 'none');
+                $("html, body").animate({scrollTop: 0}, 150);
+                if (data.status == 200) {
+                    $('.btn.btn-primary').html('SUCCESS');
+                    $('.settings-alert').html('');
+                    $('.settings-alert').addClass('hidden');
+                    setTimeout(function () {
+                        $('.btn.btn-primary').html('<?php echo $so['lang']['save_changes']; ?>');
+                    }, 2000);
+                } else if (data.status == 400) {
+                    $('.settings-alert').html(data.errors);
+                    $('.settings-alert.hidden').removeClass('hidden');
+                } else {
+                    return false;
+                }
+            }
+        });
+    });
+</script>

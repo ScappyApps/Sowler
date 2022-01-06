@@ -1,0 +1,71 @@
+<?php $search = So_Search(So_Secure($_GET['q'])); ?>
+<div id="doc">
+    <div id="page-outer">
+        <div id="page-container" class="AppContent wrapper-search">
+            <div class="SearchNavigation">
+                <div class="SearchNavigation-canopy u-bgUserColor">
+                    <div class="SearchNavigation-textContainer">
+                        <h1 class="SearchNavigation-titleText" dir="ltr">
+                            <?php echo $_GET['q']; ?>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="AppContainer">
+                <div class="AppContent-main u-cf">
+                    <div class="Grid-cell u-size2of3 u-lg-size3of4">
+                        <div class="Grid Grid--withGutter">
+                            <div class="AdaptiveSearchTimeline--userGrid Grid-cell u-size2of2 u-lg-size3of3" role="main">
+                                <div class="GridTimeline">
+                                    <div class="stream-item js-new-items-bar-container">
+                                    </div>
+                                    <?php if (count($search) > 0) { ?>
+                                        <div class="GridTimeline-items has-items" role="list">
+                                            <div class="Grid Grid--withGutter" data-component-context="user" role="presentation">
+                                                <?php
+                                                foreach ($search as $so['result']) {
+                                                    echo So_GetPage('app/search/result');
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    <?php } else { ?>
+                                        <div class="SearchEmptyTimeline">
+
+                                            <div class="SearchEmptyTimeline-empty">
+                                                <div class="SearchEmptyTimeline-emptyTitle">
+                                                    <?php echo $so['lang']['not_result']; ?>: <b><?php echo $_GET['q']; ?></b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+.SearchNavigation {
+    backface-visibility: hidden;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 999;
+}
+div#page-container {
+    padding-top: 70px;
+}
+.Grid--withGutter {
+    margin: 0;
+}
+.Grid--withGutter>.Grid-cell {
+    padding: 0;
+    margin-left: 0px;
+    margin-bottom: 2px!important;
+}
+</style>
